@@ -1,0 +1,24 @@
+<form novalidate="true"
+  disabled={{@disabled}}
+  data-test-form={{if @name @name true}}
+  {{on "submit" this.submit}}
+  ...attributes>
+  {{yield (hash
+    Control=(component "ui/form/control" changeset=@changeset didSubmit=this.submitTask.performCount isSubmitting=this.submitTask.isRunning)
+    isSubmitting=this.submitTask.isRunning
+    didSubmit=this.submitTask.performCount
+    Submit=(component "ui/button"
+      name="submit"
+      type="submit"
+      color="primary"
+      loading=this.submitTask.isRunning
+      task=this.submitTask
+    )
+    Button=(component "ui/button"
+      name="button"
+      type="button"
+      color="gray"
+      disabled=this.submitTask.isRunning
+    )
+  )}}
+</form>

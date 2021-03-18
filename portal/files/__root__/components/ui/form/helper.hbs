@@ -1,0 +1,14 @@
+<div class="relative overflow-hidden"
+  ...attributes>
+  {{yield}}
+  <Ui::Form::Tip class="mt-2 {{this.tipPositionClass}}"
+    @text={{@tip}}
+    @name={{@name}}
+    @changeset={{@changeset}}
+    @invalid={{@invalid}} />
+  <Ui::Form::Error class="mt-2 {{this.errorPositionClass}}"
+    @text={{this.errorText}}
+    @name={{@name}}
+    @changeset={{@changeset}}
+    @invalid={{@invalid}} />
+</div>

@@ -1,0 +1,14 @@
+{{!-- {{if this.open "bg-mirage-900" "hover:bg-mirage-700"}} --}}
+<div {{on "click" this.toggle}}
+  role="button"
+  class="cursor-pointer relative mb-2 group flex items-center p-2 pl-12 text-lg leading-6 font-medium text-white hover:text-white rounded-lg hover:bg-mirage-700 focus:outline-none focus:text-white focus:bg-mirage-700 transition ease-in-out duration-150 hover:bg-mirage-700"
+  ...attributes>
+  {{#if @icon}}
+    <Ui::SideNav::Icon @icon={{@icon}} />
+  {{/if}}
+  {{@title}}
+  {{svg-jar "chevron-right" class=(concat "absolute inset-y-0 right-0 m-2 h-6 w-6 text-white group-hover:text-mirage-50 group-focus:text-white transition-transform ease-in-out duration-150 transform " (if this.open "rotate-90" "rotate-0"))}}
+</div>
+<div class="relative pl-2 overflow-hidden transition-max-height duration-150 ease-in-out {{if this.open "max-h-full" "max-h-0"}}">
+  {{yield}}
+</div>

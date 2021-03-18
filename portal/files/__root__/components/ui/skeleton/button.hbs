@@ -1,0 +1,17 @@
+{{#if (eq @size 'xs')}}
+  <div class="min-w-40 px-2.5 py-1.5 leading-4 border border-transparent rounded-md bg-gray-100"
+    ...attributes>&nbsp;</div>
+{{else if (eq @size 'sm')}}
+  <div class="min-w-40 px-3 py-2 leading-4  border border-transparent rounded-md bg-gray-100"
+    ...attributes>&nbsp;</div>
+{{else if (eq @size 'lg')}}
+  <div class="min-w-40 px-4 py-2 leading-6 border border-transparent rounded-md bg-gray-100"
+    ...attributes>&nbsp;</div>
+{{else if (eq @size 'xl')}}
+  <div class="min-w-40 px-6 py-3 leading-6 border border-transparent rounded-md bg-gray-100"
+    ...attributes>&nbsp;</div>
+{{else}}
+  {{!-- @size = md --}}
+  <div class="min-w-40 px-4 py-2 leading-5 border border-transparent rounded-md bg-gray-100"
+    ...attributes>&nbsp;</div>
+{{/if}}

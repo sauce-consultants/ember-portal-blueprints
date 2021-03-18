@@ -1,0 +1,11 @@
+<div class="flex flex-col"
+  ...attributes>
+  {{#each (repeat @num) as |empty index|}}
+    {{#if (eq (inc index) @num)}}
+      {{!-- Is this the last line? --}}
+      <Ui::Skeleton::Line class="w-5/6" />
+    {{else}}
+      <Ui::Skeleton::Line class="w-full" />
+    {{/if}}
+  {{/each}}
+</div>

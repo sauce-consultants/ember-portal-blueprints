@@ -1,0 +1,62 @@
+{{#if @loading}}
+
+  <div class="flex items-center px-4 py-4 sm:px-6">
+    <div class="min-w-0 flex-1 flex items-center">
+      <div class="flex-shrink-0">
+        <div class="bg-gray-100 h-12 w-12 rounded-full"></div>
+      </div>
+      <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+        <div>
+          <div class="bg-gray-100 h-4 w-1/2 rounded-sm"></div>
+          <div class="bg-gray-100 h-4 w-2/3 rounded-sm mt-2"></div>
+        </div>
+        <div class="hidden md:block">
+          <div>
+            <div class="bg-gray-100 h-4 w-1/4 rounded-sm"></div>
+            <div class="bg-gray-100 h-4 w-2/5 rounded-sm mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="ml-auto rounded-full bg-gray-200 w-5 h-5"></div>
+    </div>
+  </div>
+
+{{else}}
+
+  <div class="flex items-center px-4 py-4 sm:px-6">
+    <div class="min-w-0 flex-1 flex items-center">
+      <div class="flex-shrink-0">
+        <div class="
+        h-12 w-12
+        text-lg font-bold
+        text-white bg-primary-500
+        rounded-full
+        flex justify-center items-center">{{@<%= s %>.id}}</div>
+      </div>
+      <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+        <div>
+          <p class="text-sm font-medium text-purple-600 truncate"><%= sUpper %> {{@<%= s %>.describe}}</p>
+          <p class="mt-2 flex items-center text-sm text-gray-500">
+            <span class="truncate">META_1</span>
+          </p>
+        </div>
+        <div class="hidden md:block">
+          <div>
+            <p class="text-sm text-gray-900">
+              META_2
+            </p>
+            <p class="mt-2 flex items-center text-sm text-gray-500">
+              META_3
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      {{svg-jar "dots-vertical" class="h-5 w-5 text-gray-400"}}
+    </div>
+  </div>
+
+{{/if}}

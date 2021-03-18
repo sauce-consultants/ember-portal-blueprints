@@ -1,0 +1,7 @@
+<div class="flex flex-row justify-end items-center mb-2 md:mb-0 text-gray-800"
+  data-test-header-actions>
+  {{yield (hash
+    Action=(component "ui/header/action")
+    Search=(component "ui/header/search")
+  )}}
+</div>

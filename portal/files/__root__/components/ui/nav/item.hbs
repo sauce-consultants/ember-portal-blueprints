@@ -1,0 +1,27 @@
+{{#if @route}}
+  <Ui::Link class="flex items-center px-3 py-2 text-sm font-medium rounded-md"
+    @activeClass="bg-gray-100 text-gray-900 "
+    @inactiveClass="text-gray-600 hover:bg-gray-50 hover:text-gray-900 "
+    @route={{@route}}
+    @activeWhen={{@activeWhen}}
+    @href={{@href}}
+    data-test-nav-item={{if @name @name true}}
+    ...attributes>
+    <span class="truncate">
+      {{yield}}
+    </span>
+
+  </Ui::Link>
+{{else}}
+
+  <div class="
+    flex items-center px-3 py-2 text-sm font-medium rounded-md
+    text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+    {{on "click" @action}}
+    data-test-nav-item={{if @name @name true}}
+    ...attributes>
+    <span class="truncate">
+      {{yield}}
+    </span>
+  </div>
+{{/if}}

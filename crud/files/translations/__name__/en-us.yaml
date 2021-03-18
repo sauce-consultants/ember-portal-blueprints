@@ -1,0 +1,52 @@
+nav:
+  label: <%= pUpper %>
+  icon: nav.users
+new:
+  title: New <%= sUpper %>
+  crumb: New
+  messages:
+    success: "<%= sUpper%> Created"
+    validation: "Validation Error"
+    server: "Server Error"
+list:
+  title: List <%= pUpper %>
+  crumb: <%= pUpper %>
+  actions:
+    filter: Filter
+    export:
+      label: Export
+      title: Export <%= pUpper %>
+      button: Download
+      text: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius aliquam laudantium explicabo pariatur iste dolorem animi vitae error totam. At sapiente aliquam accusamus facere veritatis.
+    search: Search
+    sort:
+      label: Sort
+      options:
+        id: ID
+        createdAt: Created
+        updatedAt: Updated
+    new: Add New <%= sUpper %>
+  messages:
+    export: Export Started
+view:
+  title: View <%= sUpper %>
+  navTitle: View
+  crumb: View
+edit:
+  title: Edit <%= sUpper %>
+  navTitle: Edit
+  crumb: Edit
+  messages:
+    cancel: Changes Reset
+    success: <%= sUpper%> Updated
+    validation: Validation Error
+    server: Server Error
+archive:
+  title: Archive <%= sUpper %>
+  navTitle: Archive
+  crumb: Archive
+  button: Archive <%= sUpper %>
+  body: <p>This will archive the <%= sUpper %> “<b>{name}</b>”.</p><p>This <%= p %> will no longer appear in the system. All data will be archived and require a manual process to restore.</p>
+  messages:
+    success: "<%= sUpper%> Archived"
+    server: "Server Error"

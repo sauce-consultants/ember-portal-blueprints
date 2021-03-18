@@ -1,0 +1,15 @@
+<Ui::Nav ...attributes
+  as
+  |nav|>
+
+  {{#each @actions as |action|}}
+
+    <nav.Item @route={{action.route}}
+      @name={{dasherize (t action.title)}}
+      @activeWhen={{action.activeWhen}}>
+      {{t action.title}}
+    </nav.Item>
+
+  {{/each}}
+
+</Ui::Nav>

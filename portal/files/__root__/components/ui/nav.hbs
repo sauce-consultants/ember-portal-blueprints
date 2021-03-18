@@ -1,0 +1,8 @@
+<nav class="space-y-1"
+  aria-label="Sidebar Navigation"
+  data-test-nav={{if @name @name true}}
+  ...attributes>
+  {{yield (hash
+    Item=(component "ui/nav/item")
+  )}}
+</nav>

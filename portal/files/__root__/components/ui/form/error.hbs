@@ -1,0 +1,4 @@
+<p data-test-form-error={{@name}}
+  id={{concat @name "-error"}}
+  class="text-sm text-red-500 transition-opacity ease-in-out duration-300 opacity-{{this.opacity}}"
+  ...attributes>{{yield}}{{@text}}</p>

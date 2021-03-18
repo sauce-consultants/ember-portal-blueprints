@@ -1,0 +1,18 @@
+<div class="
+  flex flex-row
+  px-4 py-2
+  text-sm leading-5 text-gray-700
+  hover:bg-gray-100 hover:text-gray-900
+  focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+  role="menuitem"
+  data-test-dropdown-menu-item={{if @name @name true}}
+  ...attributes>
+  <div class="flex-auto">
+    {{yield}}{{@text}}
+  </div>
+
+  {{#if @trailingIcon}}
+    {{svg-jar @trailingIcon class="w-4 h-4" data-test-icon=@trailingIcon}}
+  {{/if}}
+
+</div>

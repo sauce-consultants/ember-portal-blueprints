@@ -1,0 +1,6 @@
+<div class="md:z-20 md:sticky md:top-0 space-x-2 flex flex-row bg-primary-600 h-18 text-white px-6 md:px-12 py-5 text-base font-bold leading-8"
+  data-test-breadcrumbs={{if @name @name true}}>
+  {{yield (hash
+    Item=(component "ui/breadcrumbs/item" name=@name loading=@loading)
+  )}}
+</div>

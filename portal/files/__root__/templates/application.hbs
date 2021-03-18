@@ -1,0 +1,11 @@
+{{outlet}}
+
+{{!-- Fixed Container for our Flash messages --}}
+
+<div class="fixed bottom-0 z-50 sm:p-4 w-full pointer-events-none">
+
+  {{#each this.flashMessages.queue as |flash|}}
+    <Ui::Flash @flash={{flash}} />
+  {{/each}}
+
+</div>

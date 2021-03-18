@@ -1,0 +1,29 @@
+<footer class="space-y-4"
+  ...attributes>
+
+  <Ui::Button class="w-full"
+    @name="submit"
+    @type="submit"
+    @color="primary"
+    @size="lg"
+    @loading={{@form.submitTask.isRunning}}
+    @task={{@form.submitTask}}>{{t "form.footer.save"}}</Ui::Button>
+
+  <Ui::Button class="w-full"
+    @type="button"
+    @name="cancel"
+    @color="gray"
+    @size="lg"
+    @disabled={{@form.submitTask.isRunning}}
+    {{on "click" @onCancel}}>{{t "form.footer.cancel"}}</Ui::Button>
+
+  <Ui::Form::ServerErrors @title={{t "form.footer.serverErrors"}}
+    @errors={{@serverErrors}}
+    class="w-full" />
+
+  <Ui::Form::ValidationErrors @title={{t "form.footer.validationErrors"}}
+    @changeset={{@changeset}}
+    @form={{@form}}
+    class="w-full" />
+
+</footer>

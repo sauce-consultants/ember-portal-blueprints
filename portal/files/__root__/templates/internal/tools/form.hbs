@@ -1,0 +1,121 @@
+<div class="prose mt-4">
+
+  <h1>Form Component Generator</h1>
+
+  <p>This blueprint will generate a Form Component for a given model. Attributes to display in the component can be passed in as the second argument.</p>
+
+  <p>Use the following form to generate your blueprint command:</p>
+</div>
+
+<Ui::Card class="p-6">
+
+  <Ui::Form class="space-y-4"
+    as
+    |form|>
+
+    <form.Control as
+      |control|>
+      <control.Label>
+        Model {{this.model}}
+      </control.Label>
+      <control.Input placeholder="model"
+        @value={{this.model}} />
+      <control.Helper @tip="Please us the singular term here" />
+    </form.Control>
+
+    <form.Control as
+      |control|>
+      <control.Label>
+        Attributes
+      </control.Label>
+
+      {{#if this.attributes}}
+        <div class="flex-1 flex flex-row space-x-4">
+          <div class="w-full text-sm italic text-gray-500">
+            Name
+          </div>
+          <div class="w-full text-sm italic text-gray-500">
+            Attribute Type
+          </div>
+          <div class="w-full text-sm italic text-gray-500">
+            Misc
+          </div>
+          <div class="w-full text-sm italic text-gray-500">
+          </div>
+        </div>
+      {{/if}}
+
+      {{#each this.attributes as |attribute|}}
+        <div class="flex-1 flex flex-row space-x-4">
+          <div class="w-full">
+            <control.Input placeholder="name"
+              @value={{attribute.name}} />
+          </div>
+          <div class="w-full">
+            <select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md shadow-sm"
+              {{on "change" (fn this.setAttributeType attribute)}}>
+              {{#each this.attributeTypes as |type|}}
+                <option value="{{type}}"
+                  selected={{eq type attribute.type}}>{{type}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="w-full">
+            <control.Input placeholder="faker js method e.g. 'name.lastName' or related model"
+              @value={{attribute.meta}} />
+          </div>
+          <Ui::Button @size="sm"
+            @color="accent"
+            @style="danger"
+            {{on "click" (fn this.removeAttribute attribute)}}>
+            Remove
+          </Ui::Button>
+        </div>
+      {{else}}
+
+        <div class="w-full text-sm italic text-gray-500">Add some attributes below to auto seed the model, factory and components</div>
+
+      {{/each}}
+
+      <div>
+        <Ui::Button @size="sm"
+          @color="accent"
+          @style="secondary"
+          {{on "click" this.addAttribute}}>
+          Add Attribute
+        </Ui::Button>
+      </div>
+
+    </form.Control>
+
+    <form.Control as
+      |control|>
+      <control.Label>
+        Plural
+      </control.Label>
+      <control.Input placeholder="widget"
+        @value={{this.plural}} />
+      <control.Helper @tip="You can leave this blank if you want to let the inflection libary take care of it." />
+    </form.Control>
+
+    <form.Control as
+      |control|>
+      <control.Label>
+        Parent Route
+      </control.Label>
+      <control.Input placeholder="route"
+        @value={{this.nested}} />
+      <control.Helper @tip="This is the parent route the crud routes will be nested under. If blank it will appear top level. The default is 'internal' " />
+    </form.Control>
+
+  </Ui::Form>
+
+</Ui::Card>
+
+<div class="prose mt-4">
+  <p>To generate run the following command:</p>
+</div>
+
+<div class="bg-black text-white p-4 font-mono">
+  {{this.command}}
+</div>

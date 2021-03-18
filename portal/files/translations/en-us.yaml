@@ -1,0 +1,82 @@
+notFound:
+  title: "404"
+  subtitle: Oops. This page has gone missing.
+  text: You may have mistyped the address or the page may have moved.
+  button: Go Home
+external:
+  splashImageAlt: Image of wind turbines at sea
+  login:
+    title: Log in to Sauce Portal
+    byline: Contact an administrator if you do not have an account
+    form:
+      email:
+        label: Email
+        placeholder: name@example.com
+        tip: This is usually your work email address
+      password:
+        label: Password
+        placeholder: Enter your password
+        tip: Passwords must be at least 8 characters long
+      submit: Login
+      forgot: Forgot Password?
+    messages:
+      success: Welcome {name}!
+      validation: Validation Error
+      server: Server Error
+  invite:
+    title: Register your account
+    byline: Set a password to start using Sauce Portal
+  recover:
+    title: Forgot your password?
+    byline: No problem, enter your accounts email and we'll send a reset link to you inbox.
+    form:
+      email:
+        label: Email
+        placeholder: name@example.com
+        tip: This is usually your work email address
+      submit: Send Password Email
+      back: Back to Login
+    messages:
+      success: Password Email Sent
+      validation: Validation Error
+      server: Server Error
+  reset:
+    title: Reset your password
+    byline: Almost there! Set a new password to access Sauce-Portal again
+    form:
+      password:
+        label: New Password
+        placeholder: Enter a new password
+        tip: Passwords must be at least 8 characters long
+      passwordConfirmation:
+        label: Confirm Password
+        placeholder: Enter new password
+        tip: Please confirm your new password
+      submit: Change Password
+      back: Back to Login
+    messages:
+      success: Password Updated, please login
+      validation: Validation Error
+      server: Server Error
+home:
+  nav:
+    label: Home
+pagination:
+  label: Results per page
+modal:
+  cancel: Cancel
+search:
+  placeholder: Search
+form:
+  footer:
+    save: Save
+    cancel: Cancel
+    serverErrors: Server Error
+    validationErrors: Validation Errors
+archive:
+  title: Are You Sure?
+nav:
+  home: Home
+  logout: Logout
+footer:
+  version: "Version"

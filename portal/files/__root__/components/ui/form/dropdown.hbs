@@ -1,0 +1,14 @@
+<div class="mt-1"
+  aria-describedby={{@aria-describedby}}
+  data-test-dropdown={{@name}}>
+  <PowerSelect @selected={{@selected}}
+    @options={{@options}}
+    @onChange={{@onChange}}
+    @searchField={{@searchField}}
+    @placeholder={{@placeholder}}
+    @dropdownClass={{concat "ember-power-select-dropdown-" @name}}
+    as
+    |option|>
+    {{yield option}}
+  </PowerSelect>
+</div>

@@ -1,0 +1,57 @@
+{{#with (changeset @authUser this.LoginValidations) as |changeset|}}
+
+  <Ui::Form class="space-y-6 max-w-sm flex flex-col items-center"
+    @onSubmit={{perform @onLogin changeset}}
+    @afterSubmit={{perform @afterLogin changeset}}
+    @changeset={{changeset}}
+    as
+    |form|>
+
+    <form.Control class="w-full"
+      @name="email"
+      as
+      |control|>
+      <control.Label @text={{t "external.login.form.email.label"}} />
+      <control.Input @value={{changeset.email}}
+        @type="email"
+        placeholder={{t "external.login.form.email.placeholder"}}
+        autocomplete="username" />
+      <control.Helper @tip={{t "external.login.form.email.tip"}} />
+    </form.Control>
+
+    <form.Control class="w-full"
+      @name="password"
+      as
+      |control|>
+      <control.Label @text={{t "external.login.form.password.label"}} />
+      <control.Input @value={{changeset.password}}
+        @type="password"
+        placeholder={{t "external.login.form.password.placeholder"}}
+        autocomplete="current-password" />
+      <control.Helper @tip={{t "external.login.form.password.tip"}} />
+    </form.Control>
+
+    <form.Submit @size="lg"
+      class="w-full">{{t "external.login.form.submit"}}</form.Submit>
+
+    <Ui::Form::ServerErrors @title={{t "form.footer.serverErrors"}}
+      @errors={{@serverErrors}}
+      class="w-full" />
+
+    <Ui::Form::ValidationErrors @title={{t "form.footer.validationErrors"}}
+      @changeset={{changeset}}
+      @translationPath={{"external.login.form"}}
+      @form={{form}}
+      class="w-full" />
+
+    <LinkTo @route="external.recover-password"
+      class="w-full">
+      <form.Button @size="lg"
+        @style="text"
+        @color="gray"
+        class="w-full">{{t "external.login.form.forgot"}}</form.Button>
+    </LinkTo>
+
+  </Ui::Form>
+
+{{/with}}

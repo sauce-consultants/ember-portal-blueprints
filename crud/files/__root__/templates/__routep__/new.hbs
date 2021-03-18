@@ -1,0 +1,44 @@
+<<%= components %>::Crumbs @title={{t "<%= translations %>.new.crumb"}} />
+
+<Ui::Header as
+  |header|>
+  <header.Title @text={{t "<%= translations %>.new.title"}} />
+  <header.Actions as
+    |actions|>
+  </header.Actions>
+</Ui::Header>
+
+{{#with (changeset this.<%= s %> this.<%= sUpper %>Validations) as |changeset|}}
+
+  <Ui::Form class="px-6 lg:px-12 mb-4
+    flex flex-col md:flex-row flex-1
+    space-y-4 md:space-x-4 md:space-y-0"
+    @onSubmit={{perform this.save changeset}}
+    @afterSubmit={{perform this.afterSave changeset}}
+    @changeset={{changeset}}
+    as
+    |form|>
+
+    <section class="flex flex-col space-y-4 mb-4 flex-1">
+
+      <Ui::Card class="flex-auto">
+
+        <%= formComponent %>
+
+      </Ui::Card>
+
+      <Ui::Card>
+
+        <Ui::Form::Footer class="p-6"
+          @form={{form}}
+          @changeset={{changeset}}
+          @onCancel={{fn this.cancel changeset}}
+          @serverErrors={{this.serverErrors}} />
+
+      </Ui::Card>
+
+    </section>
+
+  </Ui::Form>
+
+{{/with}}

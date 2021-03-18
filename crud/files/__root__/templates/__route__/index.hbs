@@ -1,0 +1,36 @@
+<<%= components %>::Crumbs @<%= s %>={{this.<%= s %>}}
+  @title={{t "<%= translations %>.view.crumb"}} />
+
+<Ui::Header as
+  |header|>
+  <header.Title @text={{concat "View <%= sUpper %>: " (if this.loading "" this.<%= s %>.describe)}} />
+</Ui::Header>
+
+<div class="px-6 lg:px-12 mb-4
+flex flex-col md:flex-row flex-1
+space-y-4 md:space-x-4 md:space-y-0">
+
+  <section class="flex flex-col space-y-4 w-full">
+
+    <Ui::Card class="flex-auto">
+
+      <%= viewComponent %>
+
+    </Ui::Card>
+
+  </section>
+
+  <aside class="flex flex-col space-y-4 w-68">
+
+    <Ui::Card @title="Actions"
+      @name="actions"
+      class="flex-1">
+
+      <<%= components %>::Actions @actions={{this.sidebarActions}}
+        class="px-2 py-4" />
+
+    </Ui::Card>
+
+  </aside>
+
+</div>

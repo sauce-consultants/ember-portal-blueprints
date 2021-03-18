@@ -1,0 +1,23 @@
+<div class="
+ border-l-4 p-4 w-full
+ bg-gray-900 border-gray-500
+">
+  <div class="flex text-white">
+    <div class="flex-shrink-0">
+      {{#if (eq @flash.type "success")}}
+        {{svg-jar "speakerphone" class="h-5 w-5"}}
+      {{else if (eq @flash.type "warning")}}
+        {{svg-jar "exclamation" class="h-5 w-5"}}
+      {{else if (eq @flash.type "alert")}}
+        {{svg-jar "exclamation-circle" class="h-5 w-5"}}
+      {{else }}
+        {{svg-jar "chat-alt" class="h-5 w-5"}}
+      {{/if}}
+    </div>
+    <div class="ml-3">
+      <p class="text-sm leading-5">
+        {{@flash.message}}
+      </p>
+    </div>
+  </div>
+</div>

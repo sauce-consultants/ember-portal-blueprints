@@ -1,0 +1,72 @@
+'use strict';
+const EOL = require('os').EOL;
+const inflection = require('inflection'); // https://www.npmjs.com/package/inflection
+
+module.exports = {
+  description: 'Generate a details view component to view a model',
+
+  locals(options) {
+    let name = options.entity.name,
+      entityOptions = options.entity.options;
+
+    // Return custom template variables here.
+    return {
+      items: this.getDataItems(name, entityOptions),
+      translations: this.getTranslations(name, entityOptions)
+    };
+  },
+
+  getDataItems(model, entityOptions) {
+
+    const items = [];
+
+    for (let name in entityOptions) {
+
+      let type = entityOptions[name] || ''; //,
+      // foreignModelOrFakerMethod;
+
+      if (type.indexOf(':') > -1) {
+        // foreignModelOrFakerMethod = type.split(':')[1];
+        type = type.split(':')[0];
+      }
+
+      if (type === 'belongsTo') {
+        // we'll pass the describe method on the related model
+        name = `${name}.describe`;
+      }
+
+      if (type === 'hasMany') {
+        // we'll pass a count of the related models
+        name = `${name}.length`;
+      }
+
+      let item = `  <data.Item @loading={{@loading}}
+    @name="${name}"
+    @label={{t "${model}.details.${name}.label"}}
+    @value={{@${model}.${name}}}
+    @tip={{t "${model}.details.${name}.tip"}} />`;
+
+      items.push(item);
+    }
+
+    return EOL + items.join(EOL + EOL);
+  },
+
+  getTranslations(name, entityOptions) {
+
+    let lines = [];
+
+    for (let fieldName in entityOptions) {
+      let title = inflection.titleize(inflection.underscore(fieldName)),
+        human = inflection.humanize(fieldName, false),
+        line = `${fieldName}:
+  label: ${title}
+  tip: This is a tip for ${human}`;
+
+      lines.push(line);
+    }
+
+    return EOL + lines.join(EOL);
+
+  },
+};

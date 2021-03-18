@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Power Select Overrides */
+.ember-power-select-trigger {
+  padding-bottom:0.5rem;
+  padding-top:0.5rem;
+  min-height: 2.375rem;
+  border-width:1px;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+
+}
+.ember-power-select-trigger:focus{
+  /* box-shadow: 0 0 0 3px rgba(253, 186, 140, 0.45); */
+}

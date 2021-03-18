@@ -1,0 +1,24 @@
+{{!--
+  Dropdown panel, show/hide based on dropdown state.
+
+  Entering: "transition ease-out duration-100"
+    From: "transform opacity-0 scale-95"
+    To: "transform opacity-100 scale-100"
+  Leaving: "transition ease-in duration-75"
+    From: "transform opacity-100 scale-100"
+    To: "transform opacity-0 scale-95"
+--}}
+
+<div class="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg transition ease-out duration-100 {{if @showMenu "transform opacity-100 scale-10 pointer-events-auto" "transform opacity-0 scale-95 pointer-events-none"}}"
+  ...attributes>
+  <div class="rounded-md bg-white shadow-xs">
+    <div class="py-1"
+      role="button"
+      aria-orientation="vertical"
+      aria-labelledby="options-menu"
+      data-test-dropdown-menu={{if @name @name true}}
+      {{on "click" @toggleMenu}}>
+      {{yield (hash Item=(component "ui/dropdown/menu/item" name=@name))}}
+    </div>
+  </div>
+</div>

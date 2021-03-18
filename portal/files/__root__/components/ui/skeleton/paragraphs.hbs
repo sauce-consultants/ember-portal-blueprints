@@ -1,0 +1,6 @@
+<div clas="flex flex-col">
+  {{#each (repeat @num) as |empty index|}}
+    <Ui::Skeleton::Paragraph @lines={{@lines}}
+      class="mb-4" />
+  {{/each}}
+</div>

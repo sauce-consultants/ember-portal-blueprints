@@ -1,0 +1,24 @@
+<button ...attributes
+  data-test-button={{@name}}
+  type={{this.type}}
+  class={{this.buttonClasses}}
+  disabled={{this.disabled}}
+  {{on "click" this.onClick}}>
+  {{#if @leadingIcon}}
+    <div class={{this.leadingIconClasses}}>
+      {{svg-jar @leadingIcon}}
+    </div>
+  {{/if}}
+  <div class={{this.loadingIconClasses}}>
+    {{svg-jar this.loadingIcon}}
+  </div>
+  <div class="transition-opacity ease-in-out duration-300 {{if @loading "opacity-0" "opacity-100"}}">
+    {{yield}}
+    {{@text}}
+  </div>
+  {{#if @trailingIcon}}
+    <div class={{this.trailingIconClasses}}>
+      {{svg-jar @trailingIcon}}
+    </div>
+  {{/if}}
+</button>

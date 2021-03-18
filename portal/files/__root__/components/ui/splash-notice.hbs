@@ -1,0 +1,18 @@
+<div data-test-splash-notice={{if @name @name true}}
+  class="w-full text-gray-600
+  flex flex-col items-center justify-center
+  space-y-2 p-6"
+  ...attributes>
+  {{#if @icon}}
+    {{svg-jar @icon class="w-24 h-24 md:w-32 md:h-32 text-gray-200" data-test-splash-notice-icon=(if @name @name true)}}
+  {{/if}}
+  <h3 class="text-lg font-bold "
+    data-test-splash-notice-title={{if @name @name true}}>{{@title}}</h3>
+  {{#if @text}}
+    <p class="font-light"
+      data-test-splash-notice-text={{if @name @name true}}>{{@text}}</p>
+  {{/if}}
+  <div class="prose font-light">
+    {{yield}}
+  </div>
+</div>

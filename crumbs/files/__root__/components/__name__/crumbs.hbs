@@ -1,0 +1,29 @@
+<Ui::Breadcrumbs as
+  |crumb|>
+
+  <crumb.Item @isLast={{not (or @<%= s %> @title)}}>
+    <LinkTo @route="<%= pRoute %>.index">
+      {{t "<%= translations %>.list.crumb"}}
+    </LinkTo>
+  </crumb.Item>
+
+  {{#if @<%= s %>}}
+
+    <crumb.Item @isLast={{not @title}}>
+      <LinkTo @route="<%= sRoute %>.index"
+        @model={{@<%= s %>.id}}>
+        {{@<%= s %>.describe}}
+      </LinkTo>
+    </crumb.Item>
+
+  {{/if}}
+
+  {{#if @title}}
+
+    <crumb.Item @isLast={{true}}>
+      {{@title}}
+    </crumb.Item>
+
+  {{/if}}
+
+</Ui::Breadcrumbs>

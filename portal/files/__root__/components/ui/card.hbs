@@ -1,0 +1,16 @@
+<section class="bg-white rounded-2xl flex flex-col overflow-hidden"
+  data-test-card={{if @name @name true}}
+  ...attributes>
+
+  {{#if @title}}
+
+    <header class="px-6 py-4 border-b border-gray-100 rounded-t-2xl shadow-bottom">
+      <h1 class="text-lg font-bold leading-6"
+        data-test-card-title={{if @name @name true}}>{{@title}}</h1>
+    </header>
+
+  {{/if}}
+
+  {{yield}}
+
+</section>

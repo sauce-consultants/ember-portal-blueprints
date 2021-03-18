@@ -1,0 +1,31 @@
+<button {{on "click" this.toggle}}
+  role="button"
+  class="group cursor-pointer flex-shrink-0 flex p-4"
+  data-test-user-menu=true>
+  <div class="flex-shrink-0 w-full group block bg-gray-50 group-hover:bg-gray-100 rounded p-2">
+    <div class="flex items-center">
+      <div>
+        <div class="flex justify-center items-center h-12 w-12 rounded bg-primary-600 text-white text-center text-base font-serif font-bold py-2"
+          data-test-user-item="avatar">
+          {{this.initials}}
+        </div>
+      </div>
+      <div class="ml-3 font-medium text-black group-hover:text-gray-600 transition ease-in-out duration-150 overflow-hidden flex-auto text-left">
+        <p class="text-lg leading-6 truncate font-serif font-bold"
+          data-test-user-item="name">
+          {{this.name}}
+        </p>
+        <p class="text-sm leading-4 truncate font-light"
+          data-test-user-item="email">
+          {{this.email}}
+        </p>
+      </div>
+      <div class="flex-none">
+        {{svg-jar "chevron-right" class=(concat "h-6 w-6 text-black group-hover:text-gray-600 group-focus:text-black transition-transform ease-in-out duration-150 transform " (if this.open "rotate-90" "rotate-0"))}}
+      </div>
+    </div>
+  </div>
+</button>
+<div class="relative px-4 overflow-hidden transition-max-height duration-150 ease-in-out {{if this.open "max-h-full" "max-h-0"}}">
+  {{yield}}
+</div>

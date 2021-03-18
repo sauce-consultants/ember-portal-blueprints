@@ -1,0 +1,14 @@
+<div class="space-y-1"
+  ...attributes>
+  {{yield (hash
+    Input=(component "ui/form/input" name=@name invalid=this.isInvalid changeset=@changeset)
+    Checkbox=(component "ui/form/checkbox" name=@name invalid=this.isInvalid changeset=@changeset)
+    DateRange=(component "ui/form/date-range" name=@name invalid=this.isInvalid changeset=@changeset)
+    Dropdown=(component "ui/form/dropdown" name=@name invalid=this.isInvalid changeset=@changeset)
+    MultiDropdown=(component "ui/form/multi-dropdown" name=@name invalid=this.isInvalid changeset=@changeset)
+    Label=(component "ui/form/label" name=@name invalid=this.isInvalid)
+    Helper=(component "ui/form/helper" name=@name invalid=this.isInvalid changeset=@changeset)
+    Tip=(component "ui/form/tip" name=@name invalid=this.isInvalid)
+    Error=(component "ui/form/error" name=@name invalid=this.isInvalid)
+  )}}
+</div>

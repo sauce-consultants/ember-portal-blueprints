@@ -1,0 +1,10 @@
+<div class="ml-2 cursor-pointer flex items-center text-sm leading-6 rounded-full hover:bg-white transition-background duration-150 ease-in-out"
+  role="button"
+  data-test-action={{if @name @name true}}
+  ...attributes>
+  <div class="px-2 hidden sm:block"
+    data-test-action-label={{if @name @name true}}>
+    {{yield}}
+  </div>
+  {{svg-jar @icon class="w-5 h-5 bg-white rounded-full mr-1" data-test-action-icon=@name}}
+</div>

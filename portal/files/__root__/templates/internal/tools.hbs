@@ -1,0 +1,16 @@
+<Ui::Breadcrumbs as
+  |crumb|>
+
+  <crumb.Item @isLast={{true}}>
+    Development
+  </crumb.Item>
+
+</Ui::Breadcrumbs>
+
+<section class="px-6 lg:px-12 flex flex-col space-y-4 mb-4 flex-1">
+
+  <Ui::Tabs @tabs={{this.tabs}} />
+
+  {{outlet}}
+
+</section>

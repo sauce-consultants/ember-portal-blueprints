@@ -1,0 +1,36 @@
+{{#if @model}}
+  <LinkTo ...attributes
+    @route={{@route}}
+    @model={{@model}}
+    @activeWhen={{@activeWhen}}
+    data-test-active={{this.isActive}}
+    class={{if this.isActive @activeClass @inactiveClass}}>
+    {{yield}}
+  </LinkTo>
+{{else if @models}}
+  <LinkTo ...attributes
+    @route={{@route}}
+    @models={{@models}}
+    @activeWhen={{@activeWhen}}
+    data-test-active={{this.isActive}}
+    class={{if this.isActive @activeClass @inactiveClass}}>
+    {{yield}}
+  </LinkTo>
+{{else if @route}}
+  <LinkTo ...attributes
+    @route={{@route}}
+    @activeWhen={{@activeWhen}}
+    data-test-active={{this.isActive}}
+    class={{if this.isActive @activeClass @inactiveClass}}>
+    {{yield}}
+  </LinkTo>
+{{else}}
+  <a ...attributes
+    class={{@inactiveClass}}
+    href={{@href}}
+    target="_blank"
+    data-test-active={{false}}
+    rel="noopener noreferrer">
+    {{yield}}
+  </a>
+{{/if}}

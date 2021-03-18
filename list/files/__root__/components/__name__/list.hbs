@@ -1,0 +1,52 @@
+{{#if @filtered}}
+  <Ui::Alert @name="filtered"
+    @title="Displaying Filtered Results"
+    @icon="filter"
+    @button="Clear"
+    @onButtonClick={{@clearFilter}}
+    @type="primary"
+    @rounded={{false}} />
+{{/if}}
+
+<ul class="flex-1 flex flex-col divide-y divide-gray-200"
+  data-test-list="<%= s %>">
+  {{#if @loading}}
+
+    {{#each (repeat @size)}}
+      <li>
+        <<%= components %>::List::Item @loading={{@loading}} />
+      </li>
+    {{/each}}
+
+  {{else}}
+
+    {{#each @<%= p %> as |<%= s %>|}}
+
+      <li data-test-list-item="<%= s %>">
+        {{#if @actions}}
+          <LinkTo @route={{@actions.firstObject.route}}
+            @model={{<%= s %>.id}}
+            class="block hover:bg-primary-50"
+            data-test-list-item-link
+            data-test-list-item-id={{<%= s %>.id}}>
+            <<%= components %>::List::Item @<%= s %>={{<%= s %>}} />
+          </LinkTo>
+        {{else}}
+          <div class="block hover:bg-primary-50">
+            <<%= components %>::List::Item @<%= s %>={{<%= s %>}} />
+          </div>
+        {{/if}}
+      </li>
+
+    {{else}}
+
+      <li class="flex-1 flex flex-col items-center justify-center text-gray-600">
+        <Ui::SplashNotice @name="empty"
+          @title="No <%= pUpper %> Found"
+          @icon="document-search" />
+      </li>
+
+    {{/each}}
+
+  {{/if}}
+</ul>

@@ -40,17 +40,7 @@ export default create({
           scope: DESKTOP_SCOPE,
         }),
       },
-      employees: {
-        click: clickable('[data-test-nav-item="Employees"]', {
-          scope: DESKTOP_SCOPE,
-        }),
-        isActive: isPresent(
-          '[data-test-nav-item="Employees"][data-test-active]',
-          {
-            scope: DESKTOP_SCOPE,
-          }
-        ),
-      },
+      // DESKTOP NAV DO NOT REMOVE!
     },
   },
   mobile: {
@@ -81,17 +71,7 @@ export default create({
           scope: MOBILE_SCOPE,
         }),
       },
-      employees: {
-        click: clickable('[data-test-nav-item="Employees"]', {
-          scope: MOBILE_SCOPE,
-        }),
-        isActive: isPresent(
-          '[data-test-nav-item="Employees"][data-test-active]',
-          {
-            scope: MOBILE_SCOPE,
-          }
-        ),
-      },
+      // MOBILE NAV DO NOT REMOVE!
     },
   },
 });

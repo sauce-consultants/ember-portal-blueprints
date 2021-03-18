@@ -391,6 +391,8 @@ module.exports = {
     await this.updateRouteParams(action, options);
 
     await this.updateTestHelpers(action, options);
+
+    await this.updateRootPageObject(action, options);
   },
 
   async updateTestHelpers(action, options) {
@@ -596,6 +598,59 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
     return result;
   },
+
+  // This method will update tests/pages/internal.js to add
+  // the new routes core navigation selectors
+  async updateRootPageObject(action, options) {
+    const name = options.entity.name,
+      pRoutePath = getRoutePath(inflection.pluralize(name), options),
+      rootPage = options.nested ? options.nested : 'index.js',
+      file = `tests/pages/${rootPage}.js`,
+      desktopMarker = {
+        before: "// DESKTOP NAV DO NOT REMOVE!",
+      },
+      desktopContent = `      ${camelName}: {
+        click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
+          scope: DESKTOP_SCOPE,
+        }),
+        isActive: isPresent(
+          '[data-test-nav-item="${dashName}.nav.label"][data-test-active]',
+          {
+            scope: DESKTOP_SCOPE,
+          }
+        ),
+      },`,
+      mobileMarker = {
+        before: "// MOBILE NAV DO NOT REMOVE!",
+      },
+      mobileContent = `      ${camelName}: {
+        click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
+          scope: MOBILE_SCOPE,
+        }),
+        isActive: isPresent(
+          '[data-test-nav-item="${dashName}.nav.label"][data-test-active]',
+          {
+            scope: MOBILE_SCOPE,
+          }
+        ),
+      },`;
+
+    let result;
+
+    if (options.dryRun) {
+      return this.writeDryRunStatusToUI();
+    } else if (action === "add") {
+      result = await this.insertIntoFile(file, desktopContent, desktopMarker);
+      result = await this.insertIntoFile(file, desktopContent, desktopMarker);
+    } else {
+      result = await this.removeFromFile(file, mobileContent);
+      result = await this.removeFromFile(file, mobileContent);
+    }
+
+    this.writeUpdateFileStatusToUI(result, action, "root page object");
+
+    return result;
+  }
 
   // WARNING - make sure the text you are wanting to remove
   // is unique. This is simple find replace operation running

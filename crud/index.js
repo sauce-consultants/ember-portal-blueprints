@@ -1,15 +1,16 @@
 "use strict";
 
 const path = require("path");
-const stringUtil = require("ember-cli-string-utils");
 const EOL = require("os").EOL;
 const inflection = require("inflection"); // https://www.npmjs.com/package/inflection
+const portalInflection = require("../portal-inflection");
 const Blueprint = require("ember-cli/lib/models/blueprint");
 /* eslint-disable */
 const fs = require("fs-extra");
 const EmberRouterGenerator = require("ember-router-generator");
 const chalk = require("chalk");
 /* eslint-enable */
+// const { pluralize } = require("../portal-inflection");
 
 module.exports = {
   description: "Generate basic CRUD screen for a resource",
@@ -53,35 +54,39 @@ module.exports = {
   blueprints: ["model", "crumbs", "filter", "list", "details", "form"],
 
   locals(options) {
-    const // team
-      s = options.entity.name,
-      // teams
-      p = inflection.pluralize(s, options.plural),
-      // Team
-      sUpper = stringUtil.capitalize(s),
-      // Teams
-      pUpper = stringUtil.capitalize(p),
-      // TEAM
-      sCaps = s.toUpperCase(),
-      // TEAM
-      pCaps = p.toUpperCase(),
-      // internal.team
-      sRoute = getRoutePath(s, options),
-      // internal.teams
-      pRoute = getRoutePath(p, options),
-      // internal/team
-      sRouteFiles = getRouteDir(s, options),
-      // internal/teams
-      pRouteFiles = getRouteDir(p, options),
-      // InternalTeam
-      sClass = stringUtil.classify(sRoute).replace(".", ""),
-      // InternalTeams
-      pClass = stringUtil.classify(pRoute).replace(".", ""),
-      // Team
+    let name = options.entity.name,
+      singular = name,
+      pluralOption = options.plural ? options.plural : true;
+
+    const // sport-team
+      s = singular,
+      // sport-teams
+      p = portalInflection.pluralize(name, pluralOption),
+      // SportTeam
+      sUpper = portalInflection.camelize(name),
+      // SportTeams
+      pUpper = portalInflection.camelize(name, pluralOption),
+      // SPORT_TEAM
+      sCaps = portalInflection.uppercase(name),
+      // SPORT_TEAMS
+      pCaps = portalInflection.uppercase(name, pluralOption),
+      // internal.sport-team
+      sRoute = portalInflection.urlPath(name, options),
+      // internal.sport-teams
+      pRoute = portalInflection.urlPath(name, options, pluralOption),
+      // internal/sport-team
+      sRouteFiles = portalInflection.routePath(name, options),
+      // internal/sport-teams
+      pRouteFiles = portalInflection.routePath(name, options, pluralOption),
+      // InternalSportTeam
+      sClass = portalInflection.routeClass(name, options),
+      // InternalSportTeams
+      pClass = portalInflection.routeClass(name, options, pluralOption),
+      // SportTeam
       components = sUpper,
-      // team
+      // sport-team
       translations = s,
-      // TEAM
+      // SPORT_TEAM
       config = s.toUpperCase(),
       // This is a list of any model attributes we wish to include after the model name
       // name:string slug:string size:number isActive:boolean
@@ -428,8 +433,13 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
   // Add our CRUD routes to app/router.js
   async updateRoutes(action, options) {
     let name = options.entity.name,
-      singularRouteDir = getRouteDir(name, options),
-      pluralRouteDir = getRouteDir(inflection.pluralize(name), options),
+      pluralOption = options.plural ? options.plural : true,
+      singularRouteDir = portalInflection.urlPath(name, options),
+      pluralRouteDir = portalInflection.urlPath(
+        inflection.pluralize(name),
+        options,
+        pluralOption
+      ),
       // internal/teams
       listRoute = pluralRouteDir,
       // internal/teams/new
@@ -571,8 +581,9 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
   async updateAppConfig(action, options) {
     const name = options.entity.name,
-      pRoutePath = getRoutePath(inflection.pluralize(name), options),
-      sRoutePath = getRoutePath(name, options),
+      pluralOption = options.plural ? options.plural : true,
+      pRoutePath = portalInflection.routePath(name, options, pluralOption),
+      sRoutePath = portalInflection.routePath(name, options),
       file = "app/utils/const/app.js",
       marker = {
         before: "// DO NOT REMOVE!",
@@ -603,13 +614,16 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
   // the new routes core navigation selectors
   async updateRootPageObject(action, options) {
     const name = options.entity.name,
-      pRoutePath = getRoutePath(inflection.pluralize(name), options),
-      rootPage = options.nested ? options.nested : 'index.js',
+      camelName = inflection.camelize(inflection.underscore(name), true),
+      dashName = inflection.dasherize(name),
+      rootPage = options.nested ? options.nested : "index.js",
       file = `tests/pages/${rootPage}.js`,
       desktopMarker = {
         before: "// DESKTOP NAV DO NOT REMOVE!",
       },
-      desktopContent = `      ${camelName}: {
+      desktopContent =
+        EOL +
+        `      ${camelName}: {
         click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
           scope: DESKTOP_SCOPE,
         }),
@@ -619,11 +633,14 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
             scope: DESKTOP_SCOPE,
           }
         ),
-      },`,
+     n },` +
+        EOL,
       mobileMarker = {
         before: "// MOBILE NAV DO NOT REMOVE!",
       },
-      mobileContent = `      ${camelName}: {
+      mobileContent =
+        EOL +
+        `      ${camelName}: {
         click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
           scope: MOBILE_SCOPE,
         }),
@@ -633,7 +650,8 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
             scope: MOBILE_SCOPE,
           }
         ),
-      },`;
+      },` +
+        EOL;
 
     let result;
 
@@ -641,16 +659,16 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
       return this.writeDryRunStatusToUI();
     } else if (action === "add") {
       result = await this.insertIntoFile(file, desktopContent, desktopMarker);
-      result = await this.insertIntoFile(file, desktopContent, desktopMarker);
+      result = await this.insertIntoFile(file, mobileContent, mobileMarker);
     } else {
-      result = await this.removeFromFile(file, mobileContent);
+      result = await this.removeFromFile(file, desktopContent);
       result = await this.removeFromFile(file, mobileContent);
     }
 
     this.writeUpdateFileStatusToUI(result, action, "root page object");
 
     return result;
-  }
+  },
 
   // WARNING - make sure the text you are wanting to remove
   // is unique. This is simple find replace operation running
@@ -781,11 +799,3 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
     );
   },
 };
-
-function getRoutePath(route, options) {
-  return options.nested ? `${options.nested}.${route}` : route;
-}
-
-function getRouteDir(route, options) {
-  return options.nested ? `${options.nested}/${route}` : route;
-}

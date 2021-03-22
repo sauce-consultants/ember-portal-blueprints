@@ -19,7 +19,7 @@ module.exports = {
     };
   },
 
-  getDataItems(model, entityOptions) {
+  getDataItems(model, entityOptions, tokens) {
     const items = [];
 
     for (let name in entityOptions) {
@@ -43,9 +43,9 @@ module.exports = {
 
       let item = `  <data.Item @loading={{@loading}}
     @name="${name}"
-    @label={{t "${model}.details.${name}.label"}}
-    @value={{@${model}.${name}}}
-    @tip={{t "${model}.details.${name}.tip"}} />`;
+    @label={{t "${tokens.dasherizedSingular}.details.${name}.label"}}
+    @value={{@${tokens.camelSingular}.${name}}}
+    @tip={{t "${tokens.dasherizedSingular}.details.${name}.tip"}} />`;
 
       items.push(item);
     }
@@ -66,6 +66,6 @@ module.exports = {
       lines.push(line);
     }
 
-    return EOL + lines.join(EOL);
+    return lines.join(EOL);
   },
 };

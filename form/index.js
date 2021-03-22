@@ -14,9 +14,9 @@ module.exports = {
     // Return custom template variables here.
     return {
       ...tokens,
-      items: this.getFormItems(name, entityOptions),
-      actions: this.getActions(name, entityOptions),
-      translations: this.getTranslations(name, entityOptions),
+      items: this.getFormItems(name, entityOptions, tokens),
+      actions: this.getActions(name, entityOptions, tokens),
+      translations: this.getTranslations(name, entityOptions, tokens),
     };
   },
 

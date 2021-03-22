@@ -1,19 +1,19 @@
 /* beautify ignore:start */
-export const <%= config %>_SORT_OPTIONS = [{
-    label: "<%= translations %>.list.actions.sort.options.id",
+export const <%= capitalizedSingular %>_SORT_OPTIONS = [{
+    label: "<%= dasherizedSingular %>.list.actions.sort.options.id",
     value: "id",
   },
   {
-    label: "<%= translations %>.list.actions.sort.options.createdAt",
+    label: "<%= dasherizedSingular %>.list.actions.sort.options.createdAt",
     value: "createdAt",
   },
   {
-    label: "<%= translations %>.list.actions.sort.options.updatedAt",
+    label: "<%= dasherizedSingular %>.list.actions.sort.options.updatedAt",
     value: "updatedAt",
   },
 ];
 
-export const <%= config %>_STATUS_OPTIONS = [
+export const <%= capitalizedPlural %>_STATUS_OPTIONS = [
   {
     label: 'active',
     value: 'active',
@@ -32,18 +32,18 @@ export const <%= config %>_STATUS_OPTIONS = [
   },
 ]
 
-export const <%= config %>_FILTER_ATTRS = [
+export const <%= capitalizedSingular %>_FILTER_ATTRS = [
   'status',
 ];
 
-export const <%= config %>_ACTIONS = [{
-  title: "<%= translations %>.view.navTitle",
-  route: "<%= sRoute %>.index"
+export const <%= capitalizedSingular %>_ACTIONS = [{
+  title: "<%= dasherizedSingular %>.view.navTitle",
+  route: "<%= routeNameSingular %>.index"
 }, {
-  title: "<%= translations %>.edit.navTitle",
-  route: "<%= sRoute %>.edit"
+  title: "<%= dasherizedSingular %>.edit.navTitle",
+  route: "<%= routeNameSingular %>.edit"
 }, {
-  title: "<%= translations %>.archive.navTitle",
-  route: "<%= sRoute %>.archive"
+  title: "<%= dasherizedSingular %>.archive.navTitle",
+  route: "<%= routeNameSingular %>.archive"
 }, ];
 /* beautify ignore:end */

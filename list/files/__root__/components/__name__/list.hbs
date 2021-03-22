@@ -9,31 +9,31 @@
 {{/if}}
 
 <ul class="flex-1 flex flex-col divide-y divide-gray-200"
-  data-test-list="<%= s %>">
+  data-test-list="<%= dasherizedSingular %>">
   {{#if @loading}}
 
     {{#each (repeat @size)}}
       <li>
-        <<%= components %>::List::Item @loading={{@loading}} />
+        <<%= classSingular %>::List::Item @loading={{@loading}} />
       </li>
     {{/each}}
 
   {{else}}
 
-    {{#each @<%= p %> as |<%= s %>|}}
+    {{#each @<%= camelPlural %> as |<%= camelSingular %>|}}
 
-      <li data-test-list-item="<%= s %>">
+      <li data-test-list-item="<%= dasherizedSingular %>">
         {{#if @actions}}
           <LinkTo @route={{@actions.firstObject.route}}
-            @model={{<%= s %>.id}}
+            @model={{<%= camelSingular %>.id}}
             class="block hover:bg-primary-50"
             data-test-list-item-link
-            data-test-list-item-id={{<%= s %>.id}}>
-            <<%= components %>::List::Item @<%= s %>={{<%= s %>}} />
+            data-test-list-item-id={{<%= camelSingular %>.id}}>
+            <<%= classSingular %>::List::Item @<%= camelSingular %>={{<%= camelSingular %>}} />
           </LinkTo>
         {{else}}
           <div class="block hover:bg-primary-50">
-            <<%= components %>::List::Item @<%= s %>={{<%= s %>}} />
+            <<%= classSingular %>::List::Item @<%= camelSingular %>={{<%= camelSingular %>}} />
           </div>
         {{/if}}
       </li>
@@ -42,7 +42,7 @@
 
       <li class="flex-1 flex flex-col items-center justify-center text-gray-600">
         <Ui::SplashNotice @name="empty"
-          @title="No <%= pUpper %> Found"
+          @title="No <%= titlePlural %> Found"
           @icon="document-search" />
       </li>
 

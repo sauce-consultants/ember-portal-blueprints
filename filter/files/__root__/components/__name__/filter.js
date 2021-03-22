@@ -1,12 +1,8 @@
-// You can delete the beautify comments in this file
-// They are just used for the blueprint sytax
-
-/* beautify ignore:start */
 import Component from '@glimmer/component';
 import {
-  <%= config %>_FILTER_ATTRS,
-  <%= config %>_STATUS_OPTIONS
-} from "<%= appName %>/utils/const/<%= s %>";
+  <%= capitalizedSingular %>_FILTER_ATTRS,
+  <%= capitalizedPlural %>_STATUS_OPTIONS
+} from "<%= appName %>/utils/const/<%= dasherizedSingular %>";
 import {
   action,
 } from '@ember/object';
@@ -14,9 +10,9 @@ import { debounce } from '@ember/runloop';
 import {
   tracked
 } from '@glimmer/tracking';
-import <%= components %>FilterValidations from '<%= appName %>/validations/<%= s %>-filter';
+import <%= classSingular %>FilterValidations from '<%= appName %>/validations/<%= dasherizedSingular %>-filter';
 
-export default class <%= components %>FilterComponent extends Component {
+export default class <%= classSingular %>FilterComponent extends Component {
 
   //
   // NOTE TO SELF
@@ -28,9 +24,9 @@ export default class <%= components %>FilterComponent extends Component {
 
   // Properties
 
-  validations = <%= components %>FilterValidations;
+  validations = <%= classSingular %>FilterValidations;
 
-  filterAttrs = <%= config %>_FILTER_ATTRS;
+  filterAttrs = <%= capitalizedSingular %>_FILTER_ATTRS;
 
   // Tracked
 
@@ -51,4 +47,3 @@ export default class <%= components %>FilterComponent extends Component {
   // Actions
 <%= actions %>
 }
-/* beautify ignore:end */

@@ -1,21 +1,21 @@
 nav:
-  label: <%= pUpper %>
+  label: <%= titlePlural %>
   icon: nav.users
 new:
-  title: New <%= sUpper %>
+  title: New <%= titleSingular %>
   crumb: New
   messages:
-    success: "<%= sUpper%> Created"
+    success: "<%= titleSingular%> Created"
     validation: "Validation Error"
     server: "Server Error"
 list:
-  title: List <%= pUpper %>
-  crumb: <%= pUpper %>
+  title: List <%= titlePlural %>
+  crumb: <%= titlePlural %>
   actions:
     filter: Filter
     export:
       label: Export
-      title: Export <%= pUpper %>
+      title: Export <%= titlePlural %>
       button: Download
       text: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius aliquam laudantium explicabo pariatur iste dolorem animi vitae error totam. At sapiente aliquam accusamus facere veritatis.
     search: Search
@@ -25,28 +25,28 @@ list:
         id: ID
         createdAt: Created
         updatedAt: Updated
-    new: Add New <%= sUpper %>
+    new: Add New <%= titleSingular %>
   messages:
     export: Export Started
 view:
-  title: View <%= sUpper %>
+  title: View <%= titleSingular %>
   navTitle: View
   crumb: View
 edit:
-  title: Edit <%= sUpper %>
+  title: Edit <%= titleSingular %>
   navTitle: Edit
   crumb: Edit
   messages:
     cancel: Changes Reset
-    success: <%= sUpper%> Updated
+    success: <%= titleSingular%> Updated
     validation: Validation Error
     server: Server Error
 archive:
-  title: Archive <%= sUpper %>
+  title: Archive <%= titleSingular %>
   navTitle: Archive
   crumb: Archive
-  button: Archive <%= sUpper %>
-  body: <p>This will archive the <%= sUpper %> “<b>{name}</b>”.</p><p>This <%= p %> will no longer appear in the system. All data will be archived and require a manual process to restore.</p>
+  button: Archive <%= titleSingular %>
+  body: <p>This will archive the <%= titleSingular %> “<b>{name}</b>”.</p><p>This <%= titleSingular %> will no longer appear in the system. All data will be archived and require a manual process to restore.</p>
   messages:
-    success: "<%= sUpper%> Archived"
+    success: "<%= titleSingular%> Archived"
     server: "Server Error"

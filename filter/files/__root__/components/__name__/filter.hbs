@@ -1,5 +1,5 @@
 <heading class="flex flex-row text-black justify-between py-4 border-t border-b border-gray-300 mb-3">
-  <h1 class="font-bold text-base leading-5">Filter <%= pUpper %></h1>
+  <h1 class="font-bold text-base leading-5">Filter <%= titlePlural %></h1>
   {{svg-jar "filter" class="w-5 h-5"}}
 </heading>
 
@@ -14,13 +14,13 @@
 
     <form.Submit @name="filter"
       class="w-full">
-      {{t "<%= s %>.filter.submit"}}
+      {{t "<%= dasherizedSingular %>.filter.submit"}}
     </form.Submit>
 
     <form.Button @name="clear"
       class="w-full"
       {{on "click" @onClear}}>
-      {{t "<%= s %>.filter.clear"}}
+      {{t "<%= dasherizedSingular %>.filter.clear"}}
     </form.Button>
 
   </Ui::Form>

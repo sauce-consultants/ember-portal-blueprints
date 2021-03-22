@@ -59,6 +59,8 @@ module.exports = {
       dasherizedPlural = this.pluralize(string, plural),
       underscoreSingular = dasherizedSingular.replace("-", "_"),
       underscorePlural = dasherizedPlural.replace("-", "_"),
+      camelSingular = inflection.camelize(underscoreSingular, true),
+      camelPlural = inflection.camelize(underscorePlural, true),
       humananizedSingular = inflection.humanize(underscoreSingular, true),
       humananizedPlural = inflection.humanize(underscorePlural, true),
       titleSingular = inflection.titleize(underscoreSingular, true),
@@ -77,6 +79,8 @@ module.exports = {
     return {
       capitalizedPlural,
       capitalizedSingular,
+      camelSingular,
+      camelPlural,
       classPlural,
       classSingular,
       dasherizedPlural,

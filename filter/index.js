@@ -1,15 +1,7 @@
 "use strict";
 const EOL = require("os").EOL;
-const stringUtil = require("ember-cli-string-utils");
 const inflection = require("inflection"); // https://www.npmjs.com/package/inflection
-
-function getRoutePath(route, options) {
-  return options.nested ? `${options.nested}.${route}` : route;
-}
-
-function getRouteDir(route, options) {
-  return options.nested ? `${options.nested}/${route}` : route;
-}
+const portalInflection = require("../portal-inflection");
 
 module.exports = {
   description: "Generate basic filter component for a resource",
@@ -32,35 +24,17 @@ module.exports = {
 
   locals(options) {
     let name = options.entity.name,
-      entityOptions = options.entity.options,
-      s = options.entity.name,
-      p = inflection.pluralize(s, options.plural),
-      sUpper = stringUtil.capitalize(s),
-      pUpper = stringUtil.capitalize(p),
-      sRoute = getRoutePath(s, options),
-      pRoute = getRoutePath(p, options),
-      sRouteFiles = getRouteDir(s, options),
-      pRouteFiles = getRouteDir(p, options),
-      components = sUpper,
-      config = s.toUpperCase();
+      tokens = portalInflection.nameTokens(name, options),
+      entityOptions = options.entity.options;
 
     // Return custom template variables here.
     return {
+      ...tokens,
       appName: options.project.pkg.name,
       items: this.getFilterItems(name, entityOptions),
       tracked: this.getTrackedItems(name, entityOptions),
       actions: this.getActions(name, entityOptions),
       translations: this.getTranslations(name, entityOptions),
-      s,
-      p,
-      sUpper,
-      pUpper,
-      sRoute,
-      pRoute,
-      sRouteFiles,
-      pRouteFiles,
-      components,
-      config,
     };
   },
 

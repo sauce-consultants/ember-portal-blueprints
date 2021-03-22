@@ -1,66 +1,36 @@
-'use strict';
-const stringUtil = require('ember-cli-string-utils');
+"use strict";
 
-function getPlural(name, pluralOverride) {
-  return pluralOverride ? pluralOverride : `${name}s`;
-}
-
-function getRoutePath(route, options) {
-  return options.nested ? `${options.nested}.${route}` : route;
-}
-
-function getRouteDir(route, options) {
-  return options.nested ? `${options.nested}/${route}` : route;
-}
+const portalInflection = require("../portal-inflection");
 
 module.exports = {
-  description: 'Generate basic breadcrumb component for a resource',
+  description: "Generate basic breadcrumb component for a resource",
 
   // Current Options
   // --plural employees
-  // --parentRoute iternal
-  availableOptions: [{
-      name: 'nested',
+  // --nested internal
+  availableOptions: [
+    {
+      name: "nested",
       type: String,
-      default: ''
+      default: "",
     },
     {
-      name: 'plural',
+      name: "plural",
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   ],
 
   locals(options) {
-
-    const
-      s = options.entity.name,
-      p = getPlural(s, options.plural),
-      sUpper = stringUtil.capitalize(s),
-      pUpper = stringUtil.capitalize(p),
-      sRoute = getRoutePath(s, options),
-      pRoute = getRoutePath(p, options),
-      sRouteFiles = getRouteDir(s, options),
-      pRouteFiles = getRouteDir(p, options),
-      components = sUpper,
-      translations = s,
-      config = s.toUpperCase();
+    const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options);
 
     return {
+      ...tokens,
       appName: options.project.pkg.name,
-      s,
-      p,
-      sUpper,
-      pUpper,
-      sRoute,
-      pRoute,
-      sRouteFiles,
-      pRouteFiles,
-      components,
-      translations,
-      config
-    }
-  }
+    };
+  },
+
   // afterInstall(options) {
   //   // Perform extra work here.
   // }

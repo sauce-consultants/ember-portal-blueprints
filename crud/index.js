@@ -2,7 +2,6 @@
 
 const path = require("path");
 const EOL = require("os").EOL;
-const inflection = require("inflection"); // https://www.npmjs.com/package/inflection
 const portalInflection = require("../portal-inflection");
 const Blueprint = require("ember-cli/lib/models/blueprint");
 /* eslint-disable */
@@ -10,7 +9,6 @@ const fs = require("fs-extra");
 const EmberRouterGenerator = require("ember-router-generator");
 const chalk = require("chalk");
 /* eslint-enable */
-// const { pluralize } = require("../portal-inflection");
 
 module.exports = {
   description: "Generate basic CRUD screen for a resource",
@@ -54,62 +52,52 @@ module.exports = {
   blueprints: ["model", "crumbs", "filter", "list", "details", "form"],
 
   locals(options) {
-    let name = options.entity.name,
-      singular = name,
-      pluralOption = options.plural ? options.plural : true;
+    // This is a list of any model attributes we wish to include after the model name
+    // name:string slug:string size:number isActive:boolean
+    // <attr-name>
+    // <attr-name>:array
+    // <attr-name>:boolean
+    // <attr-name>:date
+    // <attr-name>:object
+    // <attr-name>:number
+    // <attr-name>:string
+    // <attr-name>:your-custom-transform
+    // <attr-name>:belongs-to:<model-name>
+    // <attr-name>:has-many:<model-name>
 
-    const // sport-team
-      s = singular,
-      // sport-teams
-      p = portalInflection.pluralize(name, pluralOption),
-      // SportTeam
-      sUpper = portalInflection.camelize(name),
-      // SportTeams
-      pUpper = portalInflection.camelize(name, pluralOption),
-      // SPORT_TEAM
-      sCaps = portalInflection.uppercase(name),
-      // SPORT_TEAMS
-      pCaps = portalInflection.uppercase(name, pluralOption),
-      // internal.sport-team
-      sRoute = portalInflection.urlPath(name, options),
-      // internal.sport-teams
-      pRoute = portalInflection.urlPath(name, options, pluralOption),
-      // internal/sport-team
-      sRouteFiles = portalInflection.routePath(name, options),
-      // internal/sport-teams
-      pRouteFiles = portalInflection.routePath(name, options, pluralOption),
-      // InternalSportTeam
-      sClass = portalInflection.routeClass(name, options),
-      // InternalSportTeams
-      pClass = portalInflection.routeClass(name, options, pluralOption),
-      // SportTeam
-      components = sUpper,
-      // sport-team
-      translations = s,
-      // SPORT_TEAM
-      config = s.toUpperCase(),
-      // This is a list of any model attributes we wish to include after the model name
-      // name:string slug:string size:number isActive:boolean
-      // <attr-name>
-      // <attr-name>:array
-      // <attr-name>:boolean
-      // <attr-name>:date
-      // <attr-name>:object
-      // <attr-name>:number
-      // <attr-name>:string
-      // <attr-name>:your-custom-transform
-      // <attr-name>:belongs-to:<model-name>
-      // <attr-name>:has-many:<model-name>
+    // dasherizedSingular: "sports-team",
+    // dasherizedPlural: "sports-teams",
+    // underscoreSingular: "sports_team",
+    // underscorePlural: "sports_teams",
+    // camelSingular: "sportsTeam",
+    // camelPlural: "sportsTeams",
+    // humananizedSingular: "sports team",
+    // humananizedPlural: "sports teams",
+    // titleSingular: "Sports Team",
+    // titlePlural: "Sports Teams",
+    // classSingular: "SportsTeam",
+    // classPlural: "SportsTeams",
+    // capitalizedSingular: "SPORTS_TEAM",
+    // capitalizedPlural: "SPORTS_TEAMS",
+    // routeClassSingular: "AdminSecretSportsTeam",
+    // routeClassPlural: "AdminSecretSportsTeams",
+    // routeNameSingular: "admin.secret.sports-team",
+    // routeNamePlural: "admin.secret.sports-teams",
+    // routePathSingular: "admin/secret/sports-team",
+    // routePathPlural: "admin/secret/sports-teams",
+
+    const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
       entityOptions = options.entity.options,
       // Mirage factory attributes
       factoryAttrs = this.makeFactoryAttributes(entityOptions),
       //
       viewComponent = factoryAttrs
-        ? `<${components}::Details @${s}={{this.${s}}}
+        ? `<${tokens.classSingular}::Details @${tokens.camelSingular}={{this.${tokens.camelSingular}}}
         @loading={{this.loading}} class="p-6" />`
         : `<p class="p-6 text-center">Replace with detail component(s)</p>`,
       formComponent = factoryAttrs
-        ? `<${components}::Form @form={{form}} @changeset={{changeset}}
+        ? `<${tokens.classSingular}::Form @form={{form}} @changeset={{changeset}}
           @loading={{this.loading}} class="p-6" />`
         : `<p class="p-6 text-center">Replace with form component(s)</p>`,
       // form test selectors
@@ -122,22 +110,8 @@ module.exports = {
     // let modelAttrs = getModelAttrs(options);
 
     return {
+      ...tokens,
       appName: options.project.pkg.name,
-      s,
-      p,
-      sUpper,
-      pUpper,
-      sRoute,
-      pRoute,
-      sClass,
-      pClass,
-      sCaps,
-      pCaps,
-      sRouteFiles,
-      pRouteFiles,
-      components,
-      translations,
-      config,
       factoryAttrs,
       viewComponent,
       formComponent,
@@ -150,11 +124,11 @@ module.exports = {
 
   fileMapTokens(options) {
     return {
-      __route__() {
-        return options.locals.sRouteFiles;
+      __route_singular__() {
+        return options.locals.routePathSingular;
       },
-      __routep__() {
-        return options.locals.pRouteFiles;
+      __route_plural__() {
+        return options.locals.routePathPlural;
       },
     };
   },
@@ -401,19 +375,17 @@ module.exports = {
   },
 
   async updateTestHelpers(action, options) {
-    const s = options.entity.name,
-      p = inflection.pluralize(s, options.plural),
-      sUC = s.toUpperCase(),
-      pUC = p.toUpperCase(),
+    const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
       file = "tests/helpers/test-urls.js",
       marker = {
         before: "// DO NOT REMOVE!",
       },
-      content = `export const ${pUC}_URL = "/${p}";
-export const ${pUC}_NEW_URL = "/${p}/new";
-export const ${sUC}_INDEX_URL = "/${s}/:id";
-export const ${sUC}_EDIT_URL = "/${s}/:id/edit";
-export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
+      content = `export const ${tokens.capitalizedPlural}_URL = "/${tokens.routePathPlural}";
+export const ${tokens.capitalizedPlural}_NEW_URL = "/${tokens.routePathPlural}/new";
+export const ${tokens.capitalizedSingular}_INDEX_URL = "/${tokens.routePathSingular}/:id";
+export const ${tokens.capitalizedSingular}_EDIT_URL = "/${tokens.routePathSingular}/:id/edit";
+export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSingular}/:id/archive";`;
 
     let result;
 
@@ -433,23 +405,17 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
   // Add our CRUD routes to app/router.js
   async updateRoutes(action, options) {
     let name = options.entity.name,
-      pluralOption = options.plural ? options.plural : true,
-      singularRouteDir = portalInflection.urlPath(name, options),
-      pluralRouteDir = portalInflection.urlPath(
-        inflection.pluralize(name),
-        options,
-        pluralOption
-      ),
+      tokens = portalInflection.nameTokens(name, options),
       // internal/teams
-      listRoute = pluralRouteDir,
+      listRoute = tokens.routePathPlural,
       // internal/teams/new
-      newRoute = `${pluralRouteDir}/new`,
+      newRoute = `${tokens.routePathPlural}/new`,
       // internal/team
-      viewRoute = singularRouteDir,
+      viewRoute = tokens.routePathSingular,
       // internal/team/edit
-      editRoute = `${singularRouteDir}/edit`,
+      editRoute = `${tokens.routePathSingular}/edit`,
       // internal/team/archive
-      archiveRoute = `${singularRouteDir}/archive`;
+      archiveRoute = `${tokens.routePathSingular}/archive`;
 
     await this.updateRouter(action, options, listRoute);
     await this.updateRouter(action, options, newRoute);
@@ -486,21 +452,20 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
   async updateMirageEndpoints(action, options) {
     const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
       file = "mirage/config.js",
       marker = {
         before: "  // DO NOT REMOVE!",
       },
-      endpoint = inflection.pluralize(name, options.plural),
-      title = inflection.titleize(name),
       content =
         EOL +
-        `  // ${title}
-  this.get('/${endpoint}');
-  this.put('/${endpoint}');
-  this.get('/${endpoint}/:id');
-  this.post('/${endpoint}/:id');
-  this.patch('/${endpoint}/:id');
-  this.delete('/${endpoint}/:id');
+        `  // ${tokens.titlePlural}
+  this.get('/${tokens.dasherizedPlural}');
+  this.put('/${tokens.dasherizedPlural}');
+  this.get('/${tokens.dasherizedPlural}/:id');
+  this.post('/${tokens.dasherizedPlural}/:id');
+  this.patch('/${tokens.dasherizedPlural}/:id');
+  this.delete('/${tokens.dasherizedPlural}/:id');
   `;
 
     let result;
@@ -543,7 +508,7 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
   async updateModel(action, options) {
     const name = options.entity.name,
-      className = inflection.classify(name),
+      tokens = portalInflection.nameTokens(name, options),
       file = `app/models/${name}.js`;
 
     if (options.dryRun) {
@@ -560,7 +525,9 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
       // Now we add the computed property
       marker = {
-        after: `export default class ${className}Model extends Model {` + EOL,
+        after:
+          `export default class ${tokens.classSingular}Model extends Model {` +
+          EOL,
       };
       content =
         EOL +
@@ -581,18 +548,17 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
 
   async updateAppConfig(action, options) {
     const name = options.entity.name,
-      pluralOption = options.plural ? options.plural : true,
-      pRoutePath = portalInflection.routePath(name, options, pluralOption),
-      sRoutePath = portalInflection.routePath(name, options),
+      tokens = portalInflection.nameTokens(name, options),
       file = "app/utils/const/app.js",
       marker = {
         before: "// DO NOT REMOVE!",
       },
       content = `  {
-    label: '${name}.nav.label',
-    route: '${pRoutePath}.index',
-    icon: 'nav.users',
-    activeWhen: '${pRoutePath}.index,${sRoutePath}.index,${sRoutePath}.edit,${sRoutePath}.archive',
+    label: '${tokens.dasherizedSingular}.nav.label',
+    route: '${tokens.routeNamePlural}.index',
+    enabled: true,
+    icon: 'nav.icon',
+    activeWhen: '${tokens.routeNamePlural}.index,${tokens.routeNameSingular}.index,${tokens.routeNameSingular}.edit,${tokens.routeNameSingular}.archive',
   },`;
 
     let result;
@@ -614,21 +580,19 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
   // the new routes core navigation selectors
   async updateRootPageObject(action, options) {
     const name = options.entity.name,
-      camelName = inflection.camelize(inflection.underscore(name), true),
-      dashName = inflection.dasherize(name),
-      rootPage = options.nested ? options.nested : "index.js",
-      file = `tests/pages/${rootPage}.js`,
+      tokens = portalInflection.nameTokens(name, options),
+      file = `tests/pages/${tokens.dasherizedSingular}.js`,
       desktopMarker = {
         before: "// DESKTOP NAV DO NOT REMOVE!",
       },
       desktopContent =
         EOL +
-        `      ${camelName}: {
-        click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
+        `      ${tokens.camelSingular}: {
+        click: clickable('[data-test-nav-item="${tokens.dasherizedSingular}.nav.label"]', {
           scope: DESKTOP_SCOPE,
         }),
         isActive: isPresent(
-          '[data-test-nav-item="${dashName}.nav.label"][data-test-active]',
+          '[data-test-nav-item="${tokens.dasherizedSingular}.nav.label"][data-test-active]',
           {
             scope: DESKTOP_SCOPE,
           }
@@ -640,12 +604,12 @@ export const ${sUC}_ARCHIVE_URL = "/${s}/:id/archive";`;
       },
       mobileContent =
         EOL +
-        `      ${camelName}: {
-        click: clickable('[data-test-nav-item="${dashName}.nav.label"]', {
+        `      ${tokens.camelSingular}: {
+        click: clickable('[data-test-nav-item="${tokens.dasherizedSingular}.nav.label"]', {
           scope: MOBILE_SCOPE,
         }),
         isActive: isPresent(
-          '[data-test-nav-item="${dashName}.nav.label"][data-test-active]',
+          '[data-test-nav-item="${tokens.dasherizedSingular}.nav.label"][data-test-active]',
           {
             scope: MOBILE_SCOPE,
           }

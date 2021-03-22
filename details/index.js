@@ -1,41 +1,42 @@
-'use strict';
-const EOL = require('os').EOL;
-const inflection = require('inflection'); // https://www.npmjs.com/package/inflection
+"use strict";
+const EOL = require("os").EOL;
+const portalInflection = require("../portal-inflection");
+const inflection = require("inflection");
 
 module.exports = {
-  description: 'Generate a details view component to view a model',
+  description: "Generate a details view component to view a model",
 
   locals(options) {
-    let name = options.entity.name,
+    const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
       entityOptions = options.entity.options;
 
     // Return custom template variables here.
     return {
-      items: this.getDataItems(name, entityOptions),
-      translations: this.getTranslations(name, entityOptions)
+      ...tokens,
+      items: this.getDataItems(name, entityOptions, tokens),
+      translations: this.getTranslations(name, entityOptions, tokens),
     };
   },
 
   getDataItems(model, entityOptions) {
-
     const items = [];
 
     for (let name in entityOptions) {
-
-      let type = entityOptions[name] || ''; //,
+      let type = entityOptions[name] || ""; //,
       // foreignModelOrFakerMethod;
 
-      if (type.indexOf(':') > -1) {
+      if (type.indexOf(":") > -1) {
         // foreignModelOrFakerMethod = type.split(':')[1];
-        type = type.split(':')[0];
+        type = type.split(":")[0];
       }
 
-      if (type === 'belongsTo') {
+      if (type === "belongsTo") {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
       }
 
-      if (type === 'hasMany') {
+      if (type === "hasMany") {
         // we'll pass a count of the related models
         name = `${name}.length`;
       }
@@ -53,7 +54,6 @@ module.exports = {
   },
 
   getTranslations(name, entityOptions) {
-
     let lines = [];
 
     for (let fieldName in entityOptions) {
@@ -67,6 +67,5 @@ module.exports = {
     }
 
     return EOL + lines.join(EOL);
-
   },
 };

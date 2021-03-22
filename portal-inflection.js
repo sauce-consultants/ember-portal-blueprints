@@ -52,4 +52,47 @@ module.exports = {
 
     return result;
   },
+  nameTokens: function (string, options = {}) {
+    let plural = options.plural ? options.plural : null;
+
+    const dasherizedSingular = inflection.dasherize(string),
+      dasherizedPlural = this.pluralize(string, plural),
+      underscoreSingular = dasherizedSingular.replace("-", "_"),
+      underscorePlural = dasherizedPlural.replace("-", "_"),
+      humananizedSingular = inflection.humanize(underscoreSingular, true),
+      humananizedPlural = inflection.humanize(underscorePlural, true),
+      titleSingular = inflection.titleize(underscoreSingular, true),
+      titlePlural = inflection.titleize(underscorePlural, true),
+      classSingular = inflection.camelize(underscoreSingular),
+      classPlural = inflection.camelize(underscorePlural),
+      capitalizedSingular = underscoreSingular.toUpperCase(),
+      capitalizedPlural = underscorePlural.toUpperCase(),
+      routeClassSingular = this.routeClass(underscoreSingular, options),
+      routeClassPlural = this.routeClass(dasherizedPlural, options),
+      routePathSingular = this.urlPath(dasherizedSingular, options),
+      routePathPlural = this.urlPath(dasherizedPlural, options),
+      routeNameSingular = routePathSingular.replace(/\//g, "."),
+      routeNamePlural = routePathPlural.replace(/\//g, ".");
+
+    return {
+      capitalizedPlural,
+      capitalizedSingular,
+      classPlural,
+      classSingular,
+      dasherizedPlural,
+      dasherizedSingular,
+      humananizedPlural,
+      humananizedSingular,
+      routeClassPlural,
+      routeClassSingular,
+      routeNamePlural,
+      routeNameSingular,
+      routePathPlural,
+      routePathSingular,
+      titlePlural,
+      titleSingular,
+      underscorePlural,
+      underscoreSingular,
+    };
+  },
 };

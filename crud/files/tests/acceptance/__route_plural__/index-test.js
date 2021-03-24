@@ -7,15 +7,15 @@ import {
   authenticateSession,
   invalidateSession,
 } from "ember-simple-auth/test-support";
-import { AUTHENTICATED_ADMIN } from "tchw/tests/helpers/authenticated-users";
+import { AUTHENTICATED_ADMIN } from "<%= appName %>/tests/helpers/authenticated-users";
 import {
   LOGIN_URL,
   <%= capitalizedPlural %>_URL,
   <%= capitalizedSingular %>_INDEX_URL,
-} from "tchw/tests/helpers/test-urls";
-import Navigation from "tchw/tests/pages/internal";
-import Page from "tchw/tests/pages/<%= routePathPlural %>/index";
-import presignHandler from "tchw/mirage/helpers/presign-handler";
+} from "<%= appName %>/tests/helpers/test-urls";
+import Navigation from "<%= appName %>/tests/pages/internal";
+import Page from "<%= appName %>/tests/pages/<%= routePathPlural %>/index";
+import presignHandler from "<%= appName %>/mirage/helpers/presign-handler";
 
 const PAGE_URL = <%= capitalizedPlural %>_URL;
 

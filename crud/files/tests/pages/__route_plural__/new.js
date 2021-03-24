@@ -5,7 +5,7 @@ import {
   text,
   visitable,
 } from "ember-cli-page-object";
-import { <%= capitalizedPlural %>_NEW_URL } from "tchw/tests/helpers/test-urls";
+import { <%= capitalizedPlural %>_NEW_URL } from "<%= appName %>/tests/helpers/test-urls";
 
 export default create({
   visit: visitable(<%= capitalizedSingular %>_NEW_URL),

@@ -11,7 +11,7 @@ import {
   value,
   visitable,
 } from "ember-cli-page-object";
-import { <%= capitalizedPlural %>_URL } from "tchw/tests/helpers/test-urls";
+import { <%= capitalizedPlural %>_URL } from "<%= appName %>/tests/helpers/test-urls";
 
 const TEST_SELECTOR_VALUE = "<%= dasherizedSingular %>";
 

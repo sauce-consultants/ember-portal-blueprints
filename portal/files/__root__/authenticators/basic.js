@@ -27,6 +27,10 @@ export default class BasicAuthenticator extends Base {
         response.text().then((text) => {
           try {
             let json = JSON.parse(text);
+            // GET /session responds with token:null
+            // so we need to add our token from localstorage
+            // to ensure the session is not invalidated
+            json.data.attributes.token = token;
             if (!response.ok) {
               response.responseJSON = json;
               reject(response);

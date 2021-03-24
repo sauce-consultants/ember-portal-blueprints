@@ -8,7 +8,7 @@ import {
 import { <%= capitalizedPlural %>_NEW_URL } from "tchw/tests/helpers/test-urls";
 
 export default create({
-  visit: visitable(<%= capitalizedSingular %>_EDIT_URL),
+  visit: visitable(<%= capitalizedSingular %>_NEW_URL),
 
   title: text("[data-test-header-title]"),
   crumbs: collection("[data-test-breadcrumbs-item]", {

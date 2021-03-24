@@ -8,7 +8,7 @@
   </header.Actions>
 </Ui::Header>
 
-{{#with (changeset this.<%= camelPlural %> this.<%= classSingular %>Validations) as |changeset|}}
+{{#with (changeset this.<%= camelSingular %> this.<%= classSingular %>Validations) as |changeset|}}
 
   <Ui::Form class="px-6 lg:px-12 mb-4
     flex flex-col md:flex-row flex-1

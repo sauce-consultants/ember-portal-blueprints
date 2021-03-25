@@ -15,7 +15,8 @@
   </Ui::Link>
 {{else}}
 
-  <div class="relative w-full mb-2 group flex items-center p-2 pl-12 text-lg leading-6 font-medium text-black hover:text-black rounded-lg hover:bg-gray-100 focus:outline-none focus:text-black focus:bg-gray-200 transition ease-in-out duration-150"
+  <div role="button"
+    class="relative w-full mb-2 group flex items-center p-2 pl-12 text-lg leading-6 font-medium text-black hover:text-black rounded-lg hover:bg-gray-100 focus:outline-none focus:text-black focus:bg-gray-200 transition ease-in-out duration-150"
     {{on "click" @action}}
     ...attributes>
     {{#if @icon}}

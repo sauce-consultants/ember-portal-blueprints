@@ -1,16 +1,9 @@
-import {
-  action
-} from '@ember/object';
+import {action} from '@ember/object';
 import Controller from '@ember/controller';
-import {
-  inject as service
-} from '@ember/service';
-import {
-  NAV_ITEMS
-} from '../utils/const/app';
+import {inject as service} from '@ember/service';
+import {NAV_ITEMS} from '../utils/const/app';
 
 export default class InternalController extends Controller {
-
   // Services
 
   @service session;
@@ -23,13 +16,12 @@ export default class InternalController extends Controller {
 
   get options() {
     return this.menuItems.filter(
-      menuItem =>
-      !menuItem.roles || menuItem.roles.indexOf(this.authUser.role) > -1
+      (menuItem) =>
+        !menuItem.roles || menuItem.roles.indexOf(this.authUser.role) > -1,
     );
   }
 
   get menuItems() {
-
     let menuItems = NAV_ITEMS;
 
     return menuItems;
@@ -37,7 +29,7 @@ export default class InternalController extends Controller {
 
   @action
   toggleNav() {
-    this.toggleProperty('isShowingNav');
+    this.isShowingNav = !this.isShowingNav;
   }
 
   @action

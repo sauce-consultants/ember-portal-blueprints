@@ -1,58 +1,57 @@
 import Component from '@ember/component';
-import {
-  action,
-  computed
-} from '@ember/object';
-import {
-  alias
-} from '@ember/object/computed';
-import {
-  tracked
-} from '@glimmer/tracking';
-import {
-  inject as service
-} from '@ember/service';
+import {action} from '@ember/object';
+import {tracked} from '@glimmer/tracking';
+import {inject as service} from '@ember/service';
 
 export default class UiSideNavUserComponent extends Component {
-
   // Service
 
   @service session;
 
   // Properties
 
-  tagName = "";
+  tagName = '';
 
   // Tracked
 
   @tracked open = false;
 
-  // Computed
+  // Getters
 
-  @alias('session.data.authenticated.data.attributes.first-name') firstName;
+  get sessionData() {
+    return this.session.data.authenticated.data;
+  }
 
-  @alias('session.data.authenticated.data.attributes.last-name') lastName;
+  get firstName() {
+    return this.sessionData.attributes['first-name'];
+  }
 
-  @alias('session.data.authenticated.data.attributes.email') email;
+  get lastName() {
+    return this.sessionData.attributes['last-name'];
+  }
 
-  @computed('firstName', 'lastName')
+  get email() {
+    return this.sessionData.attributes['email'];
+  }
+
   get name() {
     return this.firstName + ' ' + this.lastName;
   }
 
-  @computed('firstName', 'lastName')
   get initials() {
     if (this.firstName && this.lastName) {
-      return this.firstName.charAt(0).toUpperCase() + this.lastName.charAt(0).toUpperCase();
+      return (
+        this.firstName.charAt(0).toUpperCase() +
+        this.lastName.charAt(0).toUpperCase()
+      );
     }
-    return '??'
+    return '??';
   }
 
   // Actions
 
   @action
   toggle() {
-    this.toggleProperty('open');
+    this.open = !this.open;
   }
-
 }

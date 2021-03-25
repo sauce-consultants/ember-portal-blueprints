@@ -1,14 +1,7 @@
 import Component from '@ember/component';
-import {
-  inject as service
-} from '@ember/service';
-import {
-  alias
-} from '@ember/object/computed';
-
+import {inject as service} from '@ember/service';
 
 export default class UiSideNavComponent extends Component {
-
   // Properties
 
   tagName = '';
@@ -17,10 +10,11 @@ export default class UiSideNavComponent extends Component {
 
   @service session;
 
-  // Computed
+  // Setters
 
-  @alias('session.currentUser') authUser;
+  get authUser() {
+    return this.session.currentUser;
+  }
 
   // Actions
-
 }

@@ -1,13 +1,7 @@
 import Component from '@glimmer/component';
-import {
-  computed,
-} from '@ember/object';
-import {
-  action
-} from '@ember/object';
+import {action} from '@ember/object';
 
 export default class UiPaginationComponent extends Component {
-
   // Properties
 
   tagName = '';
@@ -34,14 +28,14 @@ export default class UiPaginationComponent extends Component {
   }
 
   get pages() {
-    return this.args.total / this.args.size
+    return this.args.total / this.args.size;
   }
 
   get start() {
     const page = this.args.page - 1;
     const size = this.args.size;
 
-    return (page * size) + 1;
+    return page * size + 1;
   }
 
   get end() {
@@ -52,9 +46,9 @@ export default class UiPaginationComponent extends Component {
     return Math.min(total, start + size - 1);
   }
 
-  // Computed
-
-  @computed.lte('args.page', 1) isPreviousButtonDisabled;
+  get isPreviousButtonDisabled() {
+    return this.args.page <= 1;
+  }
 
   get isNextButtonDisabled() {
     return this.end >= this.args.total;
@@ -65,7 +59,7 @@ export default class UiPaginationComponent extends Component {
   handleChange(props) {
     const onChangeAction = this.args.onChange;
     if (onChangeAction) {
-      return onChangeAction(props)
+      return onChangeAction(props);
     }
   }
 
@@ -81,7 +75,7 @@ export default class UiPaginationComponent extends Component {
 
   @action changePage(page) {
     const props = {
-      page: parseInt(page)
+      page: parseInt(page),
     };
     this.handleChange(props);
   }

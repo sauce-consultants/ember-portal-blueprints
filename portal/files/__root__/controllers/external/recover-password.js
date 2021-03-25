@@ -1,12 +1,11 @@
-import Controller from "@ember/controller";
-import { task } from "ember-concurrency";
-import { inject as service } from "@ember/service";
-import { alias } from "@ember/object/computed";
-import { tracked } from "@glimmer/tracking";
-import { t } from "ember-intl";
-import mapResponseErrors from "../../utils/map-response-errors";
-import fetch from "fetch";
-import getAPIURL from "../../utils/get-api-url";
+import Controller from '@ember/controller';
+import {task} from 'ember-concurrency';
+import {inject as service} from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import {t} from 'ember-intl';
+import mapResponseErrors from '../../utils/map-response-errors';
+import fetch from 'fetch';
+import getAPIURL from '../../utils/get-api-url';
 
 export default class ExternalRecoverPasswordController extends Controller {
   // Services
@@ -19,15 +18,17 @@ export default class ExternalRecoverPasswordController extends Controller {
 
   @tracked serverErrors = [];
 
-  // Computed
+  // Getters
 
-  @alias("model") authUser;
+  get authUser() {
+    return this.model;
+  }
 
   // Translations
 
-  @t("external.recover.messages.success") successMessage;
-  @t("external.recover.messages.validation") validationMessage;
-  @t("external.recover.messages.server") serverMessage;
+  @t('external.recover.messages.success') successMessage;
+  @t('external.recover.messages.validation') validationMessage;
+  @t('external.recover.messages.server') serverMessage;
 
   // Actions
 
@@ -38,21 +39,21 @@ export default class ExternalRecoverPasswordController extends Controller {
 
     yield changeset.validate();
 
-    if (changeset.get("isValid")) {
-      const url = getAPIURL("/recover-password"),
+    if (changeset.get('isValid')) {
+      const url = getAPIURL('/recover-password'),
         headers = {
-          Accept: "application/vnd.api+json",
-          "Content-Type": "application/vnd.api+json",
+          Accept: 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json',
         },
         body = {
           attributes: {
             email: changeset.email,
           },
-          type: "user",
+          type: 'user',
         };
 
       const response = yield fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers,
         body,
       });
@@ -61,18 +62,18 @@ export default class ExternalRecoverPasswordController extends Controller {
         const json = yield response.json();
         this.serverErrors = mapResponseErrors(json);
         this.flashMessages.alert(this.serverMessage);
-        throw "Server Error";
+        throw 'Server Error';
       }
     } else {
       this.flashMessages.alert(this.validationMessage);
-      throw "Validation Errors";
+      throw 'Validation Errors';
     }
   })
   onRecoverPassword;
 
   @task(function* (/*changeset*/) {
     yield this.flashMessages.success(this.successMessage);
-    this.transitionToRoute("external.login");
+    this.transitionToRoute('external.login');
   })
   afterRecoverPassword;
 }

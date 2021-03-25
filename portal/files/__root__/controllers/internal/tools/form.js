@@ -1,32 +1,32 @@
-import Controller from "@ember/controller";
-import { tracked } from "@glimmer/tracking";
-import { action, computed } from "@ember/object";
+import Controller from '@ember/controller';
+import {tracked} from '@glimmer/tracking';
+import {action} from '@ember/object';
 
 export default class InternalToolsCrudController extends Controller {
   // Attribute types
   attributeTypes = [
-    "",
-    "array",
-    "boolean",
-    "date",
-    "object",
-    "number",
-    "string",
-    "your-custom-transform",
-    "belongs-to",
-    "has-many",
+    '',
+    'array',
+    'boolean',
+    'date',
+    'object',
+    'number',
+    'string',
+    'your-custom-transform',
+    'belongs-to',
+    'has-many',
   ];
 
   // Tracking
 
-  @tracked model = "widget";
+  @tracked model = 'widget';
   @tracked attributes = [];
-  @tracked plural = "";
-  @tracked nested = "internal";
+  @tracked plural = '';
+  @tracked nested = 'internal';
 
   // Computeds
 
-  @computed("attributes.@each.{name,type,meta}", function () {
+  get attributesArgument() {
     const attributes = [];
 
     this.attributes.forEach((f) => {
@@ -44,12 +44,11 @@ export default class InternalToolsCrudController extends Controller {
         }
       }
 
-      attributes.pushObject(args.join(":"));
+      attributes.pushObject(args.join(':'));
     });
 
-    return attributes.join(" ") + " ";
-  })
-  attributesArgument;
+    return attributes.join(' ') + ' ';
+  }
 
   // Getters
 
@@ -65,7 +64,7 @@ export default class InternalToolsCrudController extends Controller {
   // Actions
 
   @action addAttribute() {
-    this.attributes.pushObject({ name: "", type: "string", meta: "" });
+    this.attributes.pushObject({name: '', type: 'string', meta: ''});
   }
 
   @action removeAttribute(attribute) {

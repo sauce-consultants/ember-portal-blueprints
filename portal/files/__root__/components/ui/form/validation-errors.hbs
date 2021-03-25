@@ -15,10 +15,16 @@
             data-test-validation-errors-body>
             {{#each @changeset.errors as |error|}}
               <li>
-                <strong class="font-bold">{{titleize error.key}}</strong>:
-                {{#each error.validation as |v|}}
-                  <br />{{v}}
-                {{/each}}
+                <a href={{concat "#" error.key "-control"}}>
+                  {{!-- We will look up the translation for the field form here 'label' --}}
+                  {{!-- In time clicking said item should scroll up to the field in question --}}
+                  <strong class="font-bold">
+                    {{t (concat @translationPath "." error.key ".label")}}:
+                  </strong>
+                  {{#each error.validation as |v|}}
+                    <br />{{v}}
+                  {{/each}}
+                </a>
               </li>
             {{/each}}
           </ul>

@@ -14,9 +14,11 @@
   </Ui::Link>
 {{else}}
 
-  <div class="
-    flex items-center px-3 py-2 text-sm font-medium rounded-md
-    text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+  <div role="button"
+    class="
+      text-sm font-medium 
+      flex items-center px-3 py-2 rounded-md
+      text-gray-600 hover:bg-gray-50 hover:text-gray-900"
     {{on "click" @action}}
     data-test-nav-item={{if @name @name true}}
     ...attributes>

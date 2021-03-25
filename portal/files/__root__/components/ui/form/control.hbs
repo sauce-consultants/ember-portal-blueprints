@@ -1,7 +1,9 @@
 <div class="space-y-1"
+  id={{concat @name "-control"}}
   ...attributes>
   {{yield (hash
     Input=(component "ui/form/input" name=@name invalid=this.isInvalid changeset=@changeset)
+    Textarea=(component "ui/form/textarea" name=@name invalid=this.isInvalid changeset=@changeset)
     Checkbox=(component "ui/form/checkbox" name=@name invalid=this.isInvalid changeset=@changeset)
     DateRange=(component "ui/form/date-range" name=@name invalid=this.isInvalid changeset=@changeset)
     Dropdown=(component "ui/form/dropdown" name=@name invalid=this.isInvalid changeset=@changeset)

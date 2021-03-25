@@ -1,12 +1,6 @@
-import Model, {
-  attr
-} from '@ember-data/model';
-import {
-  computed
-} from '@ember/object';
+import Model, {attr} from '@ember-data/model';
 
 export default class UserModel extends Model {
-
   // Attributes
 
   @attr('string') email;
@@ -17,7 +11,6 @@ export default class UserModel extends Model {
 
   // Computeds
 
-  @computed('firstName', 'lastName')
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }

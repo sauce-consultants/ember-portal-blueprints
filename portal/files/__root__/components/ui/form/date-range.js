@@ -1,18 +1,12 @@
 import Component from '@glimmer/component';
-import {
-  action,
-  computed
-} from '@ember/object';
+import {action} from '@ember/object';
 import moment from 'moment';
-import {
-  guidFor
-} from '@ember/object/internals';
+import {guidFor} from '@ember/object/internals';
 
 export default class UiFormDateRangeComponent extends Component {
-
   // Properties
 
-  format = "YYYY-MM-DD";
+  format = 'YYYY-MM-DD';
 
   // Methods
 
@@ -84,25 +78,22 @@ export default class UiFormDateRangeComponent extends Component {
     let classArray = [];
 
     if (this.args.leadingIcon) {
-      classArray.pushObject("pl-10");
+      classArray.pushObject('pl-10');
     }
     if (this.args.trailingIcon || this.invalid) {
-      classArray.pushObject("pr-10");
+      classArray.pushObject('pr-10');
     }
 
-    return classArray.join(" ");
+    return classArray.join(' ');
   }
 
-  // Computed
-
-  @computed(function() {
+  get dateInputId() {
     return guidFor(this) + '-date';
-  }) dateInputId;
+  }
 
   // Actions
 
   @action setDateRange(startDate, endDate, picker) {
-
     const value = `${startDate}~${endDate}`,
       onChange = this.args.onChange;
 
@@ -110,9 +101,11 @@ export default class UiFormDateRangeComponent extends Component {
     if (startDate === endDate) {
       string = moment(startDate).format('DD/MM/YYYY');
     } else {
-      string = `${moment(startDate).format('DD/MM/YYYY')} - ${moment(endDate).format('DD/MM/YYYY')}`;
+      string = `${moment(startDate).format('DD/MM/YYYY')} - ${moment(
+        endDate,
+      ).format('DD/MM/YYYY')}`;
     }
-    picker.element.val(string)
+    picker.element.val(string);
 
     if (onChange) {
       onChange(value);
@@ -120,8 +113,9 @@ export default class UiFormDateRangeComponent extends Component {
   }
   @action hideDatePicker() {}
   @action cancelDatePicker() {
-
-    let el = document.querySelector(`#${this.dateInputId} .daterangepicker-input`);
+    let el = document.querySelector(
+      `#${this.dateInputId} .daterangepicker-input`,
+    );
     if (el.value) {
       el.value = '';
     }
@@ -132,5 +126,4 @@ export default class UiFormDateRangeComponent extends Component {
       onChange(null);
     }
   }
-
 }

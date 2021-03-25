@@ -1,6 +1,6 @@
 import Controller from "@ember/controller";
 import { tracked } from "@glimmer/tracking";
-import { action, computed } from "@ember/object";
+import { action } from "@ember/object";
 
 export default class InternalToolsDetailsController extends Controller {
   // Attribute types
@@ -26,7 +26,7 @@ export default class InternalToolsDetailsController extends Controller {
 
   // Computeds
 
-  @computed("attributes.@each.{name,type,meta}", function () {
+  get attributesArgument {
     const attributes = [];
 
     this.attributes.forEach((f) => {
@@ -48,8 +48,7 @@ export default class InternalToolsDetailsController extends Controller {
     });
 
     return attributes.join(" ") + " ";
-  })
-  attributesArgument;
+  };
 
   // Getters
 

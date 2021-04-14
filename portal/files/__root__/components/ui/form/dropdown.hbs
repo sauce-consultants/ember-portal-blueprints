@@ -1,10 +1,18 @@
 <div class="mt-1"
   aria-describedby={{@aria-describedby}}
   data-test-dropdown={{@name}}>
-  <PowerSelect @selected={{@selected}}
+  <PowerSelect 
+    @allowClear={{@allowClear}}
+    @ariaDescribedBy={{@aria-describedby}}
+    @ariaInvalid={{@invalid}}
+    @disabled={{@disabled}}
     @options={{@options}}
     @onChange={{@onChange}}
+    @searchEnabled={{@searchEnabled}}
     @searchField={{@searchField}}
+    @searchMessage={{@searchMessage}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @selected={{@selected}}
     @placeholder={{@placeholder}}
     @dropdownClass={{concat "ember-power-select-dropdown-" @name}}
     as

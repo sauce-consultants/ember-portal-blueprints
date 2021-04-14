@@ -26,7 +26,7 @@ export default class InternalToolsDetailsController extends Controller {
 
   // Computeds
 
-  get attributesArgument {
+  get attributesArgument() {
     const attributes = [];
 
     this.attributes.forEach((f) => {
@@ -48,7 +48,7 @@ export default class InternalToolsDetailsController extends Controller {
     });
 
     return attributes.join(" ") + " ";
-  };
+  }
 
   // Getters
 

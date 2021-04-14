@@ -468,9 +468,9 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
         EOL +
         `  // ${tokens.titlePlural}
   this.get('/${tokens.dasherizedPlural}');
-  this.put('/${tokens.dasherizedPlural}');
+  this.post('/${tokens.dasherizedPlural}');
   this.get('/${tokens.dasherizedPlural}/:id');
-  this.post('/${tokens.dasherizedPlural}/:id');
+  this.put('/${tokens.dasherizedPlural}/:id');
   this.patch('/${tokens.dasherizedPlural}/:id');
   this.delete('/${tokens.dasherizedPlural}/:id');
   `;

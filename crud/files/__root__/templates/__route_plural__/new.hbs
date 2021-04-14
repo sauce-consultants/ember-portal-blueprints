@@ -32,6 +32,7 @@
         <Ui::Form::Footer class="p-6"
           @form={{form}}
           @changeset={{changeset}}
+          @translationPath={{"<%= dasherizedSingular %>.form"}}
           @onCancel={{fn this.cancel changeset}}
           @serverErrors={{this.serverErrors}} />
 

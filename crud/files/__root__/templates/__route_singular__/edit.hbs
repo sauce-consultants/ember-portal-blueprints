@@ -30,6 +30,7 @@ space-y-4 md:space-x-4 md:space-y-0"
         <Ui::Form::Footer class="p-6"
           @form={{form}}
           @changeset={{changeset}}
+          @translationPath={{"<%= dasherizedSingular %>.form"}}
           @onCancel={{fn this.cancel changeset}}
           @serverErrors={{this.serverErrors}} />
 

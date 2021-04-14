@@ -149,7 +149,8 @@ module("Acceptance | <%= routePathSingular %>/edit", function (hooks) {
 
   test("Navigation: load archive view /<%= routePathSingular %>/edit", async function (assert) {
 
-    const resource = this.server.create("<%= dasherizedSingular %>")
+    const resource = this.server.create("<%= dasherizedSingular %>"),
+      describe = `${resource.id}`;
 
     await authenticateSession(AUTHENTICATED_ADMIN);
 
@@ -173,7 +174,7 @@ module("Acceptance | <%= routePathSingular %>/edit", function (hooks) {
     assert.notOk(Page.actions.view.isActive, 'Edit action is unactive');
     assert.ok(Page.actions.archive.isActive, 'Archive action is active');
 
-    assert.equal(Page.title, `Archive <%= titleSingular %>: ${resource.id}`, "page heading is correct");
+    assert.equal(Page.title, `Archive <%= titleSingular %>: ${describe}`, "page heading is correct");
   });
 
   test("Content: /<%= routePathSingular %>/edit", async function (assert) {

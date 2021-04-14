@@ -173,7 +173,7 @@ module("Acceptance | <%= routePathSingular %>/index", function (hooks) {
     assert.notOk(Page.actions.view.isActive, 'View action is unactive');
     assert.ok(Page.actions.archive.isActive, 'Archive action is active');
 
-    assert.equal(Page.title, `Archive <%= titleSingular %>: ${descrive}`, "page heading is correct");
+    assert.equal(Page.title, `Archive <%= titleSingular %>: ${describe}`, "page heading is correct");
   });
 
   test("Content: /<%= routePathSingular %>/index", async function (assert) {

@@ -62,11 +62,15 @@ module.exports = {
       if (type === "belongs-to") {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
+        // no form input support fo has belongs to
+        continue;
       }
 
       if (type === "has-many") {
         // we'll pass a count of the related models
         name = `${name}.length`;
+        // no form input support fo has many yet
+        continue;
       }
 
       // Code will decide what form input to add for each attribute
@@ -104,11 +108,15 @@ module.exports = {
       if (type === "belongs-to") {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
+        // no form input support fo has many yet
+        continue;
       }
 
       if (type === "has-many") {
         // we'll pass a count of the related models
         name = `${name}.length`;
+        // no form input support fo has many yet
+        continue;
       }
 
       // Code will decide what form input to add for each attribute

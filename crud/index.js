@@ -236,6 +236,11 @@ module.exports = {
       if (type.indexOf(":") > -1) {
         foreignModelOrFakerMethod = type.split(":")[1];
         type = type.split(":")[0];
+
+        if (type != "has-many" && type != "belongs-to") {
+          // it's a faker method
+          foreignModelOrFakerMethod = foreignModelOrFakerMethod + "()";
+        }
       }
 
       if (!foreignModelOrFakerMethod) {
@@ -244,13 +249,13 @@ module.exports = {
             foreignModelOrFakerMethod = "lorem.words()";
             break;
           case "boolean":
-            foreignModelOrFakerMethod = "random.boolean";
+            foreignModelOrFakerMethod = "random.boolean()";
             break;
           case "number":
-            foreignModelOrFakerMethod = "random.number";
+            foreignModelOrFakerMethod = "random.number()";
             break;
           case "date":
-            foreignModelOrFakerMethod = "date.recent";
+            foreignModelOrFakerMethod = "date.recent()";
             break;
           default:
             foreignModelOrFakerMethod = false;
@@ -262,7 +267,9 @@ module.exports = {
         // e.g isAdmin: faker.random.boolean,
         // if the field is a belongsTo or hasMany we'll skip
         // adding to the factory for now... soon tho
-        attrs.push(`  ${name}: faker.${foreignModelOrFakerMethod},`);
+        attrs.push(
+          `  ${name}() { return faker.${foreignModelOrFakerMethod};},`
+        );
       }
     }
 

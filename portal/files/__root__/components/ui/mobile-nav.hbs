@@ -47,7 +47,37 @@
 
           {{#each @items as |item|}}
 
-            {{#if item.route}}
+            {{#if item.children}}
+
+              <Ui::SideNav::Group @title={{t item.label}}
+                @activeWhen={{item.activeWhen}}
+                data-test-nav-item={{item.label}}
+                @icon={{t item.icon}}>
+
+                {{#each item.children as |child|}}
+
+                  {{#if child.route}}
+                    <Ui::SideNav::Item @route={{child.route}}
+                      @icon={{t child.icon}}
+                      @activeWhen={{child.activeWhen}}
+                      data-test-nav-item={{child.label}}>
+                      {{t child.label}}
+                    </Ui::SideNav::Item>
+                  {{else}}
+                    <Ui::SideNav::Item @href={{child.href}}
+                      @icon={{t child.icon}}
+                      @activeWhen={{child.activeWhen}}
+                      data-test-nav-item={{child.label}}>
+                      {{t child.label}}
+                    </Ui::SideNav::Item>
+                  {{/if}}
+
+                {{/each}}
+
+              </Ui::SideNav::Group>
+
+            {{else if item.route}}
+
               <Ui::SideNav::Item @route={{item.route}}
                 @icon={{item.icon}}
                 @activeWhen={{item.activeWhen}}

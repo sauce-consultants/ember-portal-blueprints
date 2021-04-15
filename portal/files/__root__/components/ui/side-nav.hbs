@@ -48,14 +48,14 @@
             {{else if item.route}}
             
               <Ui::SideNav::Item @route={{item.route}}
-                @icon={{item.icon}}
+                @icon={{t item.icon}}
                 @activeWhen={{item.activeWhen}}
                 data-test-nav-item={{item.label}}>
                 {{t item.label}}
               </Ui::SideNav::Item>
             {{else}}
               <Ui::SideNav::Item @href={{item.href}}
-                @icon={{item.icon}}
+                @icon={{t item.icon}}
                 @activeWhen={{item.activeWhen}}
                 data-test-nav-item={{item.label}}>
                 {{t item.label}}

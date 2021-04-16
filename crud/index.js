@@ -13,25 +13,10 @@ const chalk = require("chalk");
 module.exports = {
   description: "Generate basic CRUD screen for a resource",
 
-  // TODO
-  // - Update routes.js with default CRUD routes ✓
-  // - Update mirage/config with default API endpoints ✓
-  // - Update scenarios with seeded model data ✓
-  // - List ✓
-  // - Add ✓
-  // - View ✓
-  // - Edit ✓
-  // - Archive ✓
-  // - Move controller flash messages to translation files ✓
-  // - Call sub blueprints for components etc ✓
-  // - Add the new resource to the main nav ✓
-  // - Seed attribute data in factories ✓
-  // - View Component Generator ✓
-  // - Form Component Generator
-  // - Check List/Form/Details components run independantly and allow custom namespace
-  // - Create acceptance tests for each CRUD route
-  // - Has Many
-  // - Remove beautify ignore comments
+  // - TODO - CRUD Check List/Form/Details components run independantly and allow custom namespace
+  // - TODO - CRUD Create acceptance tests for each CRUD route (new and edit)
+  // - TODO - CRUD Has Many Generator
+  // - TODO - CRUD Remove beautify ignore comments
 
   // Current Options
   // --plural employees

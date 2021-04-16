@@ -2,7 +2,9 @@ import {
   clickable,
   collection,
   create,
+  fillable,
   text,
+  value,
   visitable,
 } from "ember-cli-page-object";
 import { <%= capitalizedPlural %>_NEW_URL } from "<%= appName %>/tests/helpers/test-urls";

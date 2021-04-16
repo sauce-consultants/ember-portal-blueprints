@@ -150,7 +150,7 @@ module("Acceptance | <%= routePathSingular %>/edit", function (hooks) {
   test("Navigation: load archive view /<%= routePathSingular %>/edit", async function (assert) {
 
     const resource = this.server.create("<%= dasherizedSingular %>"),
-      describe = `${resource.id}`;
+      describe = `<%= titleSingular %> ${resource.id}`;
 
     await authenticateSession(AUTHENTICATED_ADMIN);
 

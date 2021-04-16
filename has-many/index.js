@@ -1,9 +1,7 @@
 'use strict';
 
-// TODO - write has many boilerplate
 // TODO - update utils/const/singular.js  with new action
 // TODO - update translations/singular/en-us.yaml  with translations
-// TODO - update test-urls
 const path = require("path");
 const EOL = require("os").EOL;
 const portalInflection = require("../portal-inflection");
@@ -87,7 +85,104 @@ module.exports = {
     // routePathPlural: "admin/secret/sports-teams",
     // ... all these variables are also available for the related 
     // many model - Prefixed with more e.g. moreClassPlural
-  }
+  },
+
+  fileMapTokens(options) {
+    return {
+      __route_singular__() {
+        return options.locals.routePathSingular;
+      },
+      __route_plural__() {
+        return options.locals.routePathPlural;
+      },
+      __many_singular__() {
+        return options.locals.manyRoutePathSingular;
+      },
+      __many_plural__() {
+        return options.locals.manyRoutePathPlural;
+      },
+    };
+  },
+
+  afterInstall: async function (options) {
+    await this.updateRoutes("add", options);
+
+    await this.updateFiles("add", options);
+
+    return true;
+  },
+
+  afterUninstall: async function (options) {
+    await this.updateRoutes("remove", options);
+
+    await this.updateFiles("remove", options);
+
+    return true;
+  },
+
+  // Add our CRUD routes to app/router.js
+  async updateRoutes(action, options) {
+    let name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
+      // internal/team/edit
+      manyRoute = `${tokens.routePathSingular}/${tokens.manyRoutePathPlural}`;
+
+    await this.updateRouter(action, options, manyRoute);
+
+    return true;
+  },
+
+  async updateRouter(action, options, route) {
+    let entity = options.entity,
+      _name = entity.name;
+    // we tweaked this bit so we can add multiple routes to router.js
+    entity.name = route;
+    let actionColorMap = {
+      add: "green",
+      remove: "red",
+    };
+    let color = actionColorMap[action] || "gray";
+
+    if (this.shouldTouchRouter(route, options)) {
+      await this.writeRoute(action, route, options);
+
+      this.ui.writeLine("updating router");
+
+      this._writeStatusToUI(chalk[color], action + " route", route);
+    }
+
+    entity.name = _name;
+  },
+
+  updateFiles: async function (action, options) {
+
+    await this.updateTestHelpers(action, options);
+
+    // await this.updateRootPageObject(action, options);
+  },
+  async updateTestHelpers(action, options) {
+    const name = options.entity.name,
+      tokens = portalInflection.nameTokens(name, options),
+      file = "tests/helpers/test-urls.js",
+      marker = {
+        before: "// DO NOT REMOVE!",
+      },
+      content = `export const ${tokens.capitalizedSingular}_${tokens.moreCapitalizedSingular}_URL = "/${tokens.routePathSingular}/:id/${tokens.moreRoutePathSingular}";`;
+
+    let result;
+
+    if (options.dryRun) {
+      return this.writeDryRunStatusToUI();
+    } else if (action === "add") {
+      result = await this.insertIntoFile(file, content, marker);
+    } else {
+      result = await this.removeFromFile(file, content);
+    }
+
+    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+
+    return result;
+  },
 
 
 };

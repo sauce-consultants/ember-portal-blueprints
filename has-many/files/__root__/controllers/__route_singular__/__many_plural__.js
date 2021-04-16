@@ -40,7 +40,7 @@ export default class InternalSectionGroupsController extends Controller {
     'sort',
     // add further query params here...
   ];
-  exportPath = '/<%= moreDasherizedPlural %>';
+  exportPath = '/<%= manyDasherizedPlural %>';
 
   // Tracked
 
@@ -58,7 +58,7 @@ export default class InternalSectionGroupsController extends Controller {
 
   @alias('<%= routeClassSingular %>Controller.model.<%= camelSingular %>.value') <%= camelSingular %>;
   @alias('<%= routeClassSingular %>Controller.model.<%= camelSingular %>.isRunning') loading<%= classSingular %>;
-  @alias('model.<%= manyCamelPlural %>..value') <%= manyCamelPlural %>.;
+  @alias('model.<%= manyCamelPlural %>.value') <%= manyCamelPlural %>;
   @alias('model.<%= manyCamelPlural %>.value.meta') meta;
   @alias('model.<%= manyCamelPlural %>..isRunning') loading<%= manyClassSingular %>;
   @or('loading<%= classSingular %>', 'loading<%= manyClassSingular %>') loading;
@@ -68,7 +68,7 @@ export default class InternalSectionGroupsController extends Controller {
 
   // Translations
 
-  @t('<%= moreDasherizedSingular %>.list.messages.export') exportMessage;
+  @t('<%= manyDasherizedSingular %>.list.messages.export') exportMessage;
 
   // Action
 

@@ -6,6 +6,12 @@ const path = require("path");
 const EOL = require("os").EOL;
 const portalInflection = require("../portal-inflection");
 const inflection = require("inflection");
+// const Blueprint = require("ember-cli/lib/models/blueprint");
+/* eslint-disable */
+const fs = require("fs-extra");
+const EmberRouterGenerator = require("ember-router-generator");
+const chalk = require("chalk");
+/* eslint-enable */
 
 module.exports = {
   description: 'Generate a has many CRUD screen for a resource',
@@ -40,26 +46,13 @@ module.exports = {
     
     // ember g has-many section --many group --nested internal
     const name = options.entity.name,
-      manyName = options['many'],
-      manyOptions = {plural: options['many-plural']},
-      tokens = portalInflection.nameTokens(name, options),
-      manyTokens = portalInflection.nameTokens(manyName, manyOptions),
+      tokens = this.generateTokens(name, options),
       entityOptions = options.entity.options;
 
-      const prefixedManyOptions = {};
-
-      Object.keys(manyTokens).forEach(key => {
-        console.log(key);
-        const prefixedKey = inflection.camelize('many_'+inflection.underscore(key), true)
-        prefixedManyOptions[prefixedKey] = manyTokens[key];
-      })
-
-      // prefix 
-      console.log(prefixedManyOptions);
+      console.log(tokens);
 
     return {
       ...tokens,
-      ...prefixedManyOptions,
       appName: options.project.pkg.name,
     };
 
@@ -120,10 +113,30 @@ module.exports = {
     return true;
   },
 
+  generateTokens(name, options) {
+    
+    const tokens = portalInflection.nameTokens(name, options),
+      manyName = options['many'],
+      manyOptions = {plural: options['many-plural']},
+      manyTokens = portalInflection.nameTokens(manyName, manyOptions);
+
+      let prefixedManyTokens = {};
+
+      Object.keys(manyTokens).forEach(
+        (key) => {
+          const prefixedKey = inflection.camelize('many_'+inflection.underscore(key), true)
+          prefixedManyTokens[prefixedKey] = manyTokens[key];
+        }
+      );
+
+      return {...prefixedManyTokens, ...tokens};
+
+  },
+
   // Add our CRUD routes to app/router.js
   async updateRoutes(action, options) {
     let name = options.entity.name,
-      tokens = portalInflection.nameTokens(name, options),
+      tokens = this.generateTokens(name, options),
       // internal/team/edit
       manyRoute = `${tokens.routePathSingular}/${tokens.manyRoutePathPlural}`;
 
@@ -162,12 +175,12 @@ module.exports = {
   },
   async updateTestHelpers(action, options) {
     const name = options.entity.name,
-      tokens = portalInflection.nameTokens(name, options),
+      tokens = this.generateTokens(name, options),
       file = "tests/helpers/test-urls.js",
       marker = {
         before: "// DO NOT REMOVE!",
       },
-      content = `export const ${tokens.capitalizedSingular}_${tokens.moreCapitalizedSingular}_URL = "/${tokens.routePathSingular}/:id/${tokens.moreRoutePathSingular}";`;
+      content = `export const ${tokens.capitalizedSingular}_${tokens.manyCapitalizedPlural}_URL = "/${tokens.routePathSingular}/:id/${tokens.manyRoutePathPlural}";`;
 
     let result;
 
@@ -182,6 +195,74 @@ module.exports = {
     this.writeUpdateFileStatusToUI(result, action, "test helper urls");
 
     return result;
+  },
+
+  shouldTouchRouter(name, options) {
+    var isIndex = name === "index";
+    var isBasic = name === "basic";
+    var isApplication = name === "application";
+
+    if (options.dryRun) {
+      this._writeStatusToUI(
+        chalk["yellow"],
+        "You specified the dry-run flag, so no routes will be updated.",
+        ""
+      );
+      return false;
+    }
+
+    return !isBasic && !isIndex && !isApplication;
+  },
+  writeRoute(action, name, options) {
+    let routerPath = path.join.apply(null, this.findRouter(options));
+    let source = fs.readFileSync(routerPath, "utf-8");
+
+    let routes = new EmberRouterGenerator(source);
+    let newRoutes = routes[action](name, options);
+
+    return Promise.resolve(fs.writeFileSync(routerPath, newRoutes.code()));
+  },
+
+  findRouter(options) {
+    let routerPathParts = [options.project.root];
+    let root = "app";
+
+    if (options.dummy && options.project.isEmberCLIAddon()) {
+      routerPathParts = routerPathParts.concat([
+        "tests",
+        "dummy",
+        root,
+        "router.js",
+      ]);
+    } else {
+      routerPathParts = routerPathParts.concat([root, "router.js"]);
+    }
+
+    return routerPathParts;
+  },
+
+  writeUpdateFileStatusToUI(fileUpdateResult, action, message) {
+    if (action === "add") {
+      if (fileUpdateResult.inserted) {
+        this._writeStatusToUI(chalk["green"], "updated", message);
+      } else {
+        this._writeStatusToUI(chalk["red"], "skipped", message);
+      }
+    } else {
+      if (fileUpdateResult.removed) {
+        this._writeStatusToUI(chalk["red"], "updated", message);
+      } else {
+        this._writeStatusToUI(chalk["yellow"], "skipped", message);
+      }
+    }
+  },
+
+  writeDryRunStatusToUI() {
+    this._writeStatusToUI(
+      chalk["yellow"],
+      "You specified the dry-run flag, so no files will be updated.",
+      ""
+    );
   },
 
 

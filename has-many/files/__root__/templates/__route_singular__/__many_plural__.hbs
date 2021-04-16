@@ -3,7 +3,7 @@
 
 <Ui::Header as
   |header|>
-  <header.Title @text={{concat (t "<%= dasherizedSingular %>.<%= moreDasheriSingular %>.title") ": " (if this.loading "" this.<%= camelSingular %>.describe)}} />
+  <header.Title @text={{concat (t "<%= dasherizedSingular %>.<%= manyDasherizedSingular %>.title") ": " (if this.loading "" this.<%= camelSingular %>.describe)}} />
 
   <header.Actions as
     |actions|>
@@ -13,7 +13,7 @@
       |dropdown|>
       <actions.Action {{on "click" dropdown.toggle}}
         @name="sort"
-        @icon="switch-vertical">{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.sort.label"}}</actions.Action>
+        @icon="switch-vertical">{{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.sort.label"}}</actions.Action>
       <dropdown.Menu as
         |menu|>
         {{#each this.sortOptions as |option|}}
@@ -27,15 +27,15 @@
 
     <actions.Action @name="filter"
       @icon="filter"
-      {{on "click" this.toggleFilter}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.filter"}}</actions.Action>
+      {{on "click" this.toggleFilter}}>{{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.filter"}}</actions.Action>
 
     <actions.Action @name="export"
       @icon="download"
-      {{on "click" this.toggleExport}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.label"}}</actions.Action>
+      {{on "click" this.toggleExport}}>{{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.export.label"}}</actions.Action>
 
     <actions.Search @name="search"
       @icon="search"
-      @value={{this.search}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.search"}}</actions.Search>
+      @value={{this.search}}>{{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.search"}}</actions.Search>
 
   </header.Actions>
 
@@ -56,7 +56,7 @@ space-y-4 md:space-x-4 md:space-y-0">
     </Ui::Card>
 
     <div class="flex flex-col items-end">
-        <LinkTo @route="<%= moreRouteNamePlural %>.new">
+        <LinkTo @route="<%= manyRouteNamePlural %>.new">
             <Ui::Button class="w-full sm:w-48"
                 @color="primary"
                 @style="secondary"
@@ -67,9 +67,9 @@ space-y-4 md:space-x-4 md:space-y-0">
     </div>
 
     <Ui::Card class="flex-auto">
-        <<%= moreClassSingular %>::List @loading={{this.loading}}
-        @<%= moreCamelPlural %>={{this.<%= moreCamelPlural %>}}
-        @actions={{this.<%= moreCamelSingular %>Actions}}
+        <<%= manyClassSingular %>::List @loading={{this.loading}}
+        @<%= manyCamelPlural %>={{this.<%= manyCamelPlural %>}}
+        @actions={{this.<%= manyCamelSingular %>Actions}}
         @filtered={{this.filtered}}
         @size={{this.size}}
         @clearFilter={{this.clearFilter}} />
@@ -103,18 +103,18 @@ space-y-4 md:space-x-4 md:space-y-0">
 <Ui::Modal @name="export"
   @isShowing={{this.showExport}}
   @icon="download"
-  @title={{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.title"}}
-  @button={{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.button"}}
+  @title={{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.export.title"}}
+  @button={{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.export.button"}}
   @onConfirm={{this.export}}
   @onCancel={{this.toggleExport}}>
-  <p>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.text"}}</p>
+  <p>{{t "<%= dasherizedSingular %>.<%= manyDasherizedPlural %>.actions.export.text"}}</p>
 </Ui::Modal>
 
 <Ui::SlideOver @name="filter"
   @isShowing={{this.showFilter}}
   @onClose={{this.toggleFilter}}>
   <div class="px-6 py-3">
-    <<%= moreClassSingular %>::Filter @filter={{this.filter}}
+    <<%= manyClassSingular %>::Filter @filter={{this.filter}}
       @onFilter={{this.filterResults}}
       @onClear={{this.clearFilter}} />
   </div>

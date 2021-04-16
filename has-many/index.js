@@ -129,7 +129,9 @@ module.exports = {
         }
       );
 
-      return {...prefixedManyTokens, ...tokens};
+      const routeNamePrefix = options.nested ? `${options.nested}.` : '';
+
+      return {...prefixedManyTokens, ...tokens, routeNamePrefix};
 
   },
 

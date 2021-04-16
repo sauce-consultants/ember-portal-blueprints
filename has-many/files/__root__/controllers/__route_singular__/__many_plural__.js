@@ -10,15 +10,15 @@ import { <%= capitalizedSingular %>_ACTIONS } from 'mytime/utils/const/section';
 import sortBy from 'mytime/utils/actions/sort-by';
 import paginate from 'mytime/utils/actions/paginate';
 import {
-  <% manyCapitalizedSingular %>_ACTIONS,
-  <% manyCapitalizedSingular %>_SORT_OPTIONS,
-  <% manyCapitalizedSingular %>_FILTER_ATTRS,
+  <%= manyCapitalizedSingular %>_ACTIONS,
+  <%= manyCapitalizedSingular %>_SORT_OPTIONS,
+  <%= manyCapitalizedSingular %>_FILTER_ATTRS,
 } from 'mytime/utils/const/<%= manyDasherizedSingular %>';
 import shape<%= manyClassSingular %>FilterParams from '<%= appName %>/utils/routes/shape-<%= manyDasherizedSingular %>-filter-params';
 import shapeSortParams from 'mytime/utils/routes/shape-sort-params';
 import getApiUrl from 'mytime/utils/get-api-url';
 
-export default class InternalSectionGroupsController extends Controller {
+export default class <%= routeClassSingular %><%= manyClassSingular %>Controller extends Controller {
   // Services
 
   @service store;
@@ -30,9 +30,9 @@ export default class InternalSectionGroupsController extends Controller {
   // Properties
 
   sidebarActions = <%= capitalizedSingular %>_ACTIONS;
-  <%= manyCamelSingular %>Actions = <% manyCapitalizedSingular %>_ACTIONS;
-  filterAttrs = <% manyCapitalizedSingular %>_FILTER_ATTRS;
-  sortOptions = <% manyCapitalizedSingular %>_SORT_OPTIONS;
+  <%= manyCamelSingular %>Actions = <%= manyCapitalizedSingular %>_ACTIONS;
+  filterAttrs = <%= manyCapitalizedSingular %>_FILTER_ATTRS;
+  sortOptions = <%= manyCapitalizedSingular %>_SORT_OPTIONS;
   queryParams = [
     'page',
     'search',
@@ -48,7 +48,7 @@ export default class InternalSectionGroupsController extends Controller {
   @tracked page = 1;
   @tracked search = '';
   @tracked size = 20;
-  @tracked sort = <% manyCapitalizedSingular %>_SORT_OPTIONS[0].value;
+  @tracked sort = <%= manyCapitalizedSingular %>_SORT_OPTIONS[0].value;
 
   // UI state of slide over/modals
   @tracked showFilter = false;

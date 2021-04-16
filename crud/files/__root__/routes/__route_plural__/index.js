@@ -1,3 +1,4 @@
+import Route from '@ember/routing/route';
 import {
   task
 } from "ember-concurrency";
@@ -7,8 +8,6 @@ import shapeSortParams from '<%= appName %>/utils/routes/shape-sort-params';
 import {
   <%= capitalizedSingular %>_FILTER_ATTRS,
 } from '<%= appName %>/utils/const/<%= dasherizedSingular %>';
-
-import Route from '@ember/routing/route';
 
 export default class <%= routeClassPlural %>IndexRoute extends Route {
 

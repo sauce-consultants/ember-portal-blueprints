@@ -1,1 +1,121 @@
- {{!-- TODO - write has many template boilerplate --}}
+<<%= classSingular %>::Crumbs @<%= camelSingular %>={{this.<%= camelSingular %>}}
+  @title={{t "<%= dasherizedSingular %>.view.crumb"}} />
+
+<Ui::Header as
+  |header|>
+  <header.Title @text={{concat (t "<%= dasherizedSingular %>.<%= moreDasheriSingular %>.title") ": " (if this.loading "" this.<%= camelSingular %>.describe)}} />
+
+  <header.Actions as
+    |actions|>
+
+    <Ui::Dropdown @name="sort"
+      as
+      |dropdown|>
+      <actions.Action {{on "click" dropdown.toggle}}
+        @name="sort"
+        @icon="switch-vertical">{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.sort.label"}}</actions.Action>
+      <dropdown.Menu as
+        |menu|>
+        {{#each this.sortOptions as |option|}}
+          <menu.Item @name={{option.value}}
+            @text={{t option.label}}
+            @trailingIcon={{sort-menu-icon this.sort option.value}}
+            {{on "click" (fn this.sortBy option.value)}} />
+        {{/each}}
+      </dropdown.Menu>
+    </Ui::Dropdown>
+
+    <actions.Action @name="filter"
+      @icon="filter"
+      {{on "click" this.toggleFilter}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.filter"}}</actions.Action>
+
+    <actions.Action @name="export"
+      @icon="download"
+      {{on "click" this.toggleExport}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.label"}}</actions.Action>
+
+    <actions.Search @name="search"
+      @icon="search"
+      @value={{this.search}}>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.search"}}</actions.Search>
+
+  </header.Actions>
+
+</Ui::Header>
+
+<div class="px-6 lg:px-12 mb-4
+flex flex-col md:flex-row flex-1
+space-y-4 md:space-x-4 md:space-y-0">
+
+    <section class="px-6 lg:px-12 flex flex-col space-y-4 mb-4 flex-1">
+
+    <Ui::Card>
+        <Ui::Pagination @name="top"
+        @size={{this.size}}
+        @page={{this.page}}
+        @total={{this.meta.total}}
+        @onChange={{this.paginateResults}} />
+    </Ui::Card>
+
+    <div class="flex flex-col items-end">
+        <LinkTo @route="<%= moreRouteNamePlural %>.new">
+            <Ui::Button class="w-full sm:w-48"
+                @color="primary"
+                @style="secondary"
+                @size="md"
+                @trailingIcon="plus">{{t "<%= dasherizedSingular %>.list.actions.new"}}
+            </Ui::Button>
+        </LinkTo>
+    </div>
+
+    <Ui::Card class="flex-auto">
+        <<%= moreClassSingular %>::List @loading={{this.loading}}
+        @<%= moreCamelPlural %>={{this.<%= moreCamelPlural %>}}
+        @actions={{this.<%= moreCamelSingular %>Actions}}
+        @filtered={{this.filtered}}
+        @size={{this.size}}
+        @clearFilter={{this.clearFilter}} />
+    </Ui::Card>
+
+    <Ui::Card>
+        <Ui::Pagination @name="bottom"
+        @size={{this.size}}
+        @page={{this.page}}
+        @total={{this.meta.total}}
+        @onChange={{this.paginateResults}} />
+    </Ui::Card>
+
+  </section>
+
+  <aside class="flex flex-col space-y-4 w-68">
+
+    <Ui::Card @title="Actions"
+      @name="actions"
+      class="flex-1">
+
+      <<%= classSingular %>::Actions @actions={{this.sidebarActions}}
+        class="px-2 py-4" />
+
+    </Ui::Card>
+
+  </aside>
+
+</div>
+
+<Ui::Modal @name="export"
+  @isShowing={{this.showExport}}
+  @icon="download"
+  @title={{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.title"}}
+  @button={{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.button"}}
+  @onConfirm={{this.export}}
+  @onCancel={{this.toggleExport}}>
+  <p>{{t "<%= dasherizedSingular %>.<%= moreDasherizedPlural %>.actions.export.text"}}</p>
+</Ui::Modal>
+
+<Ui::SlideOver @name="filter"
+  @isShowing={{this.showFilter}}
+  @onClose={{this.toggleFilter}}>
+  <div class="px-6 py-3">
+    <<%= moreClassSingular %>::Filter @filter={{this.filter}}
+      @onFilter={{this.filterResults}}
+      @onClear={{this.clearFilter}} />
+  </div>
+</Ui::SlideOver>

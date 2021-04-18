@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO - update utils/const/singular.js  with new action
-// TODO - update translations/singular/en-us.yaml  with translations
 const path = require("path");
 const EOL = require("os").EOL;
 const portalInflection = require("../portal-inflection");
@@ -60,7 +58,7 @@ module.exports = {
     // dasherizedPlural: "sports-teams",
     // underscoreSingular: "sports_team",
     // underscorePlural: "sports_teams",
-    // camelSingular: "sportsTeam",
+    // camelSingular: "sportsTeam",§
     // camelPlural: "sportsTeams",
     // humananizedSingular: "sports team",
     // humananizedPlural: "sports teams",
@@ -172,9 +170,10 @@ module.exports = {
   updateFiles: async function (action, options) {
 
     await this.updateTestHelpers(action, options);
-
-    // await this.updateRootPageObject(action, options);
+    await this.updateTestHelpers(action, options);
+    await this.updateTranslations(action, options);
   },
+
   async updateTestHelpers(action, options) {
     const name = options.entity.name,
       tokens = this.generateTokens(name, options),
@@ -183,6 +182,69 @@ module.exports = {
         before: "// DO NOT REMOVE!",
       },
       content = `export const ${tokens.capitalizedSingular}_${tokens.manyCapitalizedPlural}_URL = "/${tokens.routePathSingular}/:id/${tokens.manyRoutePathPlural}";`;
+
+    let result;
+
+    if (options.dryRun) {
+      return this.writeDryRunStatusToUI();
+    } else if (action === "add") {
+      result = await this.insertIntoFile(file, content, marker);
+    } else {
+      result = await this.removeFromFile(file, content);
+    }
+
+    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+
+    return result;
+  },
+
+  async updateResourceActions (action, options) {
+    const name = options.entity.name,
+      tokens = this.generateTokens(name, options),
+      file = `app/utils/const/${tokens.dasherizedSingular}.js`,
+      marker = {
+        after: `export const ${tokens.capitalizedSingular}_ACTIONS = [`,
+      },
+      content = `${EOL}    {
+        title: 'section.${tokens.manyDasherizedPlural}.navTitle',
+        route: 'internal.${tokens.dasherizedSingular}.${tokens.manyDasherizedPlural}',
+      },`;
+
+    let result;
+
+    if (options.dryRun) {
+      return this.writeDryRunStatusToUI();
+    } else if (action === "add") {
+      result = await this.insertIntoFile(file, content, marker);
+    } else {
+      result = await this.removeFromFile(file, content);
+    }
+
+    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+
+    return result;
+  },
+
+  async updateTranslations (action, options) {
+        const name = options.entity.name,
+      tokens = this.generateTokens(name, options),
+      file = `translations/${tokens.dasherizedSingular}/en-us.yaml`,
+      marker = {
+        before: "archive:",
+      },
+      content = `${EOL}${tokens.manyCamelPlural}:
+    title: ${tokens.titleSingular} ${tokens.manyTitlePlural}
+    navTitle: ${tokens.manyTitlePlural}
+    crumb: ${tokens.manyTitlePlural}
+    actions:
+      search: Search
+      sort:
+        label: Sort
+        options:
+          name: id
+          createdAt: Created
+          updatedAt: Updated
+      new: Add New ${tokens.manyTitleSingular}`;
 
     let result;
 
@@ -215,6 +277,7 @@ module.exports = {
 
     return !isBasic && !isIndex && !isApplication;
   },
+
   writeRoute(action, name, options) {
     let routerPath = path.join.apply(null, this.findRouter(options));
     let source = fs.readFileSync(routerPath, "utf-8");

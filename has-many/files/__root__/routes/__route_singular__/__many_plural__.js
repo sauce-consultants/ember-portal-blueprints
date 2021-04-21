@@ -36,7 +36,7 @@ export default class <%= routeClassSingular %><%= manyClassSingular %>Route exte
 
   model(params) {
 
-    const <%= camelSingular %>Id = this.paramsFor('<%= routeNameSingular %>.<%= manyRouteNamePlural %>').<%= underscoreSingular %>_id;
+    const <%= camelSingular %>Id = this.paramsFor('<%= routeNameSingular %>').<%= underscoreSingular %>_id;
 
     return {
       <%= manyCamelPlural %>: this.load<%= manyClassPlural %>.perform(params, <%= camelSingular %>Id),

@@ -15,8 +15,6 @@ module.exports = {
 
   // - TODO - CRUD Check List/Form/Details components run independantly and allow custom namespace
   // - TODO - CRUD Create acceptance tests for each CRUD route (new and edit)
-  // - TODO - CRUD Has Many Generator
-  // - TODO - CRUD Remove beautify ignore comments
 
   // Current Options
   // --plural employees

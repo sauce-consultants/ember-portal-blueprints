@@ -1,7 +1,3 @@
-// You can delete the beautify comments in this file
-// They are just used for the blueprint sytax
-
-/* beautify ignore:start */
 import Controller from '@ember/controller';
 import {
   inject as controller
@@ -29,4 +25,3 @@ export default class <%= routeClassSingular %>IndexController extends Controller
   @alias('<%= routeClassSingular %>Controller.model.<%= camelSingular %>.value') <%= camelSingular %>;
   @alias('<%= routeClassSingular %>Controller.model.<%= camelSingular %>.isRunning') loading;
 }
-/* beautify ignore:end */

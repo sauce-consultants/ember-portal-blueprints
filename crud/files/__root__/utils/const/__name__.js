@@ -1,4 +1,3 @@
-/* beautify ignore:start */
 export const <%= capitalizedSingular %>_SORT_OPTIONS = [{
     label: "<%= dasherizedSingular %>.list.actions.sort.options.id",
     value: "id",
@@ -46,4 +45,3 @@ export const <%= capitalizedSingular %>_ACTIONS = [{
   title: "<%= dasherizedSingular %>.archive.navTitle",
   route: "<%= routeNameSingular %>.archive"
 }, ];
-/* beautify ignore:end */

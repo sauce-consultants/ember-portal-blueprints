@@ -5,11 +5,9 @@ const EOL = require("os").EOL;
 const portalInflection = require("../portal-inflection");
 const inflection = require("inflection");
 // const Blueprint = require("ember-cli/lib/models/blueprint");
-/* eslint-disable */
 const fs = require("fs-extra");
 const EmberRouterGenerator = require("ember-router-generator");
 const chalk = require("chalk");
-/* eslint-enable */
 
 module.exports = {
   description: 'Generate a has many CRUD screen for a resource',

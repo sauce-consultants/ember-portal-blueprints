@@ -39,7 +39,7 @@ export default class <%= routeClassSingular %><%= manyClassSingular %>Route exte
     const <%= camelSingular %>Id = this.paramsFor('<%= routeNameSingular %>.<%= manyRouteNamePlural %>').<%= underscoreSingular %>_id;
 
     return {
-      <%= manyCamelPlural %>: this.load<%= manyClassPlural %>.perform(params),
+      <%= manyCamelPlural %>: this.load<%= manyClassPlural %>.perform(params, <%= camelSingular %>Id),
       filter: this.getFilter(params),
     };
   }

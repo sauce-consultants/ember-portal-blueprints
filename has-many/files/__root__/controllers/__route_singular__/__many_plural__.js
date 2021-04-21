@@ -6,17 +6,17 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { t } from 'ember-intl';
 import { task } from 'ember-concurrency';
-import { <%= capitalizedSingular %>_ACTIONS } from 'mytime/utils/const/section';
-import sortBy from 'mytime/utils/actions/sort-by';
-import paginate from 'mytime/utils/actions/paginate';
+import { <%= capitalizedSingular %>_ACTIONS } from '<%= appName %>/utils/const/<%= dasherizedSingular %>';
+import sortBy from '<%= appName %>/utils/actions/sort-by';
+import paginate from '<%= appName %>/utils/actions/paginate';
 import {
   <%= manyCapitalizedSingular %>_ACTIONS,
   <%= manyCapitalizedSingular %>_SORT_OPTIONS,
   <%= manyCapitalizedSingular %>_FILTER_ATTRS,
-} from 'mytime/utils/const/<%= manyDasherizedSingular %>';
+} from '<%= appName %>/utils/const/<%= manyDasherizedSingular %>';
 import shape<%= manyClassSingular %>FilterParams from '<%= appName %>/utils/routes/shape-<%= manyDasherizedSingular %>-filter-params';
-import shapeSortParams from 'mytime/utils/routes/shape-sort-params';
-import getApiUrl from 'mytime/utils/get-api-url';
+import shapeSortParams from '<%= appName %>/utils/routes/shape-sort-params';
+import getApiUrl from '<%= appName %>/utils/get-api-url';
 
 export default class <%= routeClassSingular %><%= manyClassSingular %>Controller extends Controller {
   // Services
@@ -60,7 +60,7 @@ export default class <%= routeClassSingular %><%= manyClassSingular %>Controller
   @alias('<%= routeClassSingular %>Controller.model.<%= camelSingular %>.isRunning') loading<%= classSingular %>;
   @alias('model.<%= manyCamelPlural %>.value') <%= manyCamelPlural %>;
   @alias('model.<%= manyCamelPlural %>.value.meta') meta;
-  @alias('model.<%= manyCamelPlural %>..isRunning') loading<%= manyClassSingular %>;
+  @alias('model.<%= manyCamelPlural %>.isRunning') loading<%= manyClassSingular %>;
   @or('loading<%= classSingular %>', 'loading<%= manyClassSingular %>') loading;
   @or('search', 'number') hasFilter;
   @alias('model.filter') filter;
@@ -130,7 +130,7 @@ export default class <%= routeClassSingular %><%= manyClassSingular %>Controller
   // Tasks
 
   @task(function* (params) {
-    const filter = shapeGroupFilterParams(params),
+    const filter = shape<%= manyClassSingular %>FilterParams(params),
       sort = shapeSortParams(params),
       resource = getApiUrl(this.exportPath, {
         sort,

@@ -7,7 +7,7 @@ import {
   authenticateSession,
   invalidateSession,
 } from 'ember-simple-auth/test-support';
-import { AUTHENTICATED_ADMIN } from 'mytime/tests/helpers/authenticated-users';
+import { AUTHENTICATED_ADMIN } from '<%= appName %>/tests/helpers/authenticated-users';
 import {
   LOGIN_URL,
   <%= capitalizedPlural %>_URL,
@@ -15,9 +15,9 @@ import {
   <%= capitalizedSingular %>_EDIT_URL,
   <%= capitalizedSingular %>_<%= manyCapitalizedPlural %>_URL,
   <%= capitalizedSingular %>_ARCHIVE_URL,
-} from 'mytime/tests/helpers/test-urls';
-import Navigation from 'mytime/tests/pages/internal';
-import Page from 'mytime/tests/pages/internal/<%= dasherizedSingular %>/<%= manyDasherizedPlural %>';
+} from '<%= appName %>/tests/helpers/test-urls';
+import Navigation from '<%= appName %>/tests/pages/internal';
+import Page from '<%= appName %>/tests/pages/internal/<%= dasherizedSingular %>/<%= manyDasherizedPlural %>';
 import { pluralize } from 'ember-inflector';
 
 const PAGE_URL = <%= capitalizedSingular %>_<%= manyCapitalizedPlural %>_URL;
@@ -232,6 +232,9 @@ module('Acceptance | <%= routePathSingular %>/<%= manyRoutePathPlural %>', funct
   });
 
   test('Pagination: loading page 1 of /<%= routePathSingular %>/<%= manyRoutePathPlural %>', async function (assert) {
+    // create un related records
+    this.server.createList('<%= manyDasherizedSingular %>', 38);
+
     const <%= manyCamelPlural %> = this.server.createList('<%= manyDasherizedSingular %>', 42),
       resource = this.server.create('<%= dasherizedSingular %>', { <%= manyCamelPlural %> });
 

@@ -56,12 +56,13 @@ space-y-4 md:space-x-4 md:space-y-0">
     </Ui::Card>
 
     <div class="flex flex-col items-end">
-        <LinkTo @route="<%= routeNamePrefix %><%= manyRouteNamePlural %>.new">
+        <LinkTo @route="<%= routeNamePrefix %><%= manyRouteNamePlural %>.new"
+          @query={{hash <%= camelSingular %>=this.<%= camelSingular %>.id}}>
             <Ui::Button class="w-full sm:w-48"
                 @color="primary"
                 @style="secondary"
                 @size="md"
-                @trailingIcon="plus">{{t "<%= dasherizedSingular %>.list.actions.new"}}
+                @trailingIcon="plus">{{t "<%= dasherizedSingular %>.list.actions.new<%= classSingular %>"}}
             </Ui::Button>
         </LinkTo>
     </div>

@@ -232,17 +232,23 @@ module.exports = {
       },
       content = `${EOL}${tokens.manyCamelPlural}:
     title: ${tokens.titleSingular} ${tokens.manyTitlePlural}
-    navTitle: ${tokens.manyTitlePlural}
-    crumb: ${tokens.manyTitlePlural}
-    actions:
-      search: Search
-      sort:
-        label: Sort
-        options:
-          name: id
-          createdAt: Created
-          updatedAt: Updated
-      new: Add New ${tokens.manyTitleSingular}`;
+  navTitle: ${tokens.manyTitlePlural}
+  crumb: ${tokens.manyTitlePlural}
+  actions:
+    filter: Filter
+    export:
+      label: Export
+      title: Export Employees
+      button: Download
+      text: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius aliquam laudantium explicabo pariatur iste dolorem animi vitae error totam. At sapiente aliquam accusamus facere veritatis.
+    search: Search
+    sort:
+      label: Sort
+      options:
+        name: id
+        createdAt: Created
+        updatedAt: Updated
+    new: Add New ${tokens.manyTitleSingular}`;
 
     let result;
 

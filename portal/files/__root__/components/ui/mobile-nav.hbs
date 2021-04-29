@@ -1,4 +1,4 @@
-<div class="md:hidden {{if this.isShowingNav "pointer-events-auto" "pointer-events-none"}}"
+<div class="lg:hidden {{if @isShowingNav "pointer-events-auto" "pointer-events-none"}}"
   data-test-sidebar="mobile">
   <div class="fixed inset-0 flex z-40">
     {{!--
@@ -14,7 +14,7 @@
     <div class="fixed inset-0"
       role="button"
       {{on "click" this.close}}>
-      <div class="absolute inset-0 bg-gray-200 transition-opacity ease-linear duration-300 {{if this.isShowingNav "opacity-75" "opacity-0"}}"></div>
+      <div class="absolute inset-0 bg-gray-200 transition-opacity ease-linear duration-300 {{if @isShowingNav "opacity-75" "opacity-0"}}"></div>
     </div>
     {{!--
     Off-canvas menu, show/hide based on off-canvas menu state.
@@ -26,9 +26,9 @@
       From: "translate-x-0"
       To: "-translate-x-full"
   --}}
-    <div class="relative flex-1 flex flex-col max-w-64 sm:max-w-xs w-full bg-white transition ease-in-out duration-300 transform {{if this.isShowingNav "-translate-x-0" "-translate-x-full"}}">
+    <div class="relative flex-1 flex flex-col max-w-64 sm:max-w-xs w-full bg-white transition ease-in-out duration-300 transform {{if @isShowingNav "-translate-x-0" "-translate-x-full"}}">
 
-      <div class="absolute top-0 right-0 -mr-14 px-1 py-3 transition delay-150 ease-in-out duration-300 {{if this.isShowingNav "opacity-100" "opacity-0"}}">
+      <div class="absolute top-0 right-0 -mr-14 px-1 py-3 transition delay-150 ease-in-out duration-300 {{if @isShowingNav "opacity-100" "opacity-0"}}">
         <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-200"
           type="button"
           aria-label="Close sidebar"

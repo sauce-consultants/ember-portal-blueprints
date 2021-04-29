@@ -1,13 +1,8 @@
-import Component from '@ember/component';
-import {inject as service} from '@ember/service';
-import {alias} from '@ember/object/computed';
-import {action} from '@ember/object';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 export default class UiMobileNavComponent extends Component {
-  // Properties
-
-  tagName = '';
-
   // Service
 
   @service session;
@@ -22,7 +17,7 @@ export default class UiMobileNavComponent extends Component {
 
   @action
   close() {
-    const closeAction = this.onClose;
+    const closeAction = this.args.onClose;
     if (closeAction) {
       closeAction();
     }

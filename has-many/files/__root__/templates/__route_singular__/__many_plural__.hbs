@@ -41,11 +41,8 @@
 
 </Ui::Header>
 
-<div class="px-6 lg:px-12 mb-4
-flex flex-col md:flex-row flex-1
-space-y-4 md:space-x-4 md:space-y-0">
-
-    <section class="px-6 lg:px-12 flex flex-col space-y-4 mb-4 flex-1">
+<Layout::Sidebar as |layout|>
+  <layout.Main class="space-y-4">
 
     <Ui::Card>
         <Ui::Pagination @name="top"
@@ -83,10 +80,9 @@ space-y-4 md:space-x-4 md:space-y-0">
         @total={{this.meta.total}}
         @onChange={{this.paginateResults}} />
     </Ui::Card>
+  </layout.Main>
 
-  </section>
-
-  <aside class="flex flex-col space-y-4 w-68">
+  <layout.Side>
 
     <Ui::Card @title="Actions"
       @name="actions"
@@ -96,10 +92,9 @@ space-y-4 md:space-x-4 md:space-y-0">
         class="px-2 py-4" />
 
     </Ui::Card>
-
-  </aside>
-
-</div>
+    
+  </layout.Side>
+</Layout::Sidebar>
 
 <Ui::Modal @name="export"
   @isShowing={{this.showExport}}

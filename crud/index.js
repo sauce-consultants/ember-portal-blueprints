@@ -547,7 +547,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
     label: '${tokens.dasherizedSingular}.nav.label',
     route: '${tokens.routeNamePlural}.index',
     enabled: true,
-    icon: 'nav.icon',
+    icon: '${tokens.dasherizedSingular}.nav.icon',
     activeWhen: '${tokens.routeNamePlural}.index,${tokens.routeNameSingular}.index,${tokens.routeNameSingular}.edit,${tokens.routeNameSingular}.archive',
   },`;
 

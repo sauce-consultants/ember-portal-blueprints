@@ -6,51 +6,50 @@
   <header.Title @text={{concat (t "<%= dasherizedSingular %>.edit.title") ": " (if this.loading "" this.<%= camelSingular %>.describe)}} />
 </Ui::Header>
 
-{{#with (changeset this.<%= camelSingular %> this.<%= classSingular %>Validations) as |changeset|}}
+<Layout::Sidebar as |layout|>
+  <layout.Main>
 
-  <Ui::Form class="px-6 lg:px-12 mb-4
-flex flex-col md:flex-row flex-1
-space-y-4 md:space-x-4 md:space-y-0"
-    @onSubmit={{perform this.save changeset}}
-    @afterSubmit={{perform this.afterSave changeset}}
-    @changeset={{changeset}}
-    as
-    |form|>
+    {{#with (changeset this.<%= camelSingular %> this.<%= classSingular %>Validations) as |changeset|}}
 
-    <section class="flex flex-col space-y-4 w-full">
+      <Ui::Form class="flex-1 flex flex-col space-y-4 w-full"
+        @onSubmit={{perform this.save changeset}}
+        @afterSubmit={{perform this.afterSave changeset}}
+        @changeset={{changeset}}
+        as
+        |form|>
 
-      <Ui::Card class="flex-auto">
+        <section class="flex flex-col space-y-4 w-full">
 
-        <%= formComponent %>
+          <Ui::Card class="flex-auto">
 
-      </Ui::Card>
+            <%= formComponent %>
 
-      <Ui::Card>
+          </Ui::Card>
 
-        <Ui::Form::Footer class="p-6"
-          @form={{form}}
-          @changeset={{changeset}}
-          @translationPath={{"<%= dasherizedSingular %>.form"}}
-          @onCancel={{fn this.cancel changeset}}
-          @serverErrors={{this.serverErrors}} />
+          <Ui::Card>
 
-      </Ui::Card>
+            <Ui::Form::Footer class="p-6"
+              @form={{form}}
+              @changeset={{changeset}}
+              @translationPath={{"<%= dasherizedSingular %>.form"}}
+              @onCancel={{fn this.cancel changeset}}
+              @serverErrors={{this.serverErrors}} />
 
-    </section>
+          </Ui::Card>
+      </Ui::Form>
+    {{/with}}
+  </layout.Main>
 
-    <aside class="flex flex-col space-y-4 w-68">
+  <layout.Side>
 
-      <Ui::Card @title="Actions"
-        @name="actions"
-        class="flex-1">
+    <Ui::Card @title="Actions"
+      @name="actions"
+      class="flex-1">
 
-        <<%= classSingular %>::Actions @actions={{this.sidebarActions}}
-          class="px-2 py-4" />
+      <<%= classSingular %>::Actions @actions={{this.sidebarActions}}
+        class="px-2 py-4" />
 
-      </Ui::Card>
-
-    </aside>
-
-  </Ui::Form>
-
-{{/with}}
+    </Ui::Card>
+    
+  </layout.Side>
+</Layout::Sidebar>

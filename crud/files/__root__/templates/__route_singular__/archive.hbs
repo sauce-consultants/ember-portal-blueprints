@@ -6,27 +6,23 @@
   <header.Title @text={{concat (t "<%= dasherizedSingular %>.archive.title") ": " (if this.loading "" this.<%= camelSingular %>.describe)}} />
 </Ui::Header>
 
-<Ui::Form class="px-6 lg:px-12 mb-4
-flex flex-col md:flex-row flex-1
-space-y-4 md:space-x-4 md:space-y-0"
-  as
-  |form|>
+<Layout::Sidebar as |layout|>
+  <layout.Main>
+    <Ui::Form class="w-full" as |form|>
 
-  <section class="flex flex-col space-y-4 w-full">
+      <Ui::Card>
+        <Ui::Archive class="px-4 py-5 sm:p-6"
+          @form={{form}}
+          @loading={{this.loading}}
+          @onDelete={{perform this.archive this.<%= camelSingular %>}}
+          @button={{t "<%= dasherizedSingular %>.archive.button"}}>
+          {{t "<%= dasherizedSingular %>.archive.body" htmlSafe=true name=this.<%= camelSingular %>.describe}}
+        </Ui::Archive>
+      </Ui::Card>
+    </Ui::Form>
+  </layout.Main>
 
-    <Ui::Card>
-      <Ui::Archive class="px-4 py-5 sm:p-6"
-        @form={{form}}
-        @loading={{this.loading}}
-        @onDelete={{perform this.archive this.<%= camelSingular %>}}
-        @button={{t "<%= dasherizedSingular %>.archive.button"}}>
-        {{t "<%= dasherizedSingular %>.archive.body" htmlSafe=true name=this.<%= camelSingular %>.describe}}
-      </Ui::Archive>
-    </Ui::Card>
-
-  </section>
-
-  <aside class="flex flex-col space-y-4 w-68">
+  <layout.Side>
 
     <Ui::Card @title="Actions"
       @name="actions"
@@ -36,7 +32,6 @@ space-y-4 md:space-x-4 md:space-y-0"
         class="px-2 py-4" />
 
     </Ui::Card>
-
-  </aside>
-
-</Ui::Form>
+    
+  </layout.Side>
+</Layout::Sidebar>

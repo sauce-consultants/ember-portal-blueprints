@@ -45,8 +45,6 @@ module.exports = {
       tokens = this.generateTokens(name, options),
       entityOptions = options.entity.options;
 
-      console.log(tokens);
-
     return {
       ...tokens,
       appName: options.project.pkg.name,
@@ -168,7 +166,7 @@ module.exports = {
   updateFiles: async function (action, options) {
 
     await this.updateTestHelpers(action, options);
-    await this.updateTestHelpers(action, options);
+    await this.updateResourceActions(action, options);
     await this.updateTranslations(action, options);
   },
 

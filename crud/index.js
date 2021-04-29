@@ -426,11 +426,12 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
       // updateRoutes will remove the params when it removes
       // the route so no need to add logic for that here
       const name = options.entity.name,
+      nameUnderscored = name.replace('-', '_'),
         file = "app/router.js",
         marker = {
           after: `this.route('${name}',`,
         },
-        content = `{${EOL}        path: '${name}/:${name}_id'${EOL}      },`;
+        content = `{${EOL}        path: '${name}/:${nameUnderscored}_id'${EOL}      },`;
 
       let result = await this.insertIntoFile(file, content, marker);
 

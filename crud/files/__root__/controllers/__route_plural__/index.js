@@ -57,7 +57,7 @@ export default class <%= routeClassPlural %>IndexController extends Controller {
     @tracked page = 1;
     @tracked search = '';
     @tracked size = 20;
-    @tracked sort = <%= capitalizedSingular %>_FILTER_ATTRS[0].value;
+    @tracked sort = <%= capitalizedSingular %>_SORT_OPTIONS[0].value;
     @tracked state = null;  // example filter
 
     // UI state of slide over/modals

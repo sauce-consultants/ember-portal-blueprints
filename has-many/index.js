@@ -231,7 +231,7 @@ module.exports = {
         before: "archive:",
       },
       content = `${EOL}${tokens.manyCamelPlural}:
-    title: ${tokens.titleSingular} ${tokens.manyTitlePlural}
+  title: ${tokens.titleSingular} ${tokens.manyTitlePlural}
   navTitle: ${tokens.manyTitlePlural}
   crumb: ${tokens.manyTitlePlural}
   actions:

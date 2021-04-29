@@ -8,4 +8,16 @@
     <Ui::Flash @flash={{flash}} />
   {{/each}}
 
+  {{!-- template-lint-disable no-implicit-this --}}
+  {{#unless is-production}}
+
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center flex sm:hidden">XS</div>
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center hidden sm:flex md:hidden">SM</div>
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center hidden md:flex lg:hidden">MD</div>
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center hidden lg:flex xl:hidden">LG</div>
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center hidden xl:flex 2xl:hidden">XL</div>
+    <div class="absolute right-4 bottom-4 w-8 h-8 bg-accent-500 text-white text-xs font-bold rounded-full items-center justify-center hidden 2xl:flex">2XL</div>
+
+  {{/unless}}
+
 </div>

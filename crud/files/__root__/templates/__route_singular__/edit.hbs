@@ -18,24 +18,23 @@
         as
         |form|>
 
-        <section class="flex flex-col space-y-4 w-full">
+        <Ui::Card class="flex-auto">
 
-          <Ui::Card class="flex-auto">
+          <%= formComponent %>
 
-            <%= formComponent %>
+        </Ui::Card>
 
-          </Ui::Card>
+        <Ui::Card>
 
-          <Ui::Card>
+          <Ui::Form::Footer class="p-6"
+            @form={{form}}
+            @changeset={{changeset}}
+            @translationPath={{"<%= dasherizedSingular %>.form"}}
+            @onCancel={{fn this.cancel changeset}}
+            @serverErrors={{this.serverErrors}} />
 
-            <Ui::Form::Footer class="p-6"
-              @form={{form}}
-              @changeset={{changeset}}
-              @translationPath={{"<%= dasherizedSingular %>.form"}}
-              @onCancel={{fn this.cancel changeset}}
-              @serverErrors={{this.serverErrors}} />
-
-          </Ui::Card>
+        </Ui::Card>
+        
       </Ui::Form>
     {{/with}}
   </layout.Main>

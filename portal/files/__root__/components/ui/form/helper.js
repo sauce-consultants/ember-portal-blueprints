@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import {
   get
 } from '@ember/object';
+import { isArray } from '@ember/array';
 
 export default class UiFormHelperComponent extends Component {
 
@@ -11,7 +12,11 @@ export default class UiFormHelperComponent extends Component {
     if (changeset && changeset.isInvalid && name) {
       const errors = get(changeset.error, name);
       if (errors) {
-        return errors.validation.firstObject;
+        if (isArray(errors.validation)) {
+          return errors.validation.firstObject;
+        } else {
+          return errors.validation;
+        }
       }
     }
     return "";

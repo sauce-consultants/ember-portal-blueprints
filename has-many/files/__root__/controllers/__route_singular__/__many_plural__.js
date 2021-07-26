@@ -106,7 +106,7 @@ export default class <%= routeClassSingular %><%= manyClassSingular %>Controller
     await changeset.validate();
 
     if (changeset.get('isValid')) {
-      changeset.save();
+      await changeset.save();
 
       this.page = 1;
 

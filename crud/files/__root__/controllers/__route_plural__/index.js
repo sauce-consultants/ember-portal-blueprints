@@ -116,7 +116,7 @@ export default class <%= routeClassPlural %>IndexController extends Controller {
 
       if (changeset.get("isValid")) {
 
-        changeset.save();
+        await changeset.save();
 
         this.page = 1;
 

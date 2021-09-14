@@ -1,13 +1,16 @@
 'use strict';
 
-const path = require("path");
-const EOL = require("os").EOL;
-const portalInflection = require("../portal-inflection");
-const inflection = require("inflection");
+const path = require('path');
+const EOL = require('os').EOL;
+const portalInflection = require('../portal-inflection');
+const inflection = require('inflection');
 // const Blueprint = require("ember-cli/lib/models/blueprint");
-const fs = require("fs-extra");
-const EmberRouterGenerator = require("ember-router-generator");
-const chalk = require("chalk");
+
+/* eslint-disable node/no-extraneous-require */
+const fs = require('fs-extra');
+const EmberRouterGenerator = require('ember-router-generator');
+const chalk = require('chalk');
+/* eslint-enable node/no-extraneous-require */
 
 module.exports = {
   description: 'Generate a has many CRUD screen for a resource',
@@ -17,33 +20,32 @@ module.exports = {
   // --nested internal
   availableOptions: [
     {
-      name: "nested",
+      name: 'nested',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "plural",
+      name: 'plural',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "many",
+      name: 'many',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "many-plural",
+      name: 'many-plural',
       type: String,
-      default: "",
+      default: '',
     },
   ],
 
   locals(options) {
-    
     // ember g has-many section --many group --nested internal
     const name = options.entity.name,
-      tokens = this.generateTokens(name, options),
-      entityOptions = options.entity.options;
+      tokens = this.generateTokens(name, options);
+    // entityOptions = options.entity.options;
 
     return {
       ...tokens,
@@ -70,7 +72,7 @@ module.exports = {
     // routeNamePlural: "admin.secret.sports-teams",
     // routePathSingular: "admin/secret/sports-team",
     // routePathPlural: "admin/secret/sports-teams",
-    // ... all these variables are also available for the related 
+    // ... all these variables are also available for the related
     // many model - Prefixed with more e.g. moreClassPlural
   },
 
@@ -92,41 +94,40 @@ module.exports = {
   },
 
   afterInstall: async function (options) {
-    await this.updateRoutes("add", options);
+    await this.updateRoutes('add', options);
 
-    await this.updateFiles("add", options);
+    await this.updateFiles('add', options);
 
     return true;
   },
 
   afterUninstall: async function (options) {
-    await this.updateRoutes("remove", options);
+    await this.updateRoutes('remove', options);
 
-    await this.updateFiles("remove", options);
+    await this.updateFiles('remove', options);
 
     return true;
   },
 
   generateTokens(name, options) {
-    
     const tokens = portalInflection.nameTokens(name, options),
       manyName = options['many'],
       manyOptions = {plural: options['many-plural']},
       manyTokens = portalInflection.nameTokens(manyName, manyOptions);
 
-      let prefixedManyTokens = {};
+    let prefixedManyTokens = {};
 
-      Object.keys(manyTokens).forEach(
-        (key) => {
-          const prefixedKey = inflection.camelize('many_'+inflection.underscore(key), true)
-          prefixedManyTokens[prefixedKey] = manyTokens[key];
-        }
+    Object.keys(manyTokens).forEach((key) => {
+      const prefixedKey = inflection.camelize(
+        'many_' + inflection.underscore(key),
+        true,
       );
+      prefixedManyTokens[prefixedKey] = manyTokens[key];
+    });
 
-      const routeNamePrefix = options.nested ? `${options.nested}.` : '';
+    const routeNamePrefix = options.nested ? `${options.nested}.` : '';
 
-      return {...prefixedManyTokens, ...tokens, routeNamePrefix};
-
+    return {...prefixedManyTokens, ...tokens, routeNamePrefix};
   },
 
   // Add our CRUD routes to app/router.js
@@ -147,24 +148,23 @@ module.exports = {
     // we tweaked this bit so we can add multiple routes to router.js
     entity.name = route;
     let actionColorMap = {
-      add: "green",
-      remove: "red",
+      add: 'green',
+      remove: 'red',
     };
-    let color = actionColorMap[action] || "gray";
+    let color = actionColorMap[action] || 'gray';
 
     if (this.shouldTouchRouter(route, options)) {
       await this.writeRoute(action, route, options);
 
-      this.ui.writeLine("updating router");
+      this.ui.writeLine('updating router');
 
-      this._writeStatusToUI(chalk[color], action + " route", route);
+      this._writeStatusToUI(chalk[color], action + ' route', route);
     }
 
     entity.name = _name;
   },
 
   updateFiles: async function (action, options) {
-
     await this.updateTestHelpers(action, options);
     await this.updateResourceActions(action, options);
     await this.updateTranslations(action, options);
@@ -173,9 +173,9 @@ module.exports = {
   async updateTestHelpers(action, options) {
     const name = options.entity.name,
       tokens = this.generateTokens(name, options),
-      file = "tests/helpers/test-urls.js",
+      file = 'tests/helpers/test-urls.js',
       marker = {
-        before: "// DO NOT REMOVE!",
+        before: '// DO NOT REMOVE!',
       },
       content = `export const ${tokens.capitalizedSingular}_${tokens.manyCapitalizedPlural}_URL = "/${tokens.routePathSingular}/:id/${tokens.manyRoutePathPlural}";`;
 
@@ -183,18 +183,18 @@ module.exports = {
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+    this.writeUpdateFileStatusToUI(result, action, 'test helper urls');
 
     return result;
   },
 
-  async updateResourceActions (action, options) {
+  async updateResourceActions(action, options) {
     const name = options.entity.name,
       tokens = this.generateTokens(name, options),
       file = `app/utils/const/${tokens.dasherizedSingular}.js`,
@@ -210,23 +210,23 @@ module.exports = {
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+    this.writeUpdateFileStatusToUI(result, action, 'test helper urls');
 
     return result;
   },
 
-  async updateTranslations (action, options) {
-        const name = options.entity.name,
+  async updateTranslations(action, options) {
+    const name = options.entity.name,
       tokens = this.generateTokens(name, options),
       file = `translations/${tokens.dasherizedSingular}/en-us.yaml`,
       marker = {
-        before: "archive:",
+        before: 'archive:',
       },
       content = `${EOL}${tokens.manyCamelPlural}:
   title: ${tokens.titleSingular} ${tokens.manyTitlePlural}
@@ -252,27 +252,27 @@ module.exports = {
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+    this.writeUpdateFileStatusToUI(result, action, 'test helper urls');
 
     return result;
   },
 
   shouldTouchRouter(name, options) {
-    var isIndex = name === "index";
-    var isBasic = name === "basic";
-    var isApplication = name === "application";
+    var isIndex = name === 'index';
+    var isBasic = name === 'basic';
+    var isApplication = name === 'application';
 
     if (options.dryRun) {
       this._writeStatusToUI(
-        chalk["yellow"],
-        "You specified the dry-run flag, so no routes will be updated.",
-        ""
+        chalk['yellow'],
+        'You specified the dry-run flag, so no routes will be updated.',
+        '',
       );
       return false;
     }
@@ -282,7 +282,7 @@ module.exports = {
 
   writeRoute(action, name, options) {
     let routerPath = path.join.apply(null, this.findRouter(options));
-    let source = fs.readFileSync(routerPath, "utf-8");
+    let source = fs.readFileSync(routerPath, 'utf-8');
 
     let routes = new EmberRouterGenerator(source);
     let newRoutes = routes[action](name, options);
@@ -292,45 +292,43 @@ module.exports = {
 
   findRouter(options) {
     let routerPathParts = [options.project.root];
-    let root = "app";
+    let root = 'app';
 
     if (options.dummy && options.project.isEmberCLIAddon()) {
       routerPathParts = routerPathParts.concat([
-        "tests",
-        "dummy",
+        'tests',
+        'dummy',
         root,
-        "router.js",
+        'router.js',
       ]);
     } else {
-      routerPathParts = routerPathParts.concat([root, "router.js"]);
+      routerPathParts = routerPathParts.concat([root, 'router.js']);
     }
 
     return routerPathParts;
   },
 
   writeUpdateFileStatusToUI(fileUpdateResult, action, message) {
-    if (action === "add") {
+    if (action === 'add') {
       if (fileUpdateResult.inserted) {
-        this._writeStatusToUI(chalk["green"], "updated", message);
+        this._writeStatusToUI(chalk['green'], 'updated', message);
       } else {
-        this._writeStatusToUI(chalk["red"], "skipped", message);
+        this._writeStatusToUI(chalk['red'], 'skipped', message);
       }
     } else {
       if (fileUpdateResult.removed) {
-        this._writeStatusToUI(chalk["red"], "updated", message);
+        this._writeStatusToUI(chalk['red'], 'updated', message);
       } else {
-        this._writeStatusToUI(chalk["yellow"], "skipped", message);
+        this._writeStatusToUI(chalk['yellow'], 'skipped', message);
       }
     }
   },
 
   writeDryRunStatusToUI() {
     this._writeStatusToUI(
-      chalk["yellow"],
-      "You specified the dry-run flag, so no files will be updated.",
-      ""
+      chalk['yellow'],
+      'You specified the dry-run flag, so no files will be updated.',
+      '',
     );
   },
-
-
 };

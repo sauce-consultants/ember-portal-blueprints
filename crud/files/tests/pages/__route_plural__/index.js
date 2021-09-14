@@ -30,7 +30,7 @@ export default create({
   // Actions
   actions: {
     sort: {
-      toggleMenu: clickable('[data-test-action="sort"]'),
+      toggleMenu: clickable('[data-test-dropdown="sort"]'),
       isVisible: isVisible('[data-test-dropdown-menu="sort"]'),
       items: collection(
         "[data-test-dropdown-menu-item]",

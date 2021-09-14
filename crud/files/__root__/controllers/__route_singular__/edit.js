@@ -75,7 +75,7 @@ export default class <%= routeClassSingular %>EditController extends Controller 
     if (changeset.get("isValid")) {
 
       try {
-        changeset.save();
+        yield changeset.save();
       } catch (e) {
         window.console.error(e);
         this.flashMessages.alert(this.serverMessage);

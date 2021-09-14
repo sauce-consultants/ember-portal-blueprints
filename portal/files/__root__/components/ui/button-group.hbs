@@ -1,0 +1,5 @@
+<div class={{this.groupClasses}} ...attributes>
+    {{yield (hash
+        Button=(component "ui/button" loading=@loading color=@color class=this.buttonClasses)
+    )}}
+</div>

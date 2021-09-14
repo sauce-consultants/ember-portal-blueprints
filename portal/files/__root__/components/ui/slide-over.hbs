@@ -10,7 +10,7 @@
 
         <div class="
         pointer-events-auto w-screen
-        max-w-80 w-96
+        max-w-md md:w-96
         transition ease-in-out duration-500 sm:duration-700
         transform {{if @isShowing "translate-x-0" "translate-x-full"}}
         ">
@@ -29,7 +29,7 @@
 
             <div class="relative flex-1 px-4 sm:px-6">
 
-              <div class="absolute inset-0 ">
+              <div class="absolute inset-0" ...attributes>
                 {{yield}}
               </div>
 

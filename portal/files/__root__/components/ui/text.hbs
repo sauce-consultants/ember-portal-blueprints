@@ -1,0 +1,5 @@
+{{#if @loading}}
+    <span class="rounded-md text-transparent {{if @skeletonColor @skeletonColor "bg-gray-200 dark:bg-gray-800"}} {{if @size (concat "text-" @size) ""}}" ...attributes>{{yield}}{{@text}}</span>
+{{else}}
+    <span class={{if @size (concat "text-" @size) ""}} ...attributes>{{yield}}{{@text}}</span>
+{{/if}}

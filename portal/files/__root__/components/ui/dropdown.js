@@ -1,13 +1,8 @@
 import Component from '@glimmer/component';
-import {
-  action
-} from '@ember/object';
-import {
-  tracked
-} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class UiDropdownComponent extends Component {
-
   // Tracking
 
   @tracked showMenu = false;
@@ -18,5 +13,4 @@ export default class UiDropdownComponent extends Component {
   toggleMenu() {
     this.showMenu = !this.showMenu;
   }
-
 }

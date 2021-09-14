@@ -1,0 +1,6 @@
+ <Ui::Text::H1 
+    class="font-bold leading-6"
+    @size="lg" 
+    @loading={{@loading}}
+    data-test-card-title={{if @name @name true}}
+>{{@title}}{{yield}}</Ui::Text::H1>

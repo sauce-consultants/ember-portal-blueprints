@@ -1,8 +1,32 @@
+{{#if @loading}}
+
+  <div class="
+    p-4 w-full
+    text-transparent
+    bg-gray-100 dark:bg-gray-800 
+    border-l-4 border-gray-200 dark:border-gray-800"
+  >
+    <div class="flex ">
+      <div class="flex-shrink-0">
+        <div class="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+      </div>
+      <div class="ml-3">
+        <Ui::Text::P @loading={{@loading}} class="text-sm leading-5">
+          {{@flash.message}}
+        </Ui::Text::P>
+      </div>
+    </div>
+  </div>
+
+{{else}}
+
 <div class="
- border-l-4 p-4 w-full
- bg-gray-900 border-gray-500
-">
-  <div class="flex text-white">
+  p-4 w-full
+  text-white dark:text-black 
+  bg-gray-900 dark:bg-gray-100 
+  border-l-4  border-gray-500"
+>
+  <div class="flex ">
     <div class="flex-shrink-0">
       {{#if (eq @flash.type "success")}}
         {{svg-jar "speakerphone" class="h-5 w-5"}}
@@ -15,9 +39,10 @@
       {{/if}}
     </div>
     <div class="ml-3">
-      <p class="text-sm leading-5">
+      <Ui::Text::P class="text-sm leading-5">
         {{@flash.message}}
-      </p>
+      </Ui::Text::P>
     </div>
   </div>
 </div>
+{{/if}}

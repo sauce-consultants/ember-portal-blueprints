@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import { get } from "@ember/object";
+import { get } from '@ember/object';
 
 export default class UiFormControlComponent extends Component {
-
   get isInvalid() {
-    return this.args.invalid || this.invalidChangeset
+    return this.args.invalid || this.invalidChangeset;
   }
 
   get invalidChangeset() {
@@ -21,5 +20,4 @@ export default class UiFormControlComponent extends Component {
 
     return false;
   }
-
 }

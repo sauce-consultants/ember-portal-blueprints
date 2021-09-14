@@ -1,0 +1,26 @@
+<label class="relative flex items-start" {{on "click" (fn @onChange @value)}} type="button">
+    <div class="flex items-center h-5">
+
+        <Ui::Form::Radio 
+            @checked={{or @checked (eq @selected @value)}}
+            @value={{@value}}
+            @loading={{@loading}}
+            @name={{@name}}
+        />
+      
+    </div>
+    <div class="ml-3 text-sm">
+
+        {{#if @label}}
+            <div class="font-medium text-gray-700 dark:text-gray-300">
+                <Ui::Text @loading={{@loading}}>{{@label}}</Ui::Text>
+            </div>
+        {{/if}}
+
+        {{#if @tip}}
+            <p class="font-light text-gray-500">
+                <Ui::Text @loading={{@loading}}>{{@tip}}</Ui::Text>
+            </p>
+        {{/if}}    
+    </div>
+  </label>

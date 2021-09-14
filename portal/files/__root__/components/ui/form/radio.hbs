@@ -1,0 +1,16 @@
+{{#if @loading}}
+
+  <div class="h-4 w-4 mt-0.5 border bg-gray-200 dark:bg-gray-800 border-gray-200 dark:border-gray-800 rounded-full"></div>
+ 
+{{else}}
+
+  <Input 
+    name={{@name}}
+    @value={{@value}} 
+    @type="radio"
+    checked={{@checked}}
+    class="h-4 w-4 mt-0.5 cursor-pointer {{this.borderClasses}} {{this.focusClasses}} {{this.textClasses}} {{this.disabledClasses}}" 
+    ...attributes
+  />
+
+{{/if}}

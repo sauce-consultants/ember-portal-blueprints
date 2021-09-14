@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 
 export default class UiFormLabelComponent extends Component {
-
   // Getters
 
   get invalid() {
@@ -11,10 +10,10 @@ export default class UiFormLabelComponent extends Component {
     }
     return invalid;
   }
-  get textColor() {
+  get textClasses() {
     if (this.invalid) {
-      return 'red';
+      return 'text-danger-700';
     }
-    return 'gray';
+    return 'text-gray-700';
   }
 }

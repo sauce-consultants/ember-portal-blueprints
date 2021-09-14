@@ -1,0 +1,5 @@
+<div class="flex items-center justify-between flex-wrap sm:flex-nowrap space-x-4" ...attributes>
+    {{yield (hash
+        Col=(component "ui/card/header/columns/column" loading=@loading)
+    )}}
+</div>

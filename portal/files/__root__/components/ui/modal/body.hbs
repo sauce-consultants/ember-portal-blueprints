@@ -1,0 +1,6 @@
+<div class={{this.baseClasses}} ...attributes>
+    {{yield (hash
+        Title=(component "ui/modal/title" loading=@loading)
+        Text=(component "ui/modal/text" loading=@loading)
+    )}}
+</div>

@@ -1,0 +1,36 @@
+<Ui::Modal 
+  @name="export"
+  @isShowing={{@isShowing}}
+  @style="centered"
+  @onCancel={{@onCancel}}
+  as |modal|
+>
+
+  <modal.Body as |body|>
+
+    <modal.Aside as |aside|>
+      <aside.Icon @icon="download" />
+    </modal.Aside>
+
+    <body.Title>{{t (concat @translationPath ".title")}}</body.Title>
+    <body.Text>{{t (concat @translationPath ".text")}}</body.Text>
+
+  </modal.Body>
+
+  <modal.Footer as |footer|>
+    <footer.ButtonGroup as |group|>
+      <group.Button 
+        @color="primary" 
+        @name="confirm"
+        {{on "click" @onConfirm}}
+      >{{t (concat @translationPath ".button")}}</group.Button>
+      <group.Button 
+        @color="gray" 
+        @style="border"
+        @name="cancel"
+        {{on "click" @onCancel}}
+      >Cancel</group.Button>
+    </footer.ButtonGroup>
+  </modal.Footer>
+  
+</Ui::Modal>

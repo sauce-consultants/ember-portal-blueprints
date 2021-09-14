@@ -1,6 +1,10 @@
-<header class="py-6 px-6 md:px-12 flex flex-col-reverse md:flex-row justify-between">
+<header class="
+  py-6 px-6 md:px-12 
+  flex flex-col-reverse md:flex-row justify-between
+  {{this.colorClasses}}
+">
   {{yield (hash
-    Title=(component "ui/header/title")
-    Actions=(component "ui/header/actions")
+    Title=(component "ui/header/title" loading=@loading)
+    Actions=(component "ui/header/actions" loading=@loading)
   )}}
 </header>

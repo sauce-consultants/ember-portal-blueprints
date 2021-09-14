@@ -1,0 +1,7 @@
+{{#if @loading}}
+    <div class="mx-auto h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+{{else}}
+    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full {{this.colorClass}}">
+        {{svg-jar @icon class="h-6 w-6"}}
+    </div>
+{{/if}}

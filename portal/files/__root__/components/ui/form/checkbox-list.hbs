@@ -1,0 +1,10 @@
+
+<fieldset class="space-y-5" ...attributes>
+
+    {{!-- <legend class="sr-only">Notifications</legend> --}}
+
+    {{yield (hash 
+        Item=(component "ui/form/checkbox-list/item" loading=@loading)
+    )}}
+
+</fieldset>

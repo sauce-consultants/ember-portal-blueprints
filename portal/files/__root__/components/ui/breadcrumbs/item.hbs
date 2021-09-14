@@ -1,14 +1,13 @@
 <div class="flex flex-row items-center overflow-hidden {{if @isLast "flex-none" ""}}"
   data-test-breadcrumbs-item={{if @name @name true}}>
+
   <div class="truncate text-xs sm:text-base"
     data-test-breadcrumbs-item-text>
-    {{#if @loading}}
-      <div class="bg-white w-16 h-4 rounded opacity-50"></div>
-    {{else}}
-      {{yield}}
-    {{/if}}
+    <Ui::Text @skeletonColor="bg-primary-400 dark:bg-primary-600" @loading={{@loading}}>{{yield}}</Ui::Text>
   </div>
+
   {{#unless @isLast}}
     {{svg-jar "chevron-right" class="ml-1 sm:ml-2 w-4 h-4" data-test-breadcrumbs-item-seperator=true}}
   {{/unless}}
+
 </div>

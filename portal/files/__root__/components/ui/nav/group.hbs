@@ -1,0 +1,50 @@
+
+<div 
+    role="button" 
+    class="
+        {{if 
+          @loading 
+          "text-transparent" 
+          "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
+        }}
+        group flex items-center 
+        px-3 py-2 text-sm font-medium rounded-md"
+        {{on "click" this.toggle}}
+        ...attributes
+>
+
+  {{#if @icon}}
+
+      {{#if @loading}}
+          <div class="bg-gray-200 dark:bg-gray-800
+              flex-shrink-0 -ml-1 mr-3 h-6 w-6 rounded-full"></div>
+      {{else}}
+          {{svg-jar @icon class="
+              text-gray-400 dark:text-gray-600 group-hover:text-gray-500 
+              flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+          }}
+      {{/if}}
+  {{/if}}
+
+  <Ui::Text @loading={{@loading}} class="truncate">
+      {{@title}}
+  </Ui::Text>
+
+
+  {{#if @loading}}
+      <div class="bg-gray-200 dark:bg-gray-800 flex-shrink-0 ml-auto h-6 w-6 rounded-full"></div>
+  {{else}}
+      {{svg-jar (if this.open 'chevron-down' 'chevron-right') class="
+          text-gray-400 dark:text-gray-600 group-hover:text-gray-500 
+          flex-shrink-0 ml-auto h-6 w-6"
+      }}
+  {{/if}}
+
+</div>
+<div class="relative pl-2 overflow-hidden transition-max-height duration-150 ease-in-out {{if this.open "max-h-full" "max-h-0"}}">
+  {{yield (hash
+    Item=(component "ui/nav/item" loading=@loading)
+    Subtitle=(component "ui/nav/subtitle" loading=@loading)
+    Group=(component "ui/nav/group" loading=@loading)
+  )}}
+</div>

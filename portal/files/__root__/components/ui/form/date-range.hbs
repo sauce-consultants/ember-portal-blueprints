@@ -6,7 +6,18 @@
   {{/if}}
   <DateRangePicker id={{this.dateInputId}}
     data-test-input={{@name}}
-    @inputClasses="daterangepicker-input form-input block w-full border border-{{this.borderColor}}-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-{{this.focusColor}} focus:border-{{this.focusColor}}-300 transition duration-150 ease-in-out text-{{this.textColor}} {{this.placeholderColor}} sm:text-sm sm:leading-5 {{this.iconPadding}}"
+    @inputClasses="
+      daterangepicker-input 
+      form-input block w-full
+      bg-white
+      disabled:bg-gray-200
+      rounded-md shadow-sm 
+      transition duration-150 ease-in-out 
+      sm:text-sm sm:leading-5 
+      {{this.focusClasses}}
+      {{this.borderClasses}}
+      {{this.textClasses}}
+      {{this.iconPadding}}"
     @start={{this.start}}
     @end={{this.end}}
     @serverFormat={{this.format}}

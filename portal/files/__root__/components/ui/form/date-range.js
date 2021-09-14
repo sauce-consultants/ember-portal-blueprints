@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import {action} from '@ember/object';
+import { action } from '@ember/object';
 import moment from 'moment';
-import {guidFor} from '@ember/object/internals';
+import { guidFor } from '@ember/object/internals';
 
 export default class UiFormDateRangeComponent extends Component {
   // Properties
@@ -42,36 +42,29 @@ export default class UiFormDateRangeComponent extends Component {
     }
     return this.getArgWithDefault('trailingIcon', false);
   }
-  get borderColor() {
-    if (this.invalid) {
-      return 'red';
-    }
-    return 'gray';
-  }
   get iconColor() {
     if (this.invalid) {
-      return 'red';
+      return 'danger';
     }
     return 'gray';
   }
-  get focusColor() {
+  get borderClasses() {
     if (this.invalid) {
-      return 'red';
+      return 'border border-danger-500 focus:ring-danger-500 focus:ring-2 focus:ring-opacity-50';
     }
-    return 'orange';
+    return 'border border-gray-300 focus:ring-primary-500 focus:ring-2 focus:ring-opacity-50';
   }
-  get textColor() {
+  get focusClasses() {
     if (this.invalid) {
-      return 'red-500';
+      return 'focus:outline-none focus:border-danger-600';
     }
-    return 'black';
+    return 'focus:outline-none focus:border-primary-600';
   }
-
-  get placeholderColor() {
+  get textClasses() {
     if (this.invalid) {
-      return 'placeholder-red-300';
+      return 'text-black placeholder-danger-300';
     }
-    return '';
+    return 'text-black';
   }
 
   get iconPadding() {
@@ -102,7 +95,7 @@ export default class UiFormDateRangeComponent extends Component {
       string = moment(startDate).format('DD/MM/YYYY');
     } else {
       string = `${moment(startDate).format('DD/MM/YYYY')} - ${moment(
-        endDate,
+        endDate
       ).format('DD/MM/YYYY')}`;
     }
     picker.element.val(string);
@@ -114,7 +107,7 @@ export default class UiFormDateRangeComponent extends Component {
   @action hideDatePicker() {}
   @action cancelDatePicker() {
     let el = document.querySelector(
-      `#${this.dateInputId} .daterangepicker-input`,
+      `#${this.dateInputId} .daterangepicker-input`
     );
     if (el.value) {
       el.value = '';

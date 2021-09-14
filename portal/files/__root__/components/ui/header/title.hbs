@@ -1,5 +1,8 @@
 {{page-title @text}}
-<h1 class="text-2xl leading-8 font-bold"
+<Ui::Text::H1 
+  @size="2xl" 
+  @loading={{@loading}}
+  class="font-bold truncate md:text-4xl"
   data-test-header-title={{dasherize @text}}>
   {{@text}}
-</h1>
+</Ui::Text::H1>

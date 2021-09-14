@@ -1,7 +1,8 @@
-<div class="flex flex-row justify-end items-center mb-2 md:mb-0 text-gray-800"
-  data-test-header-actions>
+<div class="flex flex-row justify-end items-center mb-2 md:mb-0 space-x-1"
+  data-test-header-actions
+>
   {{yield (hash
-    Action=(component "ui/header/action")
-    Search=(component "ui/header/search")
+    Action=(component "ui/header/action" loading=@loading size="sm" color="black" style="text" iconStyle="empty")
+    Search=(component "ui/header/search" loading=@loading icon="search")
   )}}
 </div>

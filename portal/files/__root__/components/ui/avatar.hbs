@@ -1,0 +1,28 @@
+<div class={{this.reverseClasses}}>
+    {{#if @loading}}
+        <div class="{{this.baseClasses}} {{this.sizeClasses}} {{this.styleClasses}} text-transparent bg-gray-200 dark:bg-gray-80"></div>
+    {{else if @src}}
+        <img 
+            class="{{this.baseClasses}} {{this.sizeClasses}} {{this.colorClasses}} {{this.styleClasses}}"
+            src={{@src}} 
+            alt={{@alt}} 
+            ...attributes>
+    {{else if @svg}}
+        <div 
+            class="{{this.baseClasses}} {{this.sizeClasses}} {{this.colorClasses}} {{this.styleClasses}}"
+            title={{@alt}} 
+            ...attributes>
+            {{svg-jar @svg class=this.svgClasses}}
+        </div>
+    {{else}}
+        <div 
+            class="{{this.baseClasses}} {{this.sizeClasses}} {{this.colorClasses}} {{this.styleClasses}}"
+            title={{@alt}} 
+            ...attributes
+        >{{@text}}{{yield}}</div>
+    {{/if}}
+
+    {{#if @alt}}
+        <EmberTooltip>{{@alt}}</EmberTooltip>
+    {{/if}}
+</div>

@@ -1,32 +1,25 @@
 <div ...attributes>
-  <h3 class="text-lg mb-4 leading-6 font-medium text-gray-900">
+  
+  <Ui::Text::h3 @size="2xl" @loading={{@loading}} class="mb-4 font-medium text-gray-900 dark:text-gray-100">
     {{t "archive.title"}}
-  </h3>
-  {{#if @loading}}
-    <div class="mt-2 max-w-xl text-sm text-gray-500">
-      <Ui::Skeleton::Paragraphs @lines={{2}}
-        @num={{2}} />
-    </div>
-    <div class="mt-5">
-      <Ui::Skeleton::Button @size="md"
-        class="min-w-48" />
-    </div>
+  </Ui::Text::h3>
 
-  {{else}}
-    <div class="mt-2 max-w-xl text-sm text-gray-500 prose">
-      {{yield}}
-    </div>
-    <div class="mt-5">
-      <Ui::Button type="button"
-        @name="archive"
-        @size="md"
-        @style="primary"
-        @color="danger"
-        @loading={{@task.isRunning}}
-        class="min-w-48"
-        {{on "click" @onDelete}}>
-        {{@button}}
-      </Ui::Button>
-    </div>
-  {{/if}}
+  <div class="mt-2 max-w-xl text-lg text-gray-500 prose">
+    {{yield}}
+  </div>
+
+  <div class="mt-5">
+    <Ui::Button type="button"
+      @name="archive"
+      @size="xl"
+      @style="primary"
+      @color="danger"
+      @task={{@task}}
+      @loading={{@loading}}
+      class="min-w-48"
+      {{on "click" @onDelete}}>
+      {{@button}}
+    </Ui::Button>
+  </div>
+
 </div>

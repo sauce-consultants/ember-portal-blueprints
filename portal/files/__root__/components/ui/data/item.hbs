@@ -1,33 +1,46 @@
 {{#with (if @name @name (if @label (dasherize @label) true)) as |name|}}
 
-  <div class="font-base text-black leading-5 px-2 py-4 border-b border-gray-100"
+  <div class="
+    text-sm font-bold leading-5
+     text-black dark:text-white 
+    py-4 
+    border-b border-gray-100 dark:border-gray-900"
     data-test-data-item={{name}}
     ...attributes>
+
     {{#if @label}}
-      <div class="font-black mb-2"
-        data-test-data-item-label={{name}}>{{@label}}</div>
+
+      <div class="mb-2 max-w-md">
+        <Ui::Text 
+          @loading={{@loading}}
+          class="font-black"
+          data-test-data-item-label={{name}}
+        >{{@label}}</Ui::Text>
+      </div>
+
     {{/if}}
 
-    <div class="font-light mb-2"
+    <div class="font-light mb-2 max-w-md"
       data-test-data-item-value={{name}}>
-      {{#if @loading}}
 
-        <Ui::Skeleton::Word class="w-32" />
-
-      {{else}}
         {{#if (has-block)}}
           {{yield}}
-        {{else if @value}}
-          {{@value}}
         {{else}}
-          N/A
+          <Ui::Text @loading={{@loading}}>{{if @value @value "N/A"}}</Ui::Text>
         {{/if}}
-      {{/if}}
+
     </div>
 
     {{#if @tip}}
-      <div class="font-light text-xs italic"
-        data-test-data-item-tip={{name}}>{{@tip}}</div>
+      <div class="max-w-md">
+        <Ui::Text 
+          @loading={{@loading}}
+          @size='xs'
+          class="font-light italic"
+          data-test-data-item-tip={{name}}>
+            {{@tip}}
+          </Ui::Text>
+        </div>
     {{/if}}
   </div>
 

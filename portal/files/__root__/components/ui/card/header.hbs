@@ -1,0 +1,18 @@
+<header class="px-2 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-900 rounded-t-2xl shadow-bottom" ...attributes>
+
+    {{#if @title}}
+
+        <Ui::Card::Header::Title @title={{@title}} @loading={{@loading}} />
+    
+    {{/if}}
+
+    {{yield (hash
+        Title=(component "ui/card/header/title" loading=@loading)
+        Description=(component "ui/card/header/description" loading=@loading)
+        Button=(component "ui/button" loading=@loading)
+        Cols=(component "ui/card/header/columns" loading=@loading)
+        Actions=(component "ui/card/header/actions" loading=@loading)
+        Avatar=(component "ui/avatar" loading=@loading size="lg")
+    )}}
+
+</header>

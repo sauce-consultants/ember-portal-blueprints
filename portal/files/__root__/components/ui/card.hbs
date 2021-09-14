@@ -1,16 +1,21 @@
-<section class="bg-white rounded-2xl flex flex-col overflow-hidden"
+<section class="text-black dark:text-white bg-white dark:bg-black rounded-2xl flex flex-col overflow-hidden {{if @padded "px-4 py-4 sm:px-6" ""}}"
   data-test-card={{if @name @name true}}
   ...attributes>
 
   {{#if @title}}
 
-    <header class="px-6 py-4 border-b border-gray-100 rounded-t-2xl shadow-bottom">
+    <header class="px-2 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-900 rounded-t-2xl shadow-bottom">
       <h1 class="text-lg font-bold leading-6"
         data-test-card-title={{if @name @name true}}>{{@title}}</h1>
     </header>
 
   {{/if}}
 
-  {{yield}}
+  {{yield (hash
+    Header=(component "ui/card/header" loading=@loading)
+    Body=(component "ui/card/body" loading=@loading)
+    Footer=(component "ui/card/footer" loading=@loading)
+  )}}
+   
 
 </section>

@@ -1,0 +1,6 @@
+ <Ui::Text::P 
+    class="mt-1 text-sm text-gray-500"
+    @size="sm" 
+    @loading={{@loading}}
+    data-test-card-subtitle={{if @name @name true}}
+>{{@text}}{{yield}}</Ui::Text::P>

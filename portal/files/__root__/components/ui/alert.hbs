@@ -1,11 +1,11 @@
 {{#if @button}}
 
-  <div class="{{this.roundedClass}} bg-{{this.theme}}-50 p-4"
+  <div class="{{this.roundedClass}} bg-{{this.theme}}-100 dark:bg-{{this.theme}}-900 p-4"
     data-test-alert={{if @name @name true}}
     ...attributes>
     <div class="flex">
       <div class="flex-shrink-0">
-        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400") data-test-icon=this.icon}}
+        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400 dark:text-" this.theme "-600") data-test-icon=this.icon}}
       </div>
       <div class="ml-3 flex-1 md:flex md:justify-between">
         <p class="text-sm leading-5 text-{{this.theme}}-700"
@@ -15,11 +15,17 @@
         </p>
         <p class="mt-3 text-xs leading-5 md:mt-0 md:ml-6">
           <button type="button"
-            class="whitespace-no-wrap
-            px-2 rounded-md
-            bg-{{this.theme}}-100 text-{{this.theme}}-700
-            hover:text-{{this.theme}}-800 hover:bg-{{this.theme}}-200
-            transition ease-in-out duration-150"
+            class="
+              whitespace-no-wrap
+              px-4 rounded-md
+              bg-{{this.theme}}-100 dark:bg-{{this.theme}}-900 
+              text-{{this.theme}}-700 dark:text-{{this.theme}}-300
+              hover:text-{{this.theme}}-800 hover:bg-{{this.theme}}-200
+              dark:hover:text-{{this.theme}}-200 dark:hover:bg-{{this.theme}}-800
+              focus:outline-none focus:ring-2
+              focus:ring-offset-{{this.theme}}-50 focus:ring-{{this.theme}}-600
+              transition ease-in-out duration-150
+            "
             data-test-alert-button={{if @name @name true}}
             {{on "click" @onButtonClick}}>
             {{@button}}
@@ -31,19 +37,19 @@
 
 {{else if @title}}
 
-  <div class="{{this.roundedClass}} bg-{{this.theme}}-50 p-4"
+  <div class="{{this.roundedClass}} bg-{{this.theme}}-100 dark:bg-{{this.theme}}-900 p-4"
     data-test-alert={{if @name @name true}}
     ...attributes>
     <div class="flex">
       <div class="flex-shrink-0">
-        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400")}}
+        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400 dark:text-" this.theme "-600")}}
       </div>
       <div class="ml-3">
-        <h3 class="text-sm leading-5 font-medium text-{{this.theme}}-800"
+        <h3 class="text-sm leading-5 font-medium text-{{this.theme}}-800 dark:text-{{this.theme}}-200"
           data-test-alert-title={{if @name @name true}}>
           {{@title}}
         </h3>
-        <div class="mt-2 text-sm leading-5 text-{{this.theme}}-700"
+        <div class="mt-2 text-sm leading-5 text-{{this.theme}}-700 dark:text-{{this.theme}}-300"
           data-test-alert-body={{if @name @name true}}>
           {{@body}}{{yield}}
         </div>
@@ -53,15 +59,15 @@
 
 {{else}}
 
-  <div class="{{this.roundedClass}} bg-{{this.theme}}-50 p-4"
+  <div class="{{this.roundedClass}} bg-{{this.theme}}-100 dark:bg-{{this.theme}}-900 p-4"
     data-test-alert={{if @name @name true}}
     ...attributes>
     <div class="flex">
       <div class="flex-shrink-0">
-        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400")}}
+        {{svg-jar this.icon class=(concat "h-5 w-5 text-" this.theme "-400 dark:text-" this.theme "-600")}}
       </div>
       <div class="ml-3">
-        <h3 class="text-sm leading-5 font-medium text-{{this.theme}}-800"
+        <h3 class="text-sm leading-5 font-medium text-{{this.theme}}-800 dark:text-{{this.theme}}-200"
           data-test-alert-body={{if @name @name true}}>
           {{@body}}{{yield}}
         </h3>

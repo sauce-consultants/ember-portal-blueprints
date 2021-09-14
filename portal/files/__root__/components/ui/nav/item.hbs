@@ -1,7 +1,92 @@
 {{#if @route}}
-  <Ui::Link class="flex items-center px-3 py-2 text-sm font-medium rounded-md"
-    @activeClass="bg-gray-100 text-gray-900 "
-    @inactiveClass="text-gray-600 hover:bg-gray-50 hover:text-gray-900 "
+
+  <Ui::Link 
+    @activeClass="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100"
+    @inactiveClass="text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
+    @route={{@route}}
+    @activeWhen={{@activeWhen}}
+    data-test-nav-item={{if @name @name true}}
+    class="
+      {{if 
+        @loading 
+        "text-transparent" 
+        "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
+      }}
+      group flex items-center 
+      px-3 py-2 text-sm font-medium rounded-md">
+
+    {{#if @icon}}
+      {{#if @loading}}
+        <div class="bg-gray-200 dark:bg-gray-800
+          flex-shrink-0 -ml-1 mr-3 h-6 w-6 rounded-full"></div>
+      {{else}}
+        {{svg-jar @icon class="
+          text-gray-400 dark:text-gray-600 group-hover:text-gray-500 
+          flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+        }}
+      {{/if}}
+    {{/if}}
+    
+    <Ui::Text @loading={{@loading}} class="truncate">
+      {{yield}}
+    </Ui::Text>
+
+    {{#if @badge}}
+      <span class="{{if @loading "bg-gray-200 dark:bg-gray-800" "bg-white dark:bg-black"}} ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+        {{@badge}}
+      </span>
+
+    {{/if}}
+
+  </Ui::Link>
+
+{{else}}
+
+  <div 
+    role="button" 
+    class="
+      {{if 
+        @loading 
+        "text-transparent" 
+        "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
+      }}
+      group flex items-center 
+      px-3 py-2 text-sm font-medium rounded-md
+    "
+    data-test-nav-item={{if @name @name true}}>
+
+    {{#if @icon}}
+      {{#if @loading}}
+        <div class="bg-gray-200 dark:bg-gray-800
+          flex-shrink-0 -ml-1 mr-3 h-6 w-6 rounded-full"></div>
+      {{else}}
+        {{svg-jar @icon class="
+          text-gray-400 dark:text-gray-600 group-hover:text-gray-500 
+          flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+        }}
+      {{/if}}
+    {{/if}}
+    
+    <Ui::Text @loading={{@loading}} class="truncate">
+      {{yield}}
+    </Ui::Text>
+
+    {{#if @badge}}
+      <span class="{{if @loading "bg-gray-200 dark:bg-gray-800" "bg-white dark:bg-black"}} ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+        {{@badge}}
+      </span>
+    {{/if}}
+
+  </div>
+
+{{/if}}
+
+
+{{!-- {{#if @route}}
+  <Ui::Link 
+    class="flex items-center px-3 py-2 text-sm font-medium rounded-md"
+    @activeClass="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100"
+    @inactiveClass="text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
     @route={{@route}}
     @activeWhen={{@activeWhen}}
     @href={{@href}}
@@ -10,7 +95,6 @@
     <span class="truncate">
       {{yield}}
     </span>
-
   </Ui::Link>
 {{else}}
 
@@ -18,7 +102,8 @@
     class="
       text-sm font-medium 
       flex items-center px-3 py-2 rounded-md
-      text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+      text-gray-600 hover:bg-gray-50 hover:text-gray-900
+      dark:text-gray-400 dark:hover:bg-gray-950 dark:hover:text-gray-100"
     {{on "click" @action}}
     data-test-nav-item={{if @name @name true}}
     ...attributes>
@@ -26,4 +111,4 @@
       {{yield}}
     </span>
   </div>
-{{/if}}
+{{/if}} --}}

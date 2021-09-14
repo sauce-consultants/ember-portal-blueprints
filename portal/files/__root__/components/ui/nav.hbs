@@ -1,8 +1,10 @@
-<nav class="space-y-1"
+<nav class="space-y-1 max-w-xs"
   aria-label="Sidebar Navigation"
   data-test-nav={{if @name @name true}}
   ...attributes>
   {{yield (hash
-    Item=(component "ui/nav/item")
+    Item=(component "ui/nav/item" loading=@loading)
+    Subtitle=(component "ui/nav/subtitle" loading=@loading)
+    Group=(component "ui/nav/group" loading=@loading)
   )}}
 </nav>

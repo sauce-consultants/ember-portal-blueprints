@@ -1,0 +1,21 @@
+<button 
+    type="button" 
+    disabled={{this.isDisabled}}
+    class="
+        inline-flex items-center 
+        border border-transparent 
+        rounded-full shadow-sm
+        flex-grow-0
+        {{this.sizeClasses}}
+        {{this.colorClasses}}
+        {{this.disabledClasses}}
+        focus:outline-none focus:ring-2 focus:ring-offset-2
+    "
+        ...attributes>
+    {{svg-jar this.iconPath class=this.svgClasses}}
+    
+    {{#if @title}}
+        <EmberTooltip>{{@title}}</EmberTooltip>
+    {{/if}}
+
+</button>

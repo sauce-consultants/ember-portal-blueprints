@@ -1,29 +1,31 @@
 {{#if (and @changeset.isInvalid @form.didSubmit)}}
-  <div class="rounded-md bg-red-50 p-4"
+  <div class="rounded-md bg-danger-50 p-4"
     ...attributes>
     <div class="flex">
       <div class="flex-shrink-0">
-        {{svg-jar "exclamation" class="h-5 w-5 text-red-400"}}
+        {{svg-jar "exclamation" class="h-5 w-5 text-danger-400"}}
       </div>
       <div class="ml-3">
-        <h3 class="text-sm leading-5 font-medium text-red-800"
+        <h3 class="text-sm leading-5 font-medium text-danger-800"
           data-test-validation-errors-title>
           {{@title}}
         </h3>
-        <div class="mt-2 text-sm leading-5 text-red-700">
+        <div class="mt-2 text-sm leading-5 text-danger-700">
           <ul class="space-y-2"
             data-test-validation-errors-body>
             {{#each @changeset.errors as |error|}}
-              <li>
+              <li data-test-validation-error={{error.key}}>
                 <a href={{concat "#" error.key "-control"}}>
                   {{!-- We will look up the translation for the field form here 'label' --}}
                   {{!-- In time clicking said item should scroll up to the field in question --}}
-                  <strong class="font-bold">
+                  <strong class="font-bold" data-test-validation-error-label={{error.key}}>
                     {{t (concat @translationPath "." error.key ".label")}}:
                   </strong>
+                  <span data-test-validation-error-message={{error.key}}>
                   {{#each error.validation as |v|}}
                     <br />{{v}}
                   {{/each}}
+                  </span>
                 </a>
               </li>
             {{/each}}

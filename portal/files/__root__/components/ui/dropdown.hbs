@@ -1,15 +1,11 @@
-{{!--
-  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
-  Read the documentation to get started: https://tailwindui.com/documentation
---}}
 {{!-- inline-block --}}
 <div class="relative text-left"
   data-test-dropdown={{if @name @name true}}
   ...attributes>
   {{yield (hash
     Menu=(component "ui/dropdown/menu" showMenu=this.showMenu toggleMenu=this.toggleMenu)
-    Button=(component "ui/button" style="white" trailingIcon="chevron-down")
-    Icon=(component "ui/dropdown/icon")
+    Button=(component "ui/button" style="white" trailingIcon="chevron-down" loading=@loading)
+    Icon=(component "ui/icon-button" icon="dots-vertical" loading=@loading)
     toggle=this.toggleMenu
   )}}
 </div>

@@ -1,23 +1,23 @@
-"use strict";
+'use strict';
 
-const portalInflection = require("../portal-inflection");
+const portalInflection = require('../portal-inflection');
 
 module.exports = {
-  description: "Generate basic breadcrumb component for a resource",
+  description: 'Generate basic breadcrumb component for a resource',
 
   // Current Options
   // --plural employees
   // --nested internal
   availableOptions: [
     {
-      name: "nested",
+      name: 'nested',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "plural",
+      name: 'plural',
       type: String,
-      default: "",
+      default: '',
     },
   ],
 

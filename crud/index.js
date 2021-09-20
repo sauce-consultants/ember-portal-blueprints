@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const path = require("path");
-const EOL = require("os").EOL;
-const portalInflection = require("../portal-inflection");
-const Blueprint = require("ember-cli/lib/models/blueprint");
+const path = require('path');
+const EOL = require('os').EOL;
+const portalInflection = require('../portal-inflection');
+const Blueprint = require('ember-cli/lib/models/blueprint');
 /* eslint-disable */
 const fs = require("fs-extra");
 const EmberRouterGenerator = require("ember-router-generator");
@@ -11,7 +11,7 @@ const chalk = require("chalk");
 /* eslint-enable */
 
 module.exports = {
-  description: "Generate basic CRUD screen for a resource",
+  description: 'Generate basic CRUD screen for a resource',
 
   // - TODO - CRUD Check List/Form/Details components run independantly and allow custom namespace
   // - TODO - CRUD Create acceptance tests for each CRUD route (new and edit)
@@ -21,18 +21,18 @@ module.exports = {
   // --nested internal
   availableOptions: [
     {
-      name: "nested",
+      name: 'nested',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "plural",
+      name: 'plural',
       type: String,
-      default: "",
+      default: '',
     },
   ],
 
-  blueprints: ["model", "crumbs", "filter", "list", "details", "form"],
+  blueprints: ['model', 'crumbs', 'filter', 'list', 'details', 'form'],
 
   locals(options) {
     // This is a list of any model attributes we wish to include after the model name
@@ -136,17 +136,17 @@ module.exports = {
   },
 
   afterInstall: async function (options) {
-    await this.updateRoutes("add", options);
+    await this.updateRoutes('add', options);
 
-    await this.updateFiles("add", options);
+    await this.updateFiles('add', options);
 
     return true;
   },
 
   afterUninstall: async function (options) {
-    await this.updateRoutes("remove", options);
+    await this.updateRoutes('remove', options);
 
-    await this.updateFiles("remove", options);
+    await this.updateFiles('remove', options);
 
     return true;
   },
@@ -155,18 +155,18 @@ module.exports = {
     const attrs = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || "",
+      let type = entityOptions[name] || '',
         selector;
 
-      if (type.indexOf(":") > -1) {
-        type = type.split(":")[0];
+      if (type.indexOf(':') > -1) {
+        type = type.split(':')[0];
       }
 
       switch (type) {
-        case "string":
-        case "boolean":
-        case "number":
-        case "date":
+        case 'string':
+        case 'boolean':
+        case 'number':
+        case 'date':
         default:
           selector = `    ${name}: text('[data-test-data-item-value="${name}"]'),`;
           break;
@@ -182,18 +182,18 @@ module.exports = {
     const attrs = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || "",
+      let type = entityOptions[name] || '',
         selector;
 
-      if (type.indexOf(":") > -1) {
-        type = type.split(":")[0];
+      if (type.indexOf(':') > -1) {
+        type = type.split(':')[0];
       }
 
       switch (type) {
-        case "string":
-        case "boolean":
-        case "number":
-        case "date":
+        case 'string':
+        case 'boolean':
+        case 'number':
+        case 'date':
         default:
           selector = `    ${name}:{
       value: value('[data-test-input-value="${name}"]'),
@@ -213,32 +213,32 @@ module.exports = {
     const attrs = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || "",
+      let type = entityOptions[name] || '',
         foreignModelOrFakerMethod;
 
-      if (type.indexOf(":") > -1) {
-        foreignModelOrFakerMethod = type.split(":")[1];
-        type = type.split(":")[0];
+      if (type.indexOf(':') > -1) {
+        foreignModelOrFakerMethod = type.split(':')[1];
+        type = type.split(':')[0];
 
-        if (type != "has-many" && type != "belongs-to") {
+        if (type != 'has-many' && type != 'belongs-to') {
           // it's a faker method
-          foreignModelOrFakerMethod = foreignModelOrFakerMethod + "()";
+          foreignModelOrFakerMethod = foreignModelOrFakerMethod + '()';
         }
       }
 
       if (!foreignModelOrFakerMethod) {
         switch (type) {
-          case "string":
-            foreignModelOrFakerMethod = "lorem.words()";
+          case 'string':
+            foreignModelOrFakerMethod = 'lorem.words()';
             break;
-          case "boolean":
-            foreignModelOrFakerMethod = "random.boolean()";
+          case 'boolean':
+            foreignModelOrFakerMethod = 'random.boolean()';
             break;
-          case "number":
-            foreignModelOrFakerMethod = "random.number()";
+          case 'number':
+            foreignModelOrFakerMethod = 'random.number()';
             break;
-          case "date":
-            foreignModelOrFakerMethod = "date.recent()";
+          case 'date':
+            foreignModelOrFakerMethod = 'date.recent()';
             break;
           default:
             foreignModelOrFakerMethod = false;
@@ -251,7 +251,7 @@ module.exports = {
         // if the field is a belongsTo or hasMany we'll skip
         // adding to the factory for now... soon tho
         attrs.push(
-          `  ${name}() { return faker.${foreignModelOrFakerMethod};},`
+          `  ${name}() { return faker.${foreignModelOrFakerMethod};},`,
         );
       }
     }
@@ -263,32 +263,32 @@ module.exports = {
     const attrs = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || "",
+      let type = entityOptions[name] || '',
         validationRules;
 
-      if (type.indexOf(":") > -1) {
-        type = type.split(":")[0];
+      if (type.indexOf(':') > -1) {
+        type = type.split(':')[0];
       }
 
       switch (type) {
-        case "string":
+        case 'string':
           validationRules = `  ${name}:[
      validatePresence(true),
      validateLength({max:255})
    ],`;
           break;
-        case "boolean":
+        case 'boolean':
           validationRules = `  ${name}:[
      validatePresence(true),
      validateInclusion({list:[true, false]})
    ],`;
           break;
-        case "number":
+        case 'number':
           validationRules = `  ${name}:[
      validateNumber({max:255})
    ],`;
           break;
-        case "date":
+        case 'date':
           validationRules = `  ${name}:[
      validatePresence(true),
      validateDate()
@@ -309,30 +309,30 @@ module.exports = {
     const attrs = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || "",
+      let type = entityOptions[name] || '',
         validationRules;
 
-      if (type.indexOf(":") > -1) {
-        type = type.split(":")[0];
+      if (type.indexOf(':') > -1) {
+        type = type.split(':')[0];
       }
 
       switch (type) {
-        case "string":
+        case 'string':
           validationRules = `  ${name}:[
      validateLength({max:255})
    ],`;
           break;
-        case "boolean":
+        case 'boolean':
           validationRules = `  ${name}:[
      validateInclusion({list:[true, false]})
    ],`;
           break;
-        case "number":
+        case 'number':
           validationRules = `  ${name}:[
      validateNumber({max:255})
    ],`;
           break;
-        case "date":
+        case 'date':
           validationRules = `  ${name}:[
      validateDate()
    ],`;
@@ -367,9 +367,9 @@ module.exports = {
   async updateTestHelpers(action, options) {
     const name = options.entity.name,
       tokens = portalInflection.nameTokens(name, options),
-      file = "tests/helpers/test-urls.js",
+      file = 'tests/helpers/test-urls.js',
       marker = {
-        before: "// DO NOT REMOVE!",
+        before: '// DO NOT REMOVE!',
       },
       content = `export const ${tokens.capitalizedPlural}_URL = "/${tokens.routePathPlural}";
 export const ${tokens.capitalizedPlural}_NEW_URL = "/${tokens.routePathPlural}/new";
@@ -381,13 +381,13 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "test helper urls");
+    this.writeUpdateFileStatusToUI(result, action, 'test helper urls');
 
     return result;
   },
@@ -422,12 +422,12 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
   async updateRouteParams(action, options) {
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       // updateRoutes will remove the params when it removes
       // the route so no need to add logic for that here
       const name = options.entity.name,
-      nameUnderscored = name.replace('-', '_'),
-        file = "app/router.js",
+        nameUnderscored = name.replace('-', '_'),
+        file = 'app/router.js',
         marker = {
           after: `this.route('${name}',`,
         },
@@ -435,7 +435,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
       let result = await this.insertIntoFile(file, content, marker);
 
-      this.writeUpdateFileStatusToUI(result, action, "app/router.js");
+      this.writeUpdateFileStatusToUI(result, action, 'app/router.js');
 
       return result;
     }
@@ -444,9 +444,9 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
   async updateMirageEndpoints(action, options) {
     const name = options.entity.name,
       tokens = portalInflection.nameTokens(name, options),
-      file = "mirage/config.js",
+      file = 'mirage/config.js',
       marker = {
-        before: "  // DO NOT REMOVE!",
+        before: '  // DO NOT REMOVE!',
       },
       content =
         EOL +
@@ -463,22 +463,22 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "mirage endpoints");
+    this.writeUpdateFileStatusToUI(result, action, 'mirage endpoints');
 
     return result;
   },
 
   async updateMirageSeeds(action, options) {
     const name = options.entity.name,
-      file = "mirage/scenarios/default.js",
+      file = 'mirage/scenarios/default.js',
       marker = {
-        before: "  // DO NOT REMOVE!",
+        before: '  // DO NOT REMOVE!',
       },
       content = `  server.createList('${name}', 35);` + EOL;
 
@@ -486,13 +486,13 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "mirage seeds");
+    this.writeUpdateFileStatusToUI(result, action, 'mirage seeds');
 
     return result;
   },
@@ -504,7 +504,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       // First step is to add the import code
       let marker = {
           after: `from '@ember-data/model';` + EOL,
@@ -528,7 +528,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
       result = await this.insertIntoFile(file, content, marker);
 
-      this.writeUpdateFileStatusToUI(result, action, "model");
+      this.writeUpdateFileStatusToUI(result, action, 'model');
 
       return result;
     } else {
@@ -540,9 +540,9 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
   async updateAppConfig(action, options) {
     const name = options.entity.name,
       tokens = portalInflection.nameTokens(name, options),
-      file = "app/utils/const/app.js",
+      file = 'app/utils/const/app.js',
       marker = {
-        before: "// DO NOT REMOVE!",
+        before: '// DO NOT REMOVE!',
       },
       content = `  {
     label: '${tokens.dasherizedSingular}.nav.label',
@@ -556,13 +556,13 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, content, marker);
     } else {
       result = await this.removeFromFile(file, content);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "app config");
+    this.writeUpdateFileStatusToUI(result, action, 'app config');
 
     return result;
   },
@@ -574,7 +574,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
       tokens = portalInflection.nameTokens(name, options),
       file = `tests/pages/${tokens.dasherizedSingular}.js`,
       desktopMarker = {
-        before: "// DESKTOP NAV DO NOT REMOVE!",
+        before: '// DESKTOP NAV DO NOT REMOVE!',
       },
       desktopContent =
         EOL +
@@ -591,7 +591,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
      n },` +
         EOL,
       mobileMarker = {
-        before: "// MOBILE NAV DO NOT REMOVE!",
+        before: '// MOBILE NAV DO NOT REMOVE!',
       },
       mobileContent =
         EOL +
@@ -612,7 +612,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
     if (options.dryRun) {
       return this.writeDryRunStatusToUI();
-    } else if (action === "add") {
+    } else if (action === 'add') {
       result = await this.insertIntoFile(file, desktopContent, desktopMarker);
       result = await this.insertIntoFile(file, mobileContent, mobileMarker);
     } else {
@@ -620,7 +620,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
       result = await this.removeFromFile(file, mobileContent);
     }
 
-    this.writeUpdateFileStatusToUI(result, action, "root page object");
+    this.writeUpdateFileStatusToUI(result, action, 'root page object');
 
     return result;
   },
@@ -632,23 +632,23 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
   async removeFromFile(fullPath, contentsToRemove) {
     let returnValue = {
       path: fullPath,
-      originalContents: "",
-      contents: "",
+      originalContents: '',
+      contents: '',
       removed: false,
     };
 
     let exists = await fs.existsSync(fullPath);
 
     if (exists) {
-      let originalContents = "";
+      let originalContents = '';
 
       originalContents = fs.readFileSync(fullPath, {
-        encoding: "utf8",
+        encoding: 'utf8',
       });
 
       let contentsToWrite = originalContents.replace(
         contentsToRemove + EOL,
-        ""
+        '',
       );
 
       if (contentsToWrite !== originalContents) {
@@ -669,32 +669,32 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
     // we tweaked this bit so we can add multiple routes to router.js
     entity.name = route;
     let actionColorMap = {
-      add: "green",
-      remove: "red",
+      add: 'green',
+      remove: 'red',
     };
-    let color = actionColorMap[action] || "gray";
+    let color = actionColorMap[action] || 'gray';
 
     if (this.shouldTouchRouter(route, options)) {
       await this.writeRoute(action, route, options);
 
-      this.ui.writeLine("updating router");
+      this.ui.writeLine('updating router');
 
-      this._writeStatusToUI(chalk[color], action + " route", route);
+      this._writeStatusToUI(chalk[color], action + ' route', route);
     }
 
     entity.name = _name;
   },
 
   shouldTouchRouter(name, options) {
-    var isIndex = name === "index";
-    var isBasic = name === "basic";
-    var isApplication = name === "application";
+    var isIndex = name === 'index';
+    var isBasic = name === 'basic';
+    var isApplication = name === 'application';
 
     if (options.dryRun) {
       this._writeStatusToUI(
-        chalk["yellow"],
-        "You specified the dry-run flag, so no routes will be updated.",
-        ""
+        chalk['yellow'],
+        'You specified the dry-run flag, so no routes will be updated.',
+        '',
       );
       return false;
     }
@@ -704,7 +704,7 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
   writeRoute(action, name, options) {
     let routerPath = path.join.apply(null, this.findRouter(options));
-    let source = fs.readFileSync(routerPath, "utf-8");
+    let source = fs.readFileSync(routerPath, 'utf-8');
 
     let routes = new EmberRouterGenerator(source);
     let newRoutes = routes[action](name, options);
@@ -714,43 +714,43 @@ export const ${tokens.capitalizedSingular}_ARCHIVE_URL = "/${tokens.routePathSin
 
   findRouter(options) {
     let routerPathParts = [options.project.root];
-    let root = "app";
+    let root = 'app';
 
     if (options.dummy && options.project.isEmberCLIAddon()) {
       routerPathParts = routerPathParts.concat([
-        "tests",
-        "dummy",
+        'tests',
+        'dummy',
         root,
-        "router.js",
+        'router.js',
       ]);
     } else {
-      routerPathParts = routerPathParts.concat([root, "router.js"]);
+      routerPathParts = routerPathParts.concat([root, 'router.js']);
     }
 
     return routerPathParts;
   },
 
   writeUpdateFileStatusToUI(fileUpdateResult, action, message) {
-    if (action === "add") {
+    if (action === 'add') {
       if (fileUpdateResult.inserted) {
-        this._writeStatusToUI(chalk["green"], "updated", message);
+        this._writeStatusToUI(chalk['green'], 'updated', message);
       } else {
-        this._writeStatusToUI(chalk["red"], "skipped", message);
+        this._writeStatusToUI(chalk['red'], 'skipped', message);
       }
     } else {
       if (fileUpdateResult.removed) {
-        this._writeStatusToUI(chalk["red"], "updated", message);
+        this._writeStatusToUI(chalk['red'], 'updated', message);
       } else {
-        this._writeStatusToUI(chalk["yellow"], "skipped", message);
+        this._writeStatusToUI(chalk['yellow'], 'skipped', message);
       }
     }
   },
 
   writeDryRunStatusToUI() {
     this._writeStatusToUI(
-      chalk["yellow"],
-      "You specified the dry-run flag, so no files will be updated.",
-      ""
+      chalk['yellow'],
+      'You specified the dry-run flag, so no files will be updated.',
+      '',
     );
   },
 };

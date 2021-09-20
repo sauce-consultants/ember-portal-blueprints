@@ -1,24 +1,25 @@
-"use strict";
-const EOL = require("os").EOL;
-const inflection = require("inflection"); // https://www.npmjs.com/package/inflection
-const portalInflection = require("../portal-inflection");
+'use strict';
+
+const EOL = require('os').EOL;
+const inflection = require('inflection'); // https://www.npmjs.com/package/inflection
+const portalInflection = require('../portal-inflection');
 
 module.exports = {
-  description: "Generate basic filter component for a resource",
+  description: 'Generate basic filter component for a resource',
 
   // Current Options
   // --plural employees
   // --parentRoute iternal
   availableOptions: [
     {
-      name: "nested",
+      name: 'nested',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "plural",
+      name: 'plural',
       type: String,
-      default: "",
+      default: '',
     },
   ],
 
@@ -51,22 +52,22 @@ module.exports = {
     const items = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || ""; //,
+      let type = entityOptions[name] || ''; //,
       // foreignModelOrFakerMethod;
 
-      if (type.indexOf(":") > -1) {
+      if (type.indexOf(':') > -1) {
         // foreignModelOrFakerMethod = type.split(':')[1];
-        type = type.split(":")[0];
+        type = type.split(':')[0];
       }
 
-      if (type === "belongs-to") {
+      if (type === 'belongs-to') {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
         // no form input support fo has belongs to
         continue;
       }
 
-      if (type === "has-many") {
+      if (type === 'has-many') {
         // we'll pass a count of the related models
         name = `${name}.length`;
         // no form input support fo has many yet
@@ -76,13 +77,13 @@ module.exports = {
       // Code will decide what form input to add for each attribute
       let inputType = this.getInputType(name, type);
 
-      if (inputType === "select") {
+      if (inputType === 'select') {
         items.push(this.makeSelectControl(inputType, name, model));
-      } else if (inputType === "multiselect") {
+      } else if (inputType === 'multiselect') {
         items.push(this.makeMultiSelectControl(inputType, name, model));
-      } else if (inputType === "checkbox") {
+      } else if (inputType === 'checkbox') {
         items.push(this.makeCheckboxControl(inputType, name, model));
-      } else if (inputType === "date") {
+      } else if (inputType === 'date') {
         items.push(this.makeDateControl(inputType, name, model));
       } else {
         // Must be a text input then
@@ -97,22 +98,22 @@ module.exports = {
     const actions = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || ""; //,
+      let type = entityOptions[name] || ''; //,
       // foreignModelOrFakerMethod;
 
-      if (type.indexOf(":") > -1) {
+      if (type.indexOf(':') > -1) {
         // foreignModelOrFakerMethod = type.split(':')[1];
-        type = type.split(":")[0];
+        type = type.split(':')[0];
       }
 
-      if (type === "belongs-to") {
+      if (type === 'belongs-to') {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
         // no form input support fo has many yet
         continue;
       }
 
-      if (type === "has-many") {
+      if (type === 'has-many') {
         // we'll pass a count of the related models
         name = `${name}.length`;
         // no form input support fo has many yet
@@ -122,13 +123,13 @@ module.exports = {
       // Code will decide what form input to add for each attribute
       let inputType = this.getInputType(name, type);
 
-      if (inputType === "select") {
+      if (inputType === 'select') {
         actions.push(this.makeUpdateAction(inputType, name, model));
-      } else if (inputType === "multiselect") {
+      } else if (inputType === 'multiselect') {
         actions.push(this.makeUpdateAction(inputType, name, model));
-      } else if (inputType === "checkbox") {
+      } else if (inputType === 'checkbox') {
         actions.push(this.makeToggleAction(inputType, name, model));
-      } else if (inputType === "date") {
+      } else if (inputType === 'date') {
         actions.push(this.makeUpdateAction(inputType, name, model));
       } else {
         // Must be a text input then
@@ -158,34 +159,34 @@ module.exports = {
 
   getInputType(attrName, attrType) {
     switch (attrType) {
-      case "has-many":
-      case "array":
-        return "multiselect";
-      case "belongs-to":
-        return "select";
-      case "boolean":
-        return "checkbox";
-      case "number":
-        return "number";
-      case "date":
-        return "date";
-      case "string":
+      case 'has-many':
+      case 'array':
+        return 'multiselect';
+      case 'belongs-to':
+        return 'select';
+      case 'boolean':
+        return 'checkbox';
+      case 'number':
+        return 'number';
+      case 'date':
+        return 'date';
+      case 'string':
       default:
         // all custom or object attributes will get a text input
-        return "text";
+        return 'text';
     }
   },
 
   makeSelectControl(inputType, name, model) {
-    return this.makeTextControl("text", name, model);
+    return this.makeTextControl('text', name, model);
   },
 
   makeMultiSelectControl(inputType, name, model) {
-    return this.makeTextControl("text", name, model);
+    return this.makeTextControl('text', name, model);
   },
 
   makeCheckboxControl(inputType, name, model) {
-    const actionName = "toggle" + inflection.classify(name);
+    const actionName = 'toggle' + inflection.classify(name);
     return `     <Ui::Form::Control class="w-full"
         @changeset={{@changeset}}
         @name="${name}"
@@ -203,7 +204,7 @@ module.exports = {
   },
 
   makeDateControl(inputType, name, model) {
-    const actionName = "update" + inflection.classify(name);
+    const actionName = 'update' + inflection.classify(name);
 
     return `    <Ui::Form::Control class="w-full"
         @changeset={{@changeset}}
@@ -238,14 +239,14 @@ module.exports = {
   },
 
   makeUpdateAction(inputType, name) {
-    const actionName = "update" + inflection.classify(name);
+    const actionName = 'update' + inflection.classify(name);
     return `  @action ${actionName}(changeset, event) {
     changeset.set('${name}', event.target.valueAsDate);
   }`;
   },
 
   makeToggleAction(inputType, name) {
-    const actionName = "toggle" + inflection.classify(name);
+    const actionName = 'toggle' + inflection.classify(name);
     return `  @action ${actionName}(changeset) {
     changeset.set('${name}', !changeset.${name});
   }`;

@@ -1,22 +1,22 @@
-"use strict";
-const portalInflection = require("../portal-inflection");
+'use strict';
+const portalInflection = require('../portal-inflection');
 
 module.exports = {
-  description: "Generate basic list component for a resource",
+  description: 'Generate basic list component for a resource',
 
   // Current Options
   // --plural employees
   // --parentRoute iternal
   availableOptions: [
     {
-      name: "nested",
+      name: 'nested',
       type: String,
-      default: "",
+      default: '',
     },
     {
-      name: "plural",
+      name: 'plural',
       type: String,
-      default: "",
+      default: '',
     },
   ],
 

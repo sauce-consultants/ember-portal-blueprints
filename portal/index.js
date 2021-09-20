@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const inflection = require("inflection"); // https://www.npmjs.com/package/inflection
+const inflection = require('inflection'); // https://www.npmjs.com/package/inflection
 
 module.exports = {
-  description: "",
+  description: '',
 
   locals(options) {
     const appName = options.project.pkg.name;

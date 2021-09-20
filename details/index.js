@@ -1,10 +1,10 @@
-"use strict";
-const EOL = require("os").EOL;
-const portalInflection = require("../portal-inflection");
-const inflection = require("inflection");
+'use strict';
+const EOL = require('os').EOL;
+const portalInflection = require('../portal-inflection');
+const inflection = require('inflection');
 
 module.exports = {
-  description: "Generate a details view component to view a model",
+  description: 'Generate a details view component to view a model',
 
   locals(options) {
     const name = options.entity.name,
@@ -23,20 +23,20 @@ module.exports = {
     const items = [];
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || ""; //,
+      let type = entityOptions[name] || ''; //,
       // foreignModelOrFakerMethod;
 
-      if (type.indexOf(":") > -1) {
+      if (type.indexOf(':') > -1) {
         // foreignModelOrFakerMethod = type.split(':')[1];
-        type = type.split(":")[0];
+        type = type.split(':')[0];
       }
 
-      if (type === "belongsTo") {
+      if (type === 'belongsTo') {
         // we'll pass the describe method on the related model
         name = `${name}.describe`;
       }
 
-      if (type === "hasMany") {
+      if (type === 'hasMany') {
         // we'll pass a count of the related models
         name = `${name}.length`;
       }

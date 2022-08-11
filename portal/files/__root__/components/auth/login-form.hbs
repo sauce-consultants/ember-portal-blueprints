@@ -44,12 +44,8 @@
       @form={{form}}
       class="w-full" />
 
-    <LinkTo @route="external.recover-password"
-      class="w-full">
-      <form.Button @size="lg"
-        @style="text"
-        @color="gray"
-        class="w-full">{{t "external.login.form.forgot"}}</form.Button>
+    <LinkTo @route="external.recover-password" class="text-gray-500 hover:text-primary-600">
+        {{t "external.login.form.forgot"}}
     </LinkTo>
 
   </Ui::Form>

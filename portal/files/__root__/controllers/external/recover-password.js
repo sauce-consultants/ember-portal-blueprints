@@ -45,12 +45,14 @@ export default class ExternalRecoverPasswordController extends Controller {
           Accept: 'application/vnd.api+json',
           'Content-Type': 'application/vnd.api+json',
         },
-        body = {
-          attributes: {
-            email: changeset.email,
+        body = JSON.stringify({
+          data: {
+            attributes: {
+              email: changeset.email,
+            },
+            type: 'user',
           },
-          type: 'user',
-        };
+        });
 
       const response = yield fetch(url, {
         method: 'POST',
@@ -58,12 +60,18 @@ export default class ExternalRecoverPasswordController extends Controller {
         body,
       });
 
-      if (!response.ok) {
+      if (response.status === 422) {
+        this.flashMessages.alert(
+          "We where unable to send you a recovery email. Please ensure you've entered the correct email address."
+        );
+        throw 'Wrong Email';
+      } else if (!response.ok) {
         const json = yield response.json();
         this.serverErrors = mapResponseErrors(json);
         this.flashMessages.alert(this.serverMessage);
         throw 'Server Error';
       }
+      
     } else {
       this.flashMessages.alert(this.validationMessage);
       throw 'Validation Errors';

@@ -30,6 +30,7 @@ export default class <%= routeClassSingular %>EditController extends Controller 
   // Services
 
   @service flashMessages;
+  @service router;
 
   // Controllers
 
@@ -59,9 +60,9 @@ export default class <%= routeClassSingular %>EditController extends Controller 
 
   // Actions
 
-  @action cancel(changeset) {
+  @action cancel() {
     this.flashMessages.success(this.cancelMessage);
-    return changeset.rollback();
+    this.router.transitionTo('<%= routeNamePlural %>');
   }
 
   // Tasks

@@ -45,9 +45,9 @@ export default class <%= routeClassPlural %>NewController extends Controller {
 
   // Actions
 
-  @action cancel(changeset) {
+  @action cancel() {
     this.flashMessages.success(this.cancelMessage);
-    return changeset.rollback();
+    this.transitionToRoute('<%= routeNamePlural %>');  
   }
 
   // Tasks

@@ -22,7 +22,6 @@ export default class <%= routeClassPlural %>NewController extends Controller {
   // Services
 
   @service flashMessages;
-  @service router;
 
   // Properties
 
@@ -48,7 +47,7 @@ export default class <%= routeClassPlural %>NewController extends Controller {
 
   @action cancel() {
     this.flashMessages.success(this.cancelMessage);
-    this.router.transitionTo('<%= routeNamePlural %>');  
+    this.transitionToRoute('<%= routeNamePlural %>');  
   }
 
   // Tasks
